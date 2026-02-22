@@ -331,6 +331,13 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Persistent Chat Widget (shown on all pages except dedicated chat page) -->
+            <div id="persistent-chat" class="mt-8">
+                <header class="mb-4"><h2 class="text-3xl font-bold text-slate-800">✨ AI 집사에게 물어보기</h2><p id="persistent-chat-subtitle" class="text-slate-500">...의 건강 데이터에 대해 궁금한 점을 AI에게 물어보세요.</p></header>
+                <div id="persistentChatWindow" class="bg-white rounded-xl shadow-sm p-4 overflow-y-auto space-y-4 min-h-[120px] max-h-[400px]"><div class="flex justify-start"><div id="persistent-chat-welcome" class="chat-bubble chat-bubble-ai p-3 rounded-lg shadow-sm">안녕하세요! 저는 ...의 건강 데이터를 학습한 AI 집사입니다. 무엇이 궁금하신가요?</div></div></div>
+                <form id="persistentChatForm" class="mt-4 flex items-center space-x-2"><input id="persistentChatInput" type="text" placeholder="메시지를 입력하세요..." class="flex-grow border-slate-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 p-3" required><button type="submit" class="bg-indigo-600 text-white font-semibold p-3 rounded-lg hover:bg-indigo-700 transition-colors flex items-center"><i data-lucide="send" class="w-6 h-6"></i></button></form>
+            </div>
         </main>
     </div>
 
@@ -366,7 +373,15 @@
             weight_2_months_ago: "5.0kg",
             weight_1_month_ago: "5.05kg",
             litter_visits_monthly_avg: "4.2회",
-            litter_duration_monthly_avg: "48초"
+            litter_duration_monthly_avg: "48초",
+            // Cat-Guard AI 5대 징후 데이터
+            five_signs: {
+                defecation_freq: "일 평균 4.2회 (정상: 2-4회)",
+                stool_size: "정상 범위",
+                litter_duration: "평균 48초 → 최근 95초 (급증)",
+                vomiting: "최근 1주간 0회",
+                limping: "8/20 경미한 뒷다리 이상 감지"
+            }
         };
         const mockVetData = [
             { name: "튼튼 동물병원", address: "서울시 강남구 테헤란로 123", rating: 4.8, reviews: 210, features: "비뇨기계 질환 전문의, 최신 초음파 장비 보유", isRecommended: true },
@@ -554,6 +569,11 @@
             if (targetPage) targetPage.classList.add('active');
             const targetNav = document.querySelector(`.nav-item[data-page="${pageName}"]`);
             if (targetNav) targetNav.classList.add('active');
+            // Hide persistent chat on dedicated chat page, show on all others
+            const persistentChat = document.getElementById('persistent-chat');
+            if (persistentChat) {
+                persistentChat.style.display = (pageName === 'chat') ? 'none' : 'block';
+            }
         }
 
         document.querySelectorAll('.nav-item').forEach(item => {
@@ -597,6 +617,9 @@
             document.getElementById('breed-info-title').textContent = `AI 맞춤 품종 정보: ${petData.breed}`;
             document.getElementById('chat-subtitle').textContent = `${petData.name}의 건강 데이터에 대해 궁금한 점을 AI에게 물어보세요.`;
             document.getElementById('chat-welcome').textContent = `안녕하세요! 저는 ${petData.name}의 건강 데이터를 학습한 AI 집사입니다. 무엇이 궁금하신가요?`;
+            // Update persistent chat widget
+            document.getElementById('persistent-chat-subtitle').textContent = `${petData.name}의 건강 데이터에 대해 궁금한 점을 AI에게 물어보세요.`;
+            document.getElementById('persistent-chat-welcome').textContent = `안녕하세요! 저는 ${petData.name}의 건강 데이터를 학습한 AI 집사입니다. 무엇이 궁금하신가요?`;
 
             const today = new Date();
             const dateString = today.toISOString().split('T')[0];
@@ -634,6 +657,12 @@
                 ];
                 updateDashboard(localHealthLogs);
                 updateHealthLogHistory(localHealthLogs);
+                // Mock video analysis history
+                const mockVideoLogs = [
+                    { id: '1', date: '2025-08-20', summary: '걸음걸이가 약간 부자연스러워 보입니다.', result: '## 보행 분석 결과\n\n관찰된 프레임에서 뒷다리의 움직임이 약간 부자연스러운 패턴을 보입니다.\n\n**관찰 사항:**\n- 뒷다리 보행 시 미세한 절뚝거림 의심\n- 점프 착지 시 좌측 뒷다리에 체중 부하 회피 경향\n\n**권장 사항:**\n- 1주일간 추가 관찰 후 지속 시 수의사 상담 권장\n- 높은 곳에서의 점프를 줄여주세요' },
+                    { id: '2', date: '2025-08-22', summary: '자세가 안정적입니다.', result: '## 자세 분석 결과\n\n현재 프레임에서 관찰된 자세는 전반적으로 안정적이며 정상 범위입니다.\n\n**관찰 사항:**\n- 앉은 자세가 균형 잡혀 있음\n- 척추 라인이 자연스러움\n- 꼬리 위치 정상\n\n**종합 평가:** 양호' },
+                ];
+                updateVideoAnalysisHistory(mockVideoLogs);
             }
 
             // Generate daily tip
@@ -669,11 +698,11 @@
             // Update alert card
             const alertCard = document.getElementById('alert-card');
             if (latest.visits > 5) {
-                alertCard.className = 'lg:col-span-2 bg-red-50 border-l-4 border-red-500 text-red-700 p-6 rounded-xl shadow-sm flex items-center';
-                alertCard.innerHTML = `<i data-lucide="alert-triangle" class="w-12 h-12 mr-6 text-red-500"></i><div><h4 class="font-bold text-xl">주의 필요</h4><p>화장실 방문 횟수가 평소보다 높습니다. '건강 알림' 탭에서 자세한 내용을 확인하세요.</p></div>`;
+                alertCard.className = 'lg:col-span-2 bg-red-50 border-l-4 border-red-500 text-red-700 p-6 rounded-xl shadow-sm';
+                alertCard.innerHTML = `<div class="flex items-start"><i data-lucide="alert-triangle" class="w-10 h-10 mr-4 text-red-500 flex-shrink-0 mt-1"></i><div><h4 class="font-bold text-xl">높은 위험도 알림!</h4><p class="mt-1">오늘 화장실 방문 횟수(${latest.visits}회)가 평소보다 많습니다. 비뇨기계 질환 가능성을 확인해보세요. <a href="#" onclick="showPage('alerts'); return false;" class="font-semibold underline">자세히 보기</a></p></div></div>`;
             } else {
-                alertCard.className = 'lg:col-span-2 bg-green-50 border-l-4 border-green-500 text-green-700 p-6 rounded-xl shadow-sm flex items-center';
-                alertCard.innerHTML = `<i data-lucide="check-circle" class="w-12 h-12 mr-6 text-green-500"></i><div><h4 class="font-bold text-xl">모든 것이 정상입니다</h4><p>오늘의 건강 데이터 분석 결과, 특이사항이 없습니다. 좋은 상태를 유지하고 있습니다!</p></div>`;
+                alertCard.className = 'lg:col-span-2 bg-green-50 border-l-4 border-green-500 text-green-700 p-6 rounded-xl shadow-sm';
+                alertCard.innerHTML = `<div class="flex items-start"><i data-lucide="check-circle" class="w-10 h-10 mr-4 text-green-500 flex-shrink-0 mt-1"></i><div><h4 class="font-bold text-xl">모든 것이 정상입니다</h4><p class="mt-1">오늘의 건강 데이터 분석 결과, 특이사항이 없습니다. 좋은 상태를 유지하고 있습니다!</p></div></div>`;
             }
 
             // Update weight chart
@@ -752,15 +781,26 @@
             container.innerHTML = '';
             logs.forEach(log => {
                 const div = document.createElement('div');
-                div.className = 'bg-slate-50 p-4 rounded-lg';
+                div.className = 'bg-slate-50 p-4 rounded-lg flex items-start space-x-4';
                 div.innerHTML = `
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="font-semibold text-sm text-slate-700">${log.date || '날짜 없음'}</span>
+                    <div class="w-16 h-16 bg-slate-200 rounded-lg flex-shrink-0 flex items-center justify-center">
+                        <i data-lucide="video" class="w-8 h-8 text-slate-400"></i>
                     </div>
-                    <div class="prose max-w-none text-sm">${simpleMarkdownToHtml(log.result || '')}</div>
+                    <div class="flex-grow">
+                        <p class="font-semibold text-sm text-slate-800">${log.date || '날짜 없음'}</p>
+                        <p class="text-sm text-slate-600 mt-1">시뮬레이션: ${log.summary || ''}</p>
+                        <button class="text-sm text-indigo-600 hover:underline mt-1 video-detail-btn" data-log-id="${log.id}">전체 분석 보기</button>
+                    </div>
                 `;
                 container.appendChild(div);
+                // Add click handler for detail view
+                div.querySelector('.video-detail-btn').addEventListener('click', () => {
+                    openModal('영상 분석 상세 결과');
+                    document.getElementById('modalSpinner').classList.add('hidden');
+                    document.getElementById('modalResult').innerHTML = simpleMarkdownToHtml(log.result || '');
+                });
             });
+            lucide.createIcons();
         }
 
         // --- Health Log Form Submission ---
@@ -1170,6 +1210,56 @@
                     chatWindow.appendChild(aiBubble);
                 } catch (error) {
                     const loading = document.getElementById('chat-loading');
+                    if (loading) loading.remove();
+
+                    const errorBubble = document.createElement('div');
+                    errorBubble.className = 'flex justify-start';
+                    errorBubble.innerHTML = `<div class="chat-bubble chat-bubble-ai p-3 rounded-lg shadow-sm text-red-500">죄송합니다. 응답 생성에 실패했습니다: ${error.message}</div>`;
+                    chatWindow.appendChild(errorBubble);
+                }
+                chatWindow.scrollTop = chatWindow.scrollHeight;
+            });
+
+            // Persistent Chat (same logic, different elements)
+            const persistentChatForm = document.getElementById('persistentChatForm');
+            if (persistentChatForm) persistentChatForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const input = document.getElementById('persistentChatInput');
+                const message = input.value.trim();
+                if (!message) return;
+
+                const chatWindow = document.getElementById('persistentChatWindow');
+
+                const userBubble = document.createElement('div');
+                userBubble.className = 'flex justify-end';
+                userBubble.innerHTML = `<div class="chat-bubble chat-bubble-user p-3 rounded-lg shadow-sm">${message}</div>`;
+                chatWindow.appendChild(userBubble);
+
+                const loadingBubble = document.createElement('div');
+                loadingBubble.className = 'flex justify-start';
+                loadingBubble.id = 'persistent-chat-loading';
+                loadingBubble.innerHTML = `<div class="chat-bubble chat-bubble-ai p-3 rounded-lg shadow-sm"><div class="animate-pulse">AI가 생각 중...</div></div>`;
+                chatWindow.appendChild(loadingBubble);
+                chatWindow.scrollTop = chatWindow.scrollHeight;
+
+                input.value = '';
+
+                try {
+                    const healthDataSummary = localHealthLogs.length > 0
+                        ? `최근 건강 기록: ${JSON.stringify(localHealthLogs.slice(0, 3))}`
+                        : '건강 기록 없음';
+                    const prompt = `당신은 ${petData.name}의 전담 AI 집사입니다. ${petContext} ${healthDataSummary}. 과거 건강 데이터: ${JSON.stringify(mockPetHistoricalData)}. 보호자 질문: "${message}". 친절하고 전문적으로 답변해주세요. 한국어로 대답해주세요.`;
+                    const result = await callGeminiAPI(prompt);
+
+                    const loading = document.getElementById('persistent-chat-loading');
+                    if (loading) loading.remove();
+
+                    const aiBubble = document.createElement('div');
+                    aiBubble.className = 'flex justify-start';
+                    aiBubble.innerHTML = `<div class="chat-bubble chat-bubble-ai p-3 rounded-lg shadow-sm">${simpleMarkdownToHtml(result)}</div>`;
+                    chatWindow.appendChild(aiBubble);
+                } catch (error) {
+                    const loading = document.getElementById('persistent-chat-loading');
                     if (loading) loading.remove();
 
                     const errorBubble = document.createElement('div');
