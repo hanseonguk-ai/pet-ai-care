@@ -94,24 +94,30 @@
 
             <!-- AI Video Analysis Page -->
             <div id="video-analysis" class="page">
-                <header class="mb-6"><h2 class="text-3xl font-bold text-slate-800">AI 영상 분석 (프레임)</h2><p id="video-analysis-subtitle" class="text-slate-500">반려동물의 행동 영상(보행, 자세 등)을 올려 AI에게 분석을 요청하세요.</p></header>
+                <header class="mb-6"><h2 class="text-3xl font-bold text-slate-800">AI 영상 분석</h2><p id="video-analysis-subtitle" class="text-slate-500">반려동물의 행동 영상을 올려 AI가 전체 영상을 분석합니다.</p></header>
                 <div class="bg-white rounded-xl shadow-sm p-6">
                     <div id="videoUploadWrapper" class="file-upload-wrapper rounded-lg p-8 text-center cursor-pointer hover:bg-slate-50 transition-colors">
                         <i data-lucide="video" class="w-16 h-16 mx-auto text-slate-400"></i>
                         <p class="mt-4 font-semibold text-slate-700">분석할 영상을 여기에 드래그하거나 클릭하세요</p>
-                        <p class="text-sm text-slate-500">보행, 점프, 자세 등 행동을 확인할 영상을 업로드하세요.</p>
+                        <p class="text-sm text-slate-500">영상의 모든 프레임을 AI가 자동으로 읽고 분석합니다.</p>
                         <input type="file" id="videoUpload" class="hidden" accept="video/*">
                     </div>
                     <div id="videoPreviewContainer" class="mt-6 text-center hidden">
                         <video id="videoPreview" controls class="max-w-full max-h-96 mx-auto rounded-lg shadow-md"></video>
-                        <p class="text-sm text-slate-500 mt-2">영상을 재생하여 분석하고 싶은 장면에서 멈춘 후 버튼을 누르세요.</p>
-                        <button id="analyzeVideoBtn" class="mt-4 bg-indigo-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-indigo-700 transition-colors flex items-center mx-auto">
-                            <span class="mr-2">✨</span> 현재 장면 분석하기
+                        <div id="videoInfoBar" class="mt-3 text-sm text-slate-500"></div>
+                        <div id="frameExtractionProgress" class="mt-3 hidden">
+                            <div class="w-full bg-slate-200 rounded-full h-3">
+                                <div id="frameProgressBar" class="bg-indigo-600 h-3 rounded-full transition-all" style="width: 0%"></div>
+                            </div>
+                            <p id="frameProgressText" class="text-sm text-slate-500 mt-1">프레임 추출 중...</p>
+                        </div>
+                        <button id="analyzeVideoBtn" class="mt-4 bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-indigo-700 transition-colors flex items-center mx-auto">
+                            <span class="mr-2">✨</span> 전체 영상 AI 분석하기
                         </button>
                     </div>
                 </div>
                 <div id="videoAnalysisResultContainer" class="mt-6 hidden">
-                    <h3 class="text-2xl font-bold text-slate-800 mb-4">AI 영상 프레임 분석 결과</h3>
+                    <h3 class="text-2xl font-bold text-slate-800 mb-4">AI 영상 분석 결과</h3>
                     <div id="videoAnalysisResult" class="bg-white rounded-xl shadow-sm p-6 prose max-w-none"></div>
                 </div>
                 <div class="mt-6 bg-white rounded-xl shadow-sm p-6">
@@ -429,7 +435,7 @@
 
             // Page subtitles
             document.getElementById('health-check-subtitle').textContent = `${p.name}의 피부, 눈, 귀 등의 사진을 올려 AI에게 예비 분석을 요청하세요.`;
-            document.getElementById('video-analysis-subtitle').textContent = `${p.name}의 행동 영상(보행, 자세 등)을 올려 AI에게 분석을 요청하세요.`;
+            document.getElementById('video-analysis-subtitle').textContent = `${p.name}의 행동 영상을 올리면 AI가 전체 프레임을 분석하여 현재 상황을 파악합니다.`;
             document.getElementById('ai-assistant-subtitle').textContent = `${p.name}의 일상 관리, 훈련, 응급 상황 대처까지 AI가 도와드립니다.`;
             document.getElementById('play-recommend-title').textContent = `${p.name} 맞춤 AI 놀이 추천`;
             document.getElementById('play-recommend-desc').textContent = `${p.name}의 나이와 품종을 고려하여 AI가 맞춤형 놀이와 환경 풍부화 아이디어를 제안합니다.`;
@@ -456,12 +462,15 @@
             logs.forEach(log => {
                 const div = document.createElement('div');
                 div.className = 'bg-slate-50 p-4 rounded-lg flex items-start space-x-4';
+                const frameInfo = log.frameCount ? `${log.frameCount}프레임 분석` : '';
+                const durationInfo = log.duration ? ` | ${log.duration}초 영상` : '';
                 div.innerHTML = `
-                    <div class="w-16 h-16 bg-slate-200 rounded-lg flex-shrink-0 flex items-center justify-center">
-                        <i data-lucide="video" class="w-8 h-8 text-slate-400"></i>
+                    <div class="w-16 h-16 bg-indigo-100 rounded-lg flex-shrink-0 flex items-center justify-center">
+                        <i data-lucide="scan-eye" class="w-8 h-8 text-indigo-500"></i>
                     </div>
                     <div class="flex-grow">
                         <p class="font-semibold text-sm text-slate-800">${log.date || '날짜 없음'}</p>
+                        <p class="text-xs text-indigo-600 mt-0.5">${frameInfo}${durationInfo}</p>
                         <p class="text-sm text-slate-600 mt-1">${log.summary || ''}</p>
                         <button class="text-sm text-indigo-600 hover:underline mt-1 video-detail-btn">전체 분석 보기</button>
                     </div>
@@ -518,7 +527,7 @@
                 } catch (e) { resultDiv.innerHTML = `<p class="text-red-500">분석에 실패했습니다: ${e.message}</p>`; }
             });
 
-            // Video Upload & Analysis
+            // Video Upload & Analysis (Full Frame Extraction)
             const videoUploadWrapper = document.getElementById('videoUploadWrapper');
             const videoUpload = document.getElementById('videoUpload');
             const videoPreview = document.getElementById('videoPreview');
@@ -536,38 +545,149 @@
                 const url = URL.createObjectURL(file);
                 videoPreview.src = url;
                 videoPreviewContainer.classList.remove('hidden');
+                videoPreview.addEventListener('loadedmetadata', () => {
+                    const duration = videoPreview.duration;
+                    const infoBar = document.getElementById('videoInfoBar');
+                    if (infoBar) infoBar.textContent = `영상 길이: ${duration.toFixed(1)}초 | 해상도: ${videoPreview.videoWidth}x${videoPreview.videoHeight}`;
+                }, { once: true });
+            }
+
+            // Extract frames from video at regular intervals
+            function extractFrames(video, maxFrames = 20) {
+                return new Promise((resolve) => {
+                    const duration = video.duration;
+                    const frameCount = Math.min(maxFrames, Math.max(5, Math.floor(duration)));
+                    const interval = duration / frameCount;
+                    const frames = [];
+                    let currentFrame = 0;
+
+                    const canvas = document.createElement('canvas');
+                    const maxDim = 512;
+                    const scale = Math.min(1, maxDim / Math.max(video.videoWidth, video.videoHeight));
+                    canvas.width = Math.round(video.videoWidth * scale);
+                    canvas.height = Math.round(video.videoHeight * scale);
+                    const ctx = canvas.getContext('2d');
+
+                    const progressBar = document.getElementById('frameProgressBar');
+                    const progressText = document.getElementById('frameProgressText');
+                    document.getElementById('frameExtractionProgress').classList.remove('hidden');
+
+                    function captureFrame() {
+                        if (currentFrame >= frameCount) {
+                            document.getElementById('frameExtractionProgress').classList.add('hidden');
+                            resolve(frames);
+                            return;
+                        }
+                        const time = currentFrame * interval;
+                        video.currentTime = Math.min(time, duration - 0.1);
+                    }
+
+                    video.addEventListener('seeked', function onSeeked() {
+                        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                        const base64 = canvas.toDataURL('image/jpeg', 0.6).split(',')[1];
+                        frames.push({ time: video.currentTime, data: base64 });
+                        currentFrame++;
+
+                        const pct = Math.round((currentFrame / frameCount) * 100);
+                        if (progressBar) progressBar.style.width = pct + '%';
+                        if (progressText) progressText.textContent = `프레임 추출 중... (${currentFrame}/${frameCount})`;
+
+                        if (currentFrame >= frameCount) {
+                            video.removeEventListener('seeked', onSeeked);
+                            document.getElementById('frameExtractionProgress').classList.add('hidden');
+                            resolve(frames);
+                        } else {
+                            const nextTime = currentFrame * interval;
+                            video.currentTime = Math.min(nextTime, duration - 0.1);
+                        }
+                    });
+
+                    captureFrame();
+                });
+            }
+
+            // Send multiple frames to Gemini Vision API
+            async function callGeminiVisionMultiFrame(prompt, frames) {
+                const parts = [{ text: prompt }];
+                frames.forEach((frame, i) => {
+                    parts.push({ text: `[프레임 ${i + 1} - ${frame.time.toFixed(1)}초]` });
+                    parts.push({ inline_data: { mime_type: "image/jpeg", data: frame.data } });
+                });
+
+                const response = await fetch("/api/gemini-vision", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ contents: [{ parts }] }),
+                });
+                if (!response.ok) {
+                    const errData = await response.json().catch(() => ({}));
+                    throw new Error(errData.error || "Vision API 요청에 실패했습니다.");
+                }
+                const data = await response.json();
+                if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+                    return data.candidates[0].content.parts[0].text;
+                }
+                throw new Error("AI 응답을 처리할 수 없습니다.");
             }
 
             const analyzeVideoBtn = document.getElementById('analyzeVideoBtn');
             if (analyzeVideoBtn) analyzeVideoBtn.addEventListener('click', async () => {
+                const video = document.getElementById('videoPreview');
+                if (!video.src || video.readyState < 2) {
+                    alert('영상을 먼저 업로드해주세요.');
+                    return;
+                }
+
                 const resultContainer = document.getElementById('videoAnalysisResultContainer');
                 const resultDiv = document.getElementById('videoAnalysisResult');
                 resultContainer.classList.remove('hidden');
-                resultDiv.innerHTML = '<div class="flex justify-center"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div></div>';
+                resultDiv.innerHTML = '<div class="flex justify-center items-center gap-3"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div><p class="text-slate-500">프레임을 추출하고 있습니다...</p></div>';
 
-                const video = document.getElementById('videoPreview');
-                const canvas = document.createElement('canvas');
-                canvas.width = video.videoWidth;
-                canvas.height = video.videoHeight;
-                canvas.getContext('2d').drawImage(video, 0, 0);
-                const frameBase64 = canvas.toDataURL('image/jpeg').split(',')[1];
+                analyzeVideoBtn.disabled = true;
+                analyzeVideoBtn.innerHTML = '<div class="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white mr-2"></div> 분석 중...';
 
                 try {
-                    const prompt = `당신은 수의사 AI 보조입니다. ${getPetContext()} 이 영상 프레임을 분석해주세요. 반려동물의 자세, 보행 패턴, 행동 등을 관찰하고, 발견되는 이상 소견이나 주의사항을 설명해주세요. 한국어로 대답해주세요.`;
-                    const result = await callGeminiVisionAPI(prompt, frameBase64);
+                    const frames = await extractFrames(video, 20);
+                    resultDiv.innerHTML = '<div class="flex justify-center items-center gap-3"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div><p class="text-slate-500">AI가 ' + frames.length + '개 프레임을 분석하고 있습니다...</p></div>';
+
+                    const prompt = `당신은 전문 수의사 AI 보조입니다. ${getPetContext()}
+
+이 영상에서 추출된 ${frames.length}개의 프레임을 순서대로 모두 분석해주세요.
+
+다음 항목들을 상세히 분석해주세요:
+1. **현재 상황 파악**: 고양이(반려동물)가 지금 무엇을 하고 있는지 (휴식, 놀이, 이동, 식사, 그루밍 등)
+2. **행동 패턴 분석**: 영상 전체에 걸쳐 나타나는 행동 흐름과 패턴
+3. **감정/심리 상태**: 자세, 꼬리, 귀, 동공 등을 통해 파악한 감정 상태 (편안함, 긴장, 호기심, 불안 등)
+4. **보행/자세 분석**: 걷는 패턴, 자세 이상 여부, 절뚝거림 등
+5. **건강 이상 소견**: 영상에서 관찰되는 건강 관련 주의사항 (구토, 과도한 핥기, 비정상적 호흡 등)
+6. **환경 관찰**: 주변 환경이 반려동물에게 안전한지 여부
+7. **종합 평가 및 조언**: 전체적인 상태 평가와 보호자에게 드리는 조언
+
+프레임은 시간순으로 제공되므로, 시간 흐름에 따른 변화도 분석해주세요.
+이것은 참고용 예비 분석이며 전문 수의사 진료를 대체할 수 없음을 명시해주세요.
+한국어로 대답해주세요.`;
+
+                    const result = await callGeminiVisionMultiFrame(prompt, frames);
                     resultDiv.innerHTML = simpleMarkdownToHtml(result);
 
                     // Save to session history
                     const now = new Date();
-                    const summary = result.substring(0, 50) + '...';
+                    const summary = result.substring(0, 80) + '...';
                     videoAnalysisLogs.unshift({
                         id: Date.now().toString(),
-                        date: now.toLocaleDateString('ko-KR'),
+                        date: now.toLocaleDateString('ko-KR') + ' ' + now.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' }),
+                        frameCount: frames.length,
+                        duration: video.duration.toFixed(1),
                         summary: summary,
                         result: result
                     });
                     updateVideoAnalysisHistory(videoAnalysisLogs);
-                } catch (e) { resultDiv.innerHTML = `<p class="text-red-500">영상 분석에 실패했습니다: ${e.message}</p>`; }
+                } catch (e) {
+                    resultDiv.innerHTML = `<p class="text-red-500">영상 분석에 실패했습니다: ${e.message}</p>`;
+                } finally {
+                    analyzeVideoBtn.disabled = false;
+                    analyzeVideoBtn.innerHTML = '<span class="mr-2">✨</span> 전체 영상 AI 분석하기';
+                }
             });
 
             // Food Safety Check
