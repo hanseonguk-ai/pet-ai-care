@@ -1,18 +1,11 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<!-- Firebase SDK (Software Development Kit) -->
-<script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pet AI Care</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
@@ -36,63 +29,13 @@
 </head>
 <body>
 
-    <!-- Authentication Container -->
-    <div id="auth-container" class="w-full h-screen flex items-center justify-center bg-slate-100">
-        <div class="w-full max-w-md">
-            <!-- Login Form -->
-            <div id="login-page">
-                <div class="bg-white p-8 rounded-xl shadow-md">
-                    <h2 class="text-3xl font-bold text-center text-indigo-600 mb-2">Pet AI Care</h2>
-                    <p class="text-center text-slate-500 mb-8">로그인하여 내 반려동물 케어하기</p>
-                    <form id="login-form">
-                        <div class="mb-4">
-                            <label for="login-email" class="block text-slate-700 font-semibold mb-2">이메일</label>
-                            <input type="email" id="login-email" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required value="test@example.com">
-                        </div>
-                        <div class="mb-6">
-                            <label for="login-password" class="block text-slate-700 font-semibold mb-2">비밀번호</label>
-                            <input type="password" id="login-password" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required value="password123">
-                        </div>
-                        <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-3 rounded-lg hover:bg-indigo-700 transition-colors">로그인</button>
-                    </form>
-                    <p id="login-error" class="text-center text-red-500 mt-4 text-sm"></p>
-                    <p class="text-center text-slate-500 mt-6">
-                        계정이 없으신가요? <a href="#" id="show-signup" class="font-semibold text-indigo-600 hover:underline">회원가입</a>
-                    </p>
-                </div>
-            </div>
-            <!-- Sign Up Form -->
-            <div id="signup-page" class="hidden">
-                 <div class="bg-white p-8 rounded-xl shadow-md">
-                    <h2 class="text-3xl font-bold text-center text-indigo-600 mb-2">Pet AI Care</h2>
-                    <p class="text-center text-slate-500 mb-8">새로운 계정 만들기</p>
-                    <form id="signup-form">
-                        <div class="mb-4">
-                            <label for="signup-email" class="block text-slate-700 font-semibold mb-2">이메일</label>
-                            <input type="email" id="signup-email" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
-                        </div>
-                        <div class="mb-6">
-                            <label for="signup-password" class="block text-slate-700 font-semibold mb-2">비밀번호</label>
-                            <input type="password" id="signup-password" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
-                        </div>
-                        <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-3 rounded-lg hover:bg-indigo-700 transition-colors">회원가입</button>
-                    </form>
-                    <p id="signup-error" class="text-center text-red-500 mt-4 text-sm"></p>
-                    <p class="text-center text-slate-500 mt-6">
-                        이미 계정이 있으신가요? <a href="#" id="show-login" class="font-semibold text-indigo-600 hover:underline">로그인</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Pet Registration Container -->
-    <div id="pet-registration-container" class="w-full h-screen flex items-center justify-center bg-slate-100 hidden">
+    <!-- Pet Info Container -->
+    <div id="pet-info-container" class="w-full h-screen flex items-center justify-center bg-slate-100">
         <div class="w-full max-w-md">
             <div class="bg-white p-8 rounded-xl shadow-md">
-                <h2 class="text-3xl font-bold text-center text-indigo-600 mb-2">반려동물 등록</h2>
-                <p class="text-center text-slate-500 mb-8">AI 케어를 시작할 반려동물을 등록해주세요.</p>
-                <form id="pet-registration-form">
+                <h2 class="text-3xl font-bold text-center text-indigo-600 mb-2">Pet AI Care</h2>
+                <p class="text-center text-slate-500 mb-8">반려동물 정보를 입력해주세요.</p>
+                <form id="pet-info-form">
                     <div class="mb-4">
                         <label for="pet-name" class="block text-slate-700 font-semibold mb-2">이름</label>
                         <input type="text" id="pet-name" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
@@ -106,16 +49,14 @@
                         <input type="number" id="pet-age" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
                     </div>
                     <div class="mb-6">
-                        <label for="pet-personality" class="block text-slate-700 font-semibold mb-2">성격 (간단히)</label>
-                        <input type="text" id="pet-personality" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="예: 활발하고 호기심 많음" required>
+                        <label for="pet-weight" class="block text-slate-700 font-semibold mb-2">몸무게 (kg)</label>
+                        <input type="number" step="0.01" id="pet-weight" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
                     </div>
-                    <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-3 rounded-lg hover:bg-indigo-700 transition-colors">등록하기</button>
+                    <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-3 rounded-lg hover:bg-indigo-700 transition-colors">시작하기</button>
                 </form>
-                 <p id="pet-reg-error" class="text-center text-red-500 mt-4 text-sm"></p>
             </div>
         </div>
     </div>
-
 
     <!-- Main App Container (Initially Hidden) -->
     <div id="app-container" class="h-screen flex-grow flex hidden">
@@ -124,92 +65,36 @@
             <div class="h-20 flex items-center justify-center border-b"><h1 class="text-2xl font-bold text-indigo-600 flex items-center"><i data-lucide="cat" class="mr-2"></i> Pet AI Care</h1></div>
             <nav class="flex-grow p-4">
                 <ul class="space-y-2">
-                    <li><a href="#" class="nav-item flex items-center py-3 px-4 rounded-lg text-slate-700 hover:bg-slate-200 transition-colors active" data-page="dashboard"><i data-lucide="layout-dashboard" class="mr-3"></i>대시보드</a></li>
-                    <li><a href="#" class="nav-item flex items-center py-3 px-4 rounded-lg text-slate-700 hover:bg-slate-200 transition-colors" data-page="health-log"><i data-lucide="clipboard-list" class="mr-3"></i>건강 기록</a></li>
-                    <li><a href="#" class="nav-item flex items-center py-3 px-4 rounded-lg text-slate-700 hover:bg-slate-200 transition-colors" data-page="alerts"><i data-lucide="bell-ring" class="mr-3"></i>건강 알림</a></li>
-                    <li><a href="#" class="nav-item flex items-center py-3 px-4 rounded-lg text-slate-700 hover:bg-slate-200 transition-colors" data-page="health-check"><i data-lucide="scan-eye" class="mr-3"></i>AI 건강 체크</a></li>
+                    <li><a href="#" class="nav-item flex items-center py-3 px-4 rounded-lg text-slate-700 hover:bg-slate-200 transition-colors active" data-page="health-check"><i data-lucide="scan-eye" class="mr-3"></i>AI 건강 체크</a></li>
                     <li><a href="#" class="nav-item flex items-center py-3 px-4 rounded-lg text-slate-700 hover:bg-slate-200 transition-colors" data-page="video-analysis"><i data-lucide="video" class="mr-3"></i>영상 분석</a></li>
                     <li><a href="#" class="nav-item flex items-center py-3 px-4 rounded-lg text-slate-700 hover:bg-slate-200 transition-colors" data-page="ai-assistant"><i data-lucide="cpu" class="mr-3"></i>AI 도우미</a></li>
                     <li><a href="#" class="nav-item flex items-center py-3 px-4 rounded-lg text-slate-700 hover:bg-slate-200 transition-colors" data-page="chat"><i data-lucide="message-circle" class="mr-3"></i>AI 챗봇</a></li>
                     <li><a href="#" class="nav-item flex items-center py-3 px-4 rounded-lg text-slate-700 hover:bg-slate-200 transition-colors" data-page="vets"><i data-lucide="stethoscope" class="mr-3"></i>병원 찾기</a></li>
-                    <li><a href="#" class="nav-item flex items-center py-3 px-4 rounded-lg text-slate-700 hover:bg-slate-200 transition-colors" data-page="devices"><i data-lucide="camera" class="mr-3"></i>연동 기기</a></li>
                 </ul>
             </nav>
-            <div class="p-4 border-t"><div class="flex items-center"><img src="https://placehold.co/40x40/e0e7ff/4338ca?text=집사" class="rounded-full" alt="User Avatar"><div class="ml-3"><p id="user-email-display" class="font-semibold text-sm truncate">김집사 님</p><a href="#" id="logout-button" class="text-sm text-slate-500 hover:text-indigo-600">로그아웃</a></div></div></div>
+            <div class="p-4 border-t">
+                <div class="flex items-center">
+                    <img id="pet-sidebar-img" src="https://placehold.co/40x40/e0e7ff/4338ca?text=Pet" class="rounded-full" alt="Pet Avatar">
+                    <div class="ml-3">
+                        <p id="pet-sidebar-name" class="font-semibold text-sm truncate">반려동물</p>
+                        <a href="#" id="edit-pet-info-btn" class="text-sm text-slate-500 hover:text-indigo-600">정보 수정</a>
+                    </div>
+                </div>
+            </div>
         </aside>
 
         <!-- Main Content -->
         <main class="flex-1 bg-slate-100 p-8 overflow-y-auto">
-            <!-- Dashboard Page -->
-            <div id="dashboard" class="page active">
-                <header class="flex justify-between items-center mb-8"><h2 id="dashboard-title" class="text-3xl font-bold text-slate-800">...의 건강 대시보드</h2><p class="text-slate-500" id="today-date">...</p></header>
-                <div id="dailyTipContainer" class="bg-indigo-100 border-l-4 border-indigo-500 text-indigo-700 p-4 rounded-lg shadow-sm mb-6"><div class="flex items-center"><i data-lucide="sparkles" class="w-6 h-6 mr-3 text-indigo-500"></i><div><h4 class="font-bold">오늘의 맞춤 건강 팁</h4><p id="dailyTipContent">AI가 오늘의 팁을 생성 중입니다...</p></div></div></div>
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-                    <div class="lg:col-span-1 bg-white p-6 rounded-xl shadow-sm flex flex-col items-center text-center"><img id="pet-profile-img" src="https://placehold.co/100x100/f3e8ff/8b5cf6?text=Pet" class="rounded-full mb-4 border-4 border-purple-200" alt="Cat Photo"><h3 id="pet-profile-name" class="text-2xl font-bold">...</h3><p id="pet-profile-details" class="text-slate-500">..., ...세</p><div class="mt-4 bg-green-100 text-green-800 font-semibold px-4 py-2 rounded-full text-sm flex items-center"><i data-lucide="shield-check" class="w-4 h-4 mr-2"></i>현재 건강 상태: 좋음</div><button id="mealPlanBtn" class="mt-4 w-full bg-green-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center"><span class="mr-2">✨</span> 맞춤 식단 추천받기</button></div>
-                    <div id="alert-card" class="lg:col-span-2 bg-slate-200 border-l-4 border-slate-500 text-slate-700 p-6 rounded-xl shadow-sm flex items-center"><i data-lucide="info" class="w-12 h-12 mr-6 text-slate-500"></i><div><h4 class="font-bold text-xl">데이터 기록 필요</h4><p>'건강 기록' 탭에서 오늘의 데이터를 입력하여 AI 분석을 시작하세요.</p></div></div>
-                </div>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-                    <div class="bg-white p-5 rounded-xl shadow-sm"><h4 class="text-slate-500 font-medium mb-2">체중</h4><p id="metric-weight" class="text-3xl font-bold">- <span class="text-lg text-slate-400">kg</span></p><p id="metric-weight-change" class="text-sm text-slate-500 flex items-center mt-1"></p></div>
-                    <div class="bg-white p-5 rounded-xl shadow-sm"><h4 class="text-slate-500 font-medium mb-2">음수량</h4><p id="metric-water" class="text-3xl font-bold">- <span class="text-lg text-slate-400">ml</span></p><p id="metric-water-change" class="text-sm text-slate-500 flex items-center mt-1"></p></div>
-                    <div class="bg-white p-5 rounded-xl shadow-sm"><h4 class="text-slate-500 font-medium mb-2">화장실 방문</h4><p id="metric-visits" class="text-3xl font-bold">- <span class="text-lg text-slate-400">회</span></p><p id="metric-visits-change" class="text-sm text-slate-500 flex items-center mt-1"></p></div>
-                    <div class="bg-white p-5 rounded-xl shadow-sm"><h4 class="text-slate-500 font-medium mb-2">평균 체류 시간</h4><p id="metric-duration" class="text-3xl font-bold">- <span class="text-lg text-slate-400">초</span></p><p id="metric-duration-change" class="text-sm text-slate-500 flex items-center mt-1"></p></div>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-sm">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-xl font-bold">주간 체중 변화</h3>
-                        <button id="longTermReportBtn" class="bg-purple-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-purple-700 transition-colors flex items-center"><span class="mr-2">✨</span> AI 장기 건강 리포트</button>
-                    </div>
-                    <canvas id="weightChart"></canvas>
-                </div>
-            </div>
-
-            <!-- Health Log Page -->
-            <div id="health-log" class="page">
-                <header class="mb-6"><h2 class="text-3xl font-bold text-slate-800">건강 기록</h2><p class="text-slate-500">매일의 건강 상태를 기록하고 추세를 확인하세요.</p></header>
-                <div class="bg-white rounded-xl shadow-sm p-6">
-                    <h3 class="text-xl font-bold text-slate-800 mb-4">오늘의 기록</h3>
-                    <form id="health-log-form" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
-                        <div><label for="log-date" class="block text-sm font-medium text-slate-700">날짜</label><input type="date" id="log-date" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"></div>
-                        <div><label for="log-weight" class="block text-sm font-medium text-slate-700">체중 (kg)</label><input type="number" step="0.01" id="log-weight" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder="5.1"></div>
-                        <div><label for="log-water" class="block text-sm font-medium text-slate-700">음수량 (ml)</label><input type="number" id="log-water" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder="230"></div>
-                        <div><label for="log-visits" class="block text-sm font-medium text-slate-700">화장실 방문 (회)</label><input type="number" id="log-visits" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder="6"></div>
-                        <button type="submit" class="w-full bg-indigo-600 text-white font-semibold py-2 px-3 rounded-lg hover:bg-indigo-700 transition-colors flex items-center justify-center"><i data-lucide="save" class="w-5 h-5 mr-2"></i>저장</button>
-                    </form>
-                    <p id="log-success-msg" class="text-green-600 mt-2 text-sm text-center"></p>
-                </div>
-                <div class="mt-6 bg-white rounded-xl shadow-sm p-6">
-                    <h3 class="text-xl font-bold text-slate-800 mb-4">과거 기록</h3>
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-slate-200">
-                            <thead class="bg-slate-50"><tr><th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">날짜</th><th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">체중</th><th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">음수량</th><th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">화장실 방문</th></tr></thead>
-                            <tbody id="health-log-history" class="bg-white divide-y divide-slate-200"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Alerts Page -->
-            <div id="alerts" class="page">
-                <h2 class="text-3xl font-bold text-slate-800 mb-8">건강 알림 센터</h2>
-                <div class="space-y-4">
-                    <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-red-500">
-                        <div class="flex justify-between items-start"><div><span class="text-sm font-semibold text-red-600 bg-red-100 px-3 py-1 rounded-full">높은 위험</span><h3 class="text-xl font-bold mt-2">화장실 체류 시간 급증 및 잦은 방문</h3><p class="text-slate-500 text-sm">8월 21일 22:00 감지</p></div><p class="text-sm text-slate-600">18시간 전</p></div>
-                        <p class="mt-4 text-slate-700">AI 분석 결과, 나비가 화장실에 머무는 평균 시간이 45초에서 95초로 급증했으며, 방문 횟수 또한 평소보다 50% 이상 증가했습니다. 이는 방광염, 요로 결석 등 비뇨기계 질환의 초기 신호일 수 있습니다. 빠른 시일 내에 수의사와 상담하는 것을 권장합니다.</p>
-                        <div class="mt-4 flex flex-wrap gap-2"><button class="bg-indigo-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-indigo-700 transition-colors" onclick="showPage('vets')">주변 병원 찾기</button><button id="vetSummaryBtn" class="bg-green-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-green-700 transition-colors flex items-center"><span class="mr-2">✨</span> AI 상담 요약 생성</button><button id="alertAnalysisBtn" class="bg-amber-500 text-white font-semibold py-2 px-5 rounded-lg hover:bg-amber-600 transition-colors flex items-center"><span class="mr-2">✨</span> AI 심층 분석 및 대처 방안</button></div>
-                    </div>
-                </div>
-            </div>
-
             <!-- AI Health Check Page -->
-            <div id="health-check" class="page">
-                <header class="mb-6"><h2 class="text-3xl font-bold text-slate-800">AI 건강 체크</h2><p id="health-check-subtitle" class="text-slate-500">...의 피부, 눈, 귀 등의 사진을 올려 AI에게 예비 분석을 요청하세요.</p></header>
+            <div id="health-check" class="page active">
+                <header class="mb-6"><h2 class="text-3xl font-bold text-slate-800">AI 건강 체크</h2><p id="health-check-subtitle" class="text-slate-500">반려동물의 피부, 눈, 귀 등의 사진을 올려 AI에게 예비 분석을 요청하세요.</p></header>
                 <div class="bg-white rounded-xl shadow-sm p-6"><div id="fileUploadWrapper" class="file-upload-wrapper rounded-lg p-8 text-center cursor-pointer hover:bg-slate-50 transition-colors"><i data-lucide="upload-cloud" class="w-16 h-16 mx-auto text-slate-400"></i><p class="mt-4 font-semibold text-slate-700">분석할 사진을 여기에 드래그하거나 클릭하세요</p><p class="text-sm text-slate-500">피부, 눈, 귀 등 상태를 확인할 부위를 선명하게 찍어주세요.</p><input type="file" id="imageUpload" class="hidden" accept="image/*"></div><div id="imagePreviewContainer" class="mt-6 text-center hidden"><img id="imagePreview" src="" alt="Image Preview" class="max-w-xs max-h-64 mx-auto rounded-lg shadow-md"><button id="analyzeImageBtn" class="mt-4 bg-indigo-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-indigo-700 transition-colors flex items-center mx-auto"><span class="mr-2">✨</span> AI 분석 시작하기</button></div></div>
                 <div id="analysisResultContainer" class="mt-6 hidden"><h3 class="text-2xl font-bold text-slate-800 mb-4">AI 분석 결과</h3><div id="analysisResult" class="bg-white rounded-xl shadow-sm p-6 prose max-w-none"></div></div>
             </div>
 
             <!-- AI Video Analysis Page -->
             <div id="video-analysis" class="page">
-                <header class="mb-6"><h2 class="text-3xl font-bold text-slate-800">AI 영상 분석 (프레임)</h2><p id="video-analysis-subtitle" class="text-slate-500">...의 행동 영상(보행, 자세 등)을 올려 AI에게 분석을 요청하세요.</p></header>
+                <header class="mb-6"><h2 class="text-3xl font-bold text-slate-800">AI 영상 분석 (프레임)</h2><p id="video-analysis-subtitle" class="text-slate-500">반려동물의 행동 영상(보행, 자세 등)을 올려 AI에게 분석을 요청하세요.</p></header>
                 <div class="bg-white rounded-xl shadow-sm p-6">
                     <div id="videoUploadWrapper" class="file-upload-wrapper rounded-lg p-8 text-center cursor-pointer hover:bg-slate-50 transition-colors">
                         <i data-lucide="video" class="w-16 h-16 mx-auto text-slate-400"></i>
@@ -231,13 +116,13 @@
                 </div>
                 <div class="mt-6 bg-white rounded-xl shadow-sm p-6">
                     <h3 class="text-xl font-bold text-slate-800 mb-4">영상 분석 기록</h3>
-                    <div id="video-analysis-history" class="space-y-4 max-h-96 overflow-y-auto"></div>
+                    <div id="video-analysis-history" class="space-y-4 max-h-96 overflow-y-auto"><p class="text-slate-500 text-center">아직 분석 기록이 없습니다.</p></div>
                 </div>
             </div>
 
             <!-- AI Assistant Page -->
             <div id="ai-assistant" class="page">
-                <header class="mb-6"><h2 class="text-3xl font-bold text-slate-800">AI 도우미</h2><p id="ai-assistant-subtitle" class="text-slate-500">...의 일상 관리, 훈련, 응급 상황 대처까지 AI가 도와드립니다.</p></header>
+                <header class="mb-6"><h2 class="text-3xl font-bold text-slate-800">AI 도우미</h2><p id="ai-assistant-subtitle" class="text-slate-500">반려동물의 일상 관리, 훈련, 응급 상황 대처까지 AI가 도와드립니다.</p></header>
                 <div class="border-b border-gray-200 mb-4">
                     <nav class="-mb-px flex space-x-4 overflow-x-auto" aria-label="Tabs">
                         <button class="tab-btn whitespace-nowrap py-3 px-4 border-b-2 font-medium text-sm text-slate-500 hover:text-indigo-600 active" data-tab="lifestyle">일상 관리</button>
@@ -259,22 +144,22 @@
                             <div id="foodSafetyResultContainer" class="mt-4 hidden"><div id="foodSafetyResult" class="prose max-w-none text-sm p-3 bg-slate-50 rounded-lg"></div></div>
                         </div>
                         <div class="bg-white rounded-xl shadow-sm p-6">
-                            <h3 class="text-xl font-bold text-slate-800 mb-4" id="play-recommend-title">... 맞춤 AI 놀이 추천</h3>
-                            <p class="text-slate-600 mb-4" id="play-recommend-desc">...의 나이와 성격을 고려하여 AI가 맞춤형 놀이와 환경 풍부화 아이디어를 제안합니다.</p>
+                            <h3 class="text-xl font-bold text-slate-800 mb-4" id="play-recommend-title">맞춤 AI 놀이 추천</h3>
+                            <p class="text-slate-600 mb-4" id="play-recommend-desc">반려동물의 나이와 품종을 고려하여 AI가 맞춤형 놀이와 환경 풍부화 아이디어를 제안합니다.</p>
                             <button id="recommendPlayBtn" class="w-full bg-indigo-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-indigo-700 transition-colors flex items-center justify-center"><span class="mr-2">✨</span> 놀이 추천받기</button>
                             <div id="playRecommendationResultContainer" class="mt-4 hidden"><div id="playRecommendationResult" class="prose max-w-none text-sm p-3 bg-slate-50 rounded-lg"></div></div>
                         </div>
                     </div>
-                     <div class="bg-white rounded-xl shadow-sm p-6 mt-6">
+                    <div class="bg-white rounded-xl shadow-sm p-6 mt-6">
                         <h3 class="text-xl font-bold text-slate-800 mb-4">펫시터/병원용 인수인계 노트</h3>
-                        <p class="text-slate-600 mb-4" id="handover-desc">...를 맡길 때 필요한 인수인계 노트를 AI가 자동으로 생성해 드립니다.</p>
+                        <p class="text-slate-600 mb-4" id="handover-desc">반려동물을 맡길 때 필요한 인수인계 노트를 AI가 자동으로 생성해 드립니다.</p>
                         <button id="generateHandoverNoteBtn" class="bg-indigo-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-indigo-700 transition-colors flex items-center"><span class="mr-2">✨</span> 인수인계 노트 생성하기</button>
-                        <div id="handoverNoteResultContainer" class="mt-4 hidden"><h4 id="handover-title" class="text-lg font-bold text-slate-800 mb-2 flex justify-between items-center">... 인수인계 노트 <button id="copyHandoverNoteBtn" class="text-sm bg-slate-200 text-slate-700 font-semibold py-1 px-3 rounded-lg hover:bg-slate-300">복사하기</button></h4><div id="handoverNoteResult" class="prose max-w-none text-sm p-3 bg-slate-50 rounded-lg"></div></div>
+                        <div id="handoverNoteResultContainer" class="mt-4 hidden"><h4 id="handover-title" class="text-lg font-bold text-slate-800 mb-2 flex justify-between items-center">인수인계 노트 <button id="copyHandoverNoteBtn" class="text-sm bg-slate-200 text-slate-700 font-semibold py-1 px-3 rounded-lg hover:bg-slate-300">복사하기</button></h4><div id="handoverNoteResult" class="prose max-w-none text-sm p-3 bg-slate-50 rounded-lg"></div></div>
                     </div>
                 </div>
 
                 <div class="tab-content" data-tab-content="behavior">
-                    <div class="bg-white rounded-xl shadow-sm p-6"><label for="behaviorInput" class="block font-semibold text-slate-700 mb-2" id="behavior-label">분석하고 싶은 ...의 행동을 자세히 설명해주세요:</label><textarea id="behaviorInput" rows="4" class="w-full border-slate-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500" placeholder="예: 최근 밤에 잠을 안 자고 계속 울어요. 이유가 뭘까요?"></textarea><button id="analyzeBehaviorBtn" class="mt-4 bg-indigo-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-indigo-700 transition-colors flex items-center"><span class="mr-2">✨</span> AI 분석 요청하기</button></div>
+                    <div class="bg-white rounded-xl shadow-sm p-6"><label for="behaviorInput" class="block font-semibold text-slate-700 mb-2" id="behavior-label">분석하고 싶은 반려동물의 행동을 자세히 설명해주세요:</label><textarea id="behaviorInput" rows="4" class="w-full border-slate-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500" placeholder="예: 최근 밤에 잠을 안 자고 계속 울어요. 이유가 뭘까요?"></textarea><button id="analyzeBehaviorBtn" class="mt-4 bg-indigo-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-indigo-700 transition-colors flex items-center"><span class="mr-2">✨</span> AI 분석 요청하기</button></div>
                     <div id="behaviorResultContainer" class="mt-6 hidden"><h3 class="text-2xl font-bold text-slate-800 mb-4">AI 행동 분석 결과</h3><div id="behaviorResult" class="bg-white rounded-xl shadow-sm p-6 prose max-w-none"></div></div>
                 </div>
                 <div class="tab-content" data-tab-content="training">
@@ -285,57 +170,61 @@
                     <div class="bg-white rounded-xl shadow-sm p-6"><label for="emergencySituation" class="block font-semibold text-slate-700 mb-2">어떤 응급 상황에 대한 대처법이 궁금하신가요?</label><select id="emergencySituation" class="w-full border-slate-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"><option>독성 물질 섭취 (예: 초콜릿, 백합)</option><option>기도 막힘 / 호흡 곤란</option><option>심한 외상 / 골절 의심</option><option>경련 또는 발작</option><option>화상</option></select><button id="generateEmergencyProtocolBtn" class="mt-4 bg-indigo-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-indigo-700 transition-colors flex items-center"><span class="mr-2">✨</span> AI 응급 대처 가이드 생성</button></div>
                     <div id="emergencyProtocolResultContainer" class="mt-6 hidden"><h3 class="text-2xl font-bold text-slate-800 mb-4">AI 응급 대처 가이드</h3><div id="emergencyProtocolResult" class="bg-white rounded-xl shadow-sm p-6 prose max-w-none"></div></div>
                 </div>
-                 <div class="tab-content" data-tab-content="cost-estimator">
+                <div class="tab-content" data-tab-content="cost-estimator">
                     <div class="bg-white rounded-xl shadow-sm p-6"><label for="symptomInput" class="block font-semibold text-slate-700 mb-2">증상이나 궁금한 진료 항목을 입력하세요:</label><textarea id="symptomInput" rows="4" class="w-full border-slate-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500" placeholder="예: 고양이 방광염 진료, 스케일링 비용"></textarea><button id="estimateCostBtn" class="mt-4 bg-indigo-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-indigo-700 transition-colors flex items-center"><span class="mr-2">✨</span> AI 진료비 예상하기</button></div>
                     <div id="costEstimateResultContainer" class="mt-6 hidden"><h3 class="text-2xl font-bold text-slate-800 mb-4">AI 진료비 예상 결과</h3><div id="costEstimateResult" class="bg-white rounded-xl shadow-sm p-6 prose max-w-none"></div></div>
                 </div>
                 <div class="tab-content" data-tab-content="breed-info">
-                    <div class="bg-white rounded-xl shadow-sm p-6"><p class="text-slate-700 mb-4" id="breed-info-desc">...의 품종인 '...'에 대한 상세 정보를 AI가 생성해 드립니다.</p><button id="generateBreedInfoBtn" class="bg-indigo-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-indigo-700 transition-colors flex items-center"><span class="mr-2">✨</span> 맞춤 품종 정보 보기</button></div>
-                    <div id="breedInfoResultContainer" class="mt-6 hidden"><h3 id="breed-info-title" class="text-2xl font-bold text-slate-800 mb-4">AI 맞춤 품종 정보: ...</h3><div id="breedInfoResult" class="bg-white rounded-xl shadow-sm p-6 prose max-w-none"></div></div>
+                    <div class="bg-white rounded-xl shadow-sm p-6"><p class="text-slate-700 mb-4" id="breed-info-desc">반려동물의 품종에 대한 상세 정보를 AI가 생성해 드립니다.</p><button id="generateBreedInfoBtn" class="bg-indigo-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-indigo-700 transition-colors flex items-center"><span class="mr-2">✨</span> 맞춤 품종 정보 보기</button></div>
+                    <div id="breedInfoResultContainer" class="mt-6 hidden"><h3 id="breed-info-title" class="text-2xl font-bold text-slate-800 mb-4">AI 맞춤 품종 정보</h3><div id="breedInfoResult" class="bg-white rounded-xl shadow-sm p-6 prose max-w-none"></div></div>
                 </div>
             </div>
 
             <!-- AI Chatbot Page -->
             <div id="chat" class="page flex flex-col h-full">
-                <header class="mb-6"><h2 class="text-3xl font-bold text-slate-800">AI 집사에게 물어보기</h2><p id="chat-subtitle" class="text-slate-500">...의 건강 데이터에 대해 궁금한 점을 AI에게 물어보세요.</p></header>
-                <div id="chatWindow" class="flex-grow bg-white rounded-xl shadow-sm p-4 overflow-y-auto space-y-4"><div class="flex justify-start"><div id="chat-welcome" class="chat-bubble chat-bubble-ai p-3 rounded-lg shadow-sm">안녕하세요! 저는 ...의 건강 데이터를 학습한 AI 집사입니다. 무엇이 궁금하신가요?</div></div></div>
+                <header class="mb-6"><h2 class="text-3xl font-bold text-slate-800">AI 집사에게 물어보기</h2><p id="chat-subtitle" class="text-slate-500">반려동물에 대해 궁금한 점을 AI에게 물어보세요.</p></header>
+                <div id="chatWindow" class="flex-grow bg-white rounded-xl shadow-sm p-4 overflow-y-auto space-y-4"><div class="flex justify-start"><div id="chat-welcome" class="chat-bubble chat-bubble-ai p-3 rounded-lg shadow-sm">안녕하세요! AI 집사입니다. 무엇이 궁금하신가요?</div></div></div>
                 <form id="chatForm" class="mt-4 flex items-center space-x-2"><input id="chatInput" type="text" placeholder="메시지를 입력하세요..." class="flex-grow border-slate-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 p-3" required><button type="submit" class="bg-indigo-600 text-white font-semibold p-3 rounded-lg hover:bg-indigo-700 transition-colors flex items-center"><i data-lucide="send" class="w-6 h-6"></i></button></form>
             </div>
 
             <!-- Vets Page -->
             <div id="vets" class="page">
-                 <h2 class="text-3xl font-bold text-slate-800 mb-8">내 주변 동물병원</h2>
-                <div class="bg-white p-4 rounded-xl shadow-sm mb-6"><div class="flex items-center space-x-2"><input id="vetSearchInput" type="text" placeholder="예: 방광염 잘 보고 야간 진료 가능한 곳" class="flex-grow border-slate-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"><button id="vetSearchBtn" class="bg-indigo-600 text-white font-semibold p-3 rounded-lg hover:bg-indigo-700 transition-colors flex items-center"><span class="mr-2">✨</span> AI 검색</button></div></div>
-                <div id="vetResults" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
-            </div>
+                <h2 class="text-3xl font-bold text-slate-800 mb-8">내 주변 동물병원</h2>
 
-            <!-- Devices Page -->
-            <div id="devices" class="page">
-                <h2 class="text-3xl font-bold text-slate-800 mb-8">연동 기기 관리</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-white p-6 rounded-xl shadow-sm">
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="text-xl font-bold">스마트 리터</h3>
-                            <span class="text-sm font-semibold text-green-600 bg-green-100 px-3 py-1 rounded-full">연동됨</span>
-                        </div>
-                        <p class="text-slate-500">모델명: Petivity Smart-Litter V2</p>
-                        <p class="text-slate-500">데이터: 화장실 방문, 체류 시간, 체중</p>
-                    </div>
-                    <div class="bg-white p-6 rounded-xl shadow-sm">
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="text-xl font-bold">홈 CCTV</h3>
-                            <span class="text-sm font-semibold text-slate-500 bg-slate-100 px-3 py-1 rounded-full">연동 안됨</span>
-                        </div>
-                        <p class="text-slate-500">모델명: Google Nest Cam</p>
-                        <button class="mt-4 bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors">연동하기</button>
+                <!-- GPS Location Section -->
+                <div class="bg-white p-6 rounded-xl shadow-sm mb-6">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                        <button id="getLocationBtn" class="bg-indigo-600 text-white font-semibold py-3 px-5 rounded-lg hover:bg-indigo-700 transition-colors flex items-center flex-shrink-0">
+                            <i data-lucide="map-pin" class="w-5 h-5 mr-2"></i> 내 위치 찾기
+                        </button>
+                        <p id="locationStatus" class="text-slate-500 text-sm">위치 버튼을 눌러 현재 위치를 확인하세요.</p>
                     </div>
                 </div>
+
+                <!-- Map Link Buttons -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                    <button id="openGoogleMapBtn" class="bg-white p-5 rounded-xl shadow-sm hover:shadow-md transition-shadow flex items-center justify-center gap-3 text-slate-400 cursor-not-allowed" disabled>
+                        <svg class="w-6 h-6 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                        <span class="font-semibold">Google 지도에서 동물병원 검색</span>
+                    </button>
+                    <button id="openNaverMapBtn" class="bg-white p-5 rounded-xl shadow-sm hover:shadow-md transition-shadow flex items-center justify-center gap-3 text-slate-400 cursor-not-allowed" disabled>
+                        <svg class="w-6 h-6 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                        <span class="font-semibold">네이버 지도에서 동물병원 검색</span>
+                    </button>
+                </div>
+
+                <!-- AI Search Section -->
+                <div class="bg-white p-4 rounded-xl shadow-sm mb-6">
+                    <h3 class="text-lg font-bold text-slate-800 mb-3">AI 병원 추천</h3>
+                    <div class="flex items-center space-x-2"><input id="vetSearchInput" type="text" placeholder="예: 방광염 잘 보고 야간 진료 가능한 곳" class="flex-grow border-slate-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"><button id="vetSearchBtn" class="bg-indigo-600 text-white font-semibold p-3 rounded-lg hover:bg-indigo-700 transition-colors flex items-center"><span class="mr-2">✨</span> AI 검색</button></div>
+                </div>
+                <div id="vetResults" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
             </div>
 
             <!-- Persistent Chat Widget (shown on all pages except dedicated chat page) -->
             <div id="persistent-chat" class="mt-8">
-                <header class="mb-4"><h2 class="text-3xl font-bold text-slate-800">✨ AI 집사에게 물어보기</h2><p id="persistent-chat-subtitle" class="text-slate-500">...의 건강 데이터에 대해 궁금한 점을 AI에게 물어보세요.</p></header>
-                <div id="persistentChatWindow" class="bg-white rounded-xl shadow-sm p-4 overflow-y-auto space-y-4 min-h-[120px] max-h-[400px]"><div class="flex justify-start"><div id="persistent-chat-welcome" class="chat-bubble chat-bubble-ai p-3 rounded-lg shadow-sm">안녕하세요! 저는 ...의 건강 데이터를 학습한 AI 집사입니다. 무엇이 궁금하신가요?</div></div></div>
+                <header class="mb-4"><h2 class="text-3xl font-bold text-slate-800">✨ AI 집사에게 물어보기</h2><p id="persistent-chat-subtitle" class="text-slate-500">반려동물에 대해 궁금한 점을 AI에게 물어보세요.</p></header>
+                <div id="persistentChatWindow" class="bg-white rounded-xl shadow-sm p-4 overflow-y-auto space-y-4 min-h-[120px] max-h-[400px]"><div class="flex justify-start"><div id="persistent-chat-welcome" class="chat-bubble chat-bubble-ai p-3 rounded-lg shadow-sm">안녕하세요! AI 집사입니다. 무엇이 궁금하신가요?</div></div></div>
                 <form id="persistentChatForm" class="mt-4 flex items-center space-x-2"><input id="persistentChatInput" type="text" placeholder="메시지를 입력하세요..." class="flex-grow border-slate-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 p-3" required><button type="submit" class="bg-indigo-600 text-white font-semibold p-3 rounded-lg hover:bg-indigo-700 transition-colors flex items-center"><i data-lucide="send" class="w-6 h-6"></i></button></form>
             </div>
         </main>
@@ -354,125 +243,51 @@
     </div>
 
     <script>
-        // Firebase configuration (not configured - simulation mode)
-        const firebaseConfig = {
-          apiKey: "YOUR_API_KEY",
-          authDomain: "YOUR_AUTH_DOMAIN",
-          projectId: "YOUR_PROJECT_ID",
-          storageBucket: "YOUR_STORAGE_BUCKET",
-          messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-          appId: "YOUR_APP_ID"
-        };
-
-        const isFirebaseConfigured = firebaseConfig.apiKey !== "YOUR_API_KEY";
-        let auth, db;
-
-        // --- Mock Data ---
-        const mockPetHistoricalData = {
-            weight_3_months_ago: "4.9kg",
-            weight_2_months_ago: "5.0kg",
-            weight_1_month_ago: "5.05kg",
-            litter_visits_monthly_avg: "4.2회",
-            litter_duration_monthly_avg: "48초",
-            // Cat-Guard AI 5대 징후 데이터
-            five_signs: {
-                defecation_freq: "일 평균 4.2회 (정상: 2-4회)",
-                stool_size: "정상 범위",
-                litter_duration: "평균 48초 → 최근 95초 (급증)",
-                vomiting: "최근 1주간 0회",
-                limping: "8/20 경미한 뒷다리 이상 감지"
-            }
-        };
-        const mockVetData = [
-            { name: "튼튼 동물병원", address: "서울시 강남구 테헤란로 123", rating: 4.8, reviews: 210, features: "비뇨기계 질환 전문의, 최신 초음파 장비 보유", isRecommended: true },
-            { name: "행복한 고양이 병원", address: "서울시 서초구 강남대로 456", rating: 4.6, reviews: 158, features: "고양이 친화 병원, 스트레스 없는 진료 환경", isRecommended: false },
-            { name: "24시 펫케어 센터", address: "서울시 송파구 올림픽로 789", rating: 4.7, reviews: 190, features: "24시간 응급 진료 가능, 야간 수술 전문", isRecommended: false },
-            { name: "중앙 동물 메디컬 센터", address: "서울시 종로구 세종대로 1", rating: 4.9, reviews: 350, features: "대학병원급 시설, 고양이 신장/방광 클리닉 운영", isRecommended: false },
-        ];
-
-        if (isFirebaseConfigured) {
-            try {
-                firebase.initializeApp(firebaseConfig);
-                auth = firebase.auth();
-                db = firebase.firestore();
-            } catch (e) {
-                console.error("Firebase initialization error:", e);
-            }
-        }
-
         lucide.createIcons();
 
         // --- GLOBAL STATE ---
         let currentPetData = null;
-        let healthLogListener = null;
-        let videoLogListener = null;
-        let weightChartInstance = null;
-        let isAppInitialized = false;
-        let localHealthLogs = []; // For simulation mode
+        let eventListenersInitialized = false;
+        let videoAnalysisLogs = [];
 
         // --- DOM Elements ---
-        const authContainer = document.getElementById('auth-container');
+        const petInfoContainer = document.getElementById('pet-info-container');
         const appContainer = document.getElementById('app-container');
-        const petRegistrationContainer = document.getElementById('pet-registration-container');
-        const loginPage = document.getElementById('login-page');
-        const signupPage = document.getElementById('signup-page');
-        const showSignup = document.getElementById('show-signup');
-        const showLogin = document.getElementById('show-login');
-        const loginForm = document.getElementById('login-form');
-        const signupForm = document.getElementById('signup-form');
-        const logoutButton = document.getElementById('logout-button');
-        const userEmailDisplay = document.getElementById('user-email-display');
-        const loginError = document.getElementById('login-error');
-        const signupError = document.getElementById('signup-error');
-        const petRegForm = document.getElementById('pet-registration-form');
-        const petRegError = document.getElementById('pet-reg-error');
-        const healthLogForm = document.getElementById('health-log-form');
+        const petInfoForm = document.getElementById('pet-info-form');
+        const editPetInfoBtn = document.getElementById('edit-pet-info-btn');
 
-        // --- Auth UI Logic ---
-        if(showSignup) showSignup.addEventListener('click', (e) => { e.preventDefault(); loginPage.classList.add('hidden'); signupPage.classList.remove('hidden'); });
-        if(showLogin) showLogin.addEventListener('click', (e) => { e.preventDefault(); signupPage.classList.add('hidden'); loginPage.classList.remove('hidden'); });
-
-        // --- Auth & Simulation Logic ---
-        if (isFirebaseConfigured && auth) {
-            auth.onAuthStateChanged(async user => {
-                if (user) {
-                    if(userEmailDisplay) userEmailDisplay.textContent = user.email;
-                    const petDocRef = db.collection('users').doc(user.uid).collection('pets').doc('main-pet');
-                    const doc = await petDocRef.get();
-                    if (doc.exists) {
-                        currentPetData = doc.data();
-                        if (!isAppInitialized) initializeAppLogic(currentPetData);
-                        if(authContainer) authContainer.classList.add('hidden');
-                        if(petRegistrationContainer) petRegistrationContainer.classList.add('hidden');
-                        if(appContainer) appContainer.classList.remove('hidden');
-                    } else {
-                        if(authContainer) authContainer.classList.add('hidden');
-                        if(appContainer) appContainer.classList.add('hidden');
-                        if(petRegistrationContainer) petRegistrationContainer.classList.remove('hidden');
-                    }
-                } else {
-                    if(authContainer) authContainer.classList.remove('hidden');
-                    if(appContainer) appContainer.classList.add('hidden');
-                    if(petRegistrationContainer) petRegistrationContainer.classList.add('hidden');
-                    currentPetData = null;
-                    isAppInitialized = false;
-                    if (healthLogListener) healthLogListener();
-                    if (videoLogListener) videoLogListener();
-                    if (weightChartInstance) { weightChartInstance.destroy(); weightChartInstance = null; }
-                }
-            });
-
-            if(signupForm) signupForm.addEventListener('submit', (e) => { e.preventDefault(); const email = document.getElementById('signup-email').value; const password = document.getElementById('signup-password').value; if(signupError) signupError.textContent = ''; auth.createUserWithEmailAndPassword(email, password).catch(error => { if(signupError) signupError.textContent = error.message; }); });
-            if(loginForm) loginForm.addEventListener('submit', (e) => { e.preventDefault(); const email = document.getElementById('login-email').value; const password = document.getElementById('login-password').value; if(loginError) loginError.textContent = ''; auth.signInWithEmailAndPassword(email, password).catch(error => { if(loginError) loginError.textContent = error.message; }); });
-            if(logoutButton) logoutButton.addEventListener('click', (e) => { e.preventDefault(); isAppInitialized = false; auth.signOut(); });
-            if(petRegForm) petRegForm.addEventListener('submit', async (e) => { e.preventDefault(); const user = auth.currentUser; if (!user) { if(petRegError) petRegError.textContent = "사용자 정보가 없습니다."; return; } const newPetData = { name: document.getElementById('pet-name').value, breed: document.getElementById('pet-breed').value, age: document.getElementById('pet-age').value, personality: document.getElementById('pet-personality').value }; if(petRegError) petRegError.textContent = ''; try { const petDocRef = db.collection('users').doc(user.uid).collection('pets').doc('main-pet'); await petDocRef.set(newPetData); currentPetData = newPetData; if (!isAppInitialized) initializeAppLogic(currentPetData); if(petRegistrationContainer) petRegistrationContainer.classList.add('hidden'); if(appContainer) appContainer.classList.remove('hidden'); } catch (error) { if(petRegError) petRegError.textContent = "등록 중 오류가 발생했습니다."; } });
-        } else {
-            // Simulation Logic
-            if(loginForm) loginForm.addEventListener('submit', (e) => { e.preventDefault(); if(userEmailDisplay) userEmailDisplay.textContent = document.getElementById('login-email').value; if(authContainer) authContainer.classList.add('hidden'); if(petRegistrationContainer) petRegistrationContainer.classList.remove('hidden'); });
-            if(signupForm) signupForm.addEventListener('submit', (e) => { e.preventDefault(); if(userEmailDisplay) userEmailDisplay.textContent = document.getElementById('signup-email').value; if(authContainer) authContainer.classList.add('hidden'); if(petRegistrationContainer) petRegistrationContainer.classList.remove('hidden'); });
-            if(petRegForm) petRegForm.addEventListener('submit', (e) => { e.preventDefault(); currentPetData = { name: document.getElementById('pet-name').value, breed: document.getElementById('pet-breed').value, age: document.getElementById('pet-age').value, personality: document.getElementById('pet-personality').value }; if (!isAppInitialized) initializeAppLogic(currentPetData); if(petRegistrationContainer) petRegistrationContainer.classList.add('hidden'); if(appContainer) appContainer.classList.remove('hidden'); });
-            if(logoutButton) logoutButton.addEventListener('click', (e) => { e.preventDefault(); currentPetData = null; isAppInitialized = false; localHealthLogs = []; if(authContainer) authContainer.classList.remove('hidden'); if(appContainer) appContainer.classList.add('hidden'); if (weightChartInstance) { weightChartInstance.destroy(); weightChartInstance = null; } });
+        // --- Helper: Get Pet Context for AI Prompts ---
+        function getPetContext() {
+            if (!currentPetData) return '';
+            return `반려동물 정보 - 이름: ${currentPetData.name}, 품종: ${currentPetData.breed}, 나이: ${currentPetData.age}세, 몸무게: ${currentPetData.weight}kg.`;
         }
+
+        // --- Pet Info Form Submission ---
+        petInfoForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            currentPetData = {
+                name: document.getElementById('pet-name').value,
+                breed: document.getElementById('pet-breed').value,
+                age: document.getElementById('pet-age').value,
+                weight: document.getElementById('pet-weight').value
+            };
+            initializeAppLogic();
+            petInfoContainer.classList.add('hidden');
+            appContainer.classList.remove('hidden');
+        });
+
+        // --- Edit Pet Info ---
+        editPetInfoBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (currentPetData) {
+                document.getElementById('pet-name').value = currentPetData.name;
+                document.getElementById('pet-breed').value = currentPetData.breed;
+                document.getElementById('pet-age').value = currentPetData.age;
+                document.getElementById('pet-weight').value = currentPetData.weight;
+            }
+            appContainer.classList.add('hidden');
+            petInfoContainer.classList.remove('hidden');
+        });
 
         // --- Gemini API Calls (via Cloudflare Functions Proxy) ---
         async function callGeminiAPI(prompt) {
@@ -569,7 +384,6 @@
             if (targetPage) targetPage.classList.add('active');
             const targetNav = document.querySelector(`.nav-item[data-page="${pageName}"]`);
             if (targetNav) targetNav.classList.add('active');
-            // Hide persistent chat on dedicated chat page, show on all others
             const persistentChat = document.getElementById('persistent-chat');
             if (persistentChat) {
                 persistentChat.style.display = (pageName === 'chat') ? 'none' : 'block';
@@ -579,8 +393,7 @@
         document.querySelectorAll('.nav-item').forEach(item => {
             item.addEventListener('click', (e) => {
                 e.preventDefault();
-                const pageName = item.dataset.page;
-                showPage(pageName);
+                showPage(item.dataset.page);
             });
         });
 
@@ -596,178 +409,39 @@
         });
 
         // --- App Initialization ---
-        function initializeAppLogic(petData) {
-            if(isAppInitialized) return;
-            isAppInitialized = true;
-
-            // Update all dynamic pet-name-related UI
-            document.getElementById('dashboard-title').textContent = `${petData.name}의 건강 대시보드`;
-            document.getElementById('pet-profile-name').textContent = petData.name;
-            document.getElementById('pet-profile-details').textContent = `${petData.breed}, ${petData.age}세`;
-            document.getElementById('pet-profile-img').src = `https://placehold.co/100x100/f3e8ff/8b5cf6?text=${encodeURIComponent(petData.name)}`;
-            document.getElementById('health-check-subtitle').textContent = `${petData.name}의 피부, 눈, 귀 등의 사진을 올려 AI에게 예비 분석을 요청하세요.`;
-            document.getElementById('video-analysis-subtitle').textContent = `${petData.name}의 행동 영상(보행, 자세 등)을 올려 AI에게 분석을 요청하세요.`;
-            document.getElementById('ai-assistant-subtitle').textContent = `${petData.name}의 일상 관리, 훈련, 응급 상황 대처까지 AI가 도와드립니다.`;
-            document.getElementById('play-recommend-title').textContent = `${petData.name} 맞춤 AI 놀이 추천`;
-            document.getElementById('play-recommend-desc').textContent = `${petData.name}의 나이와 성격을 고려하여 AI가 맞춤형 놀이와 환경 풍부화 아이디어를 제안합니다.`;
-            document.getElementById('handover-desc').textContent = `${petData.name}를 맡길 때 필요한 인수인계 노트를 AI가 자동으로 생성해 드립니다.`;
-            document.getElementById('handover-title').innerHTML = `${petData.name} 인수인계 노트 <button id="copyHandoverNoteBtn" class="text-sm bg-slate-200 text-slate-700 font-semibold py-1 px-3 rounded-lg hover:bg-slate-300">복사하기</button>`;
-            document.getElementById('behavior-label').textContent = `분석하고 싶은 ${petData.name}의 행동을 자세히 설명해주세요:`;
-            document.getElementById('breed-info-desc').textContent = `${petData.name}의 품종인 '${petData.breed}'에 대한 상세 정보를 AI가 생성해 드립니다.`;
-            document.getElementById('breed-info-title').textContent = `AI 맞춤 품종 정보: ${petData.breed}`;
-            document.getElementById('chat-subtitle').textContent = `${petData.name}의 건강 데이터에 대해 궁금한 점을 AI에게 물어보세요.`;
-            document.getElementById('chat-welcome').textContent = `안녕하세요! 저는 ${petData.name}의 건강 데이터를 학습한 AI 집사입니다. 무엇이 궁금하신가요?`;
-            // Update persistent chat widget
-            document.getElementById('persistent-chat-subtitle').textContent = `${petData.name}의 건강 데이터에 대해 궁금한 점을 AI에게 물어보세요.`;
-            document.getElementById('persistent-chat-welcome').textContent = `안녕하세요! 저는 ${petData.name}의 건강 데이터를 학습한 AI 집사입니다. 무엇이 궁금하신가요?`;
-
-            const today = new Date();
-            const dateString = today.toISOString().split('T')[0];
-            document.getElementById('log-date').value = dateString;
-            document.getElementById('today-date').textContent = today.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
-
-            // Setup Health Log
-            if (isFirebaseConfigured) {
-                const user = auth.currentUser;
-                const healthLogRef = db.collection('users').doc(user.uid).collection('pets').doc('main-pet').collection('healthLogs').orderBy('date', 'desc');
-                if(healthLogListener) healthLogListener();
-                healthLogListener = healthLogRef.onSnapshot(snapshot => {
-                    const logs = [];
-                    snapshot.forEach(doc => logs.push(doc.data()));
-                    updateDashboard(logs);
-                    updateHealthLogHistory(logs);
-                });
-                const videoLogRef = db.collection('users').doc(user.uid).collection('pets').doc('main-pet').collection('videoAnalysisLog').orderBy('date', 'desc');
-                if(videoLogListener) videoLogListener();
-                videoLogListener = videoLogRef.onSnapshot(snapshot => {
-                    const logs = [];
-                    snapshot.forEach(doc => logs.push({ id: doc.id, ...doc.data() }));
-                    updateVideoAnalysisHistory(logs);
-                });
-            } else {
-                // Simulation mode: use mock data
-                localHealthLogs = [
-                    { date: '2025-08-22', weight: 5.1, water: 230, visits: 6 },
-                    { date: '2025-08-21', weight: 5.11, water: 240, visits: 4 },
-                    { date: '2025-08-20', weight: 5.12, water: 235, visits: 4 },
-                    { date: '2025-08-19', weight: 5.08, water: 220, visits: 5 },
-                    { date: '2025-08-18', weight: 5.05, water: 250, visits: 3 },
-                    { date: '2025-08-17', weight: 5.06, water: 245, visits: 4 },
-                    { date: '2025-08-16', weight: 5.03, water: 230, visits: 4 },
-                ];
-                updateDashboard(localHealthLogs);
-                updateHealthLogHistory(localHealthLogs);
-                // Mock video analysis history
-                const mockVideoLogs = [
-                    { id: '1', date: '2025-08-20', summary: '걸음걸이가 약간 부자연스러워 보입니다.', result: '## 보행 분석 결과\n\n관찰된 프레임에서 뒷다리의 움직임이 약간 부자연스러운 패턴을 보입니다.\n\n**관찰 사항:**\n- 뒷다리 보행 시 미세한 절뚝거림 의심\n- 점프 착지 시 좌측 뒷다리에 체중 부하 회피 경향\n\n**권장 사항:**\n- 1주일간 추가 관찰 후 지속 시 수의사 상담 권장\n- 높은 곳에서의 점프를 줄여주세요' },
-                    { id: '2', date: '2025-08-22', summary: '자세가 안정적입니다.', result: '## 자세 분석 결과\n\n현재 프레임에서 관찰된 자세는 전반적으로 안정적이며 정상 범위입니다.\n\n**관찰 사항:**\n- 앉은 자세가 균형 잡혀 있음\n- 척추 라인이 자연스러움\n- 꼬리 위치 정상\n\n**종합 평가:** 양호' },
-                ];
-                updateVideoAnalysisHistory(mockVideoLogs);
+        function initializeAppLogic() {
+            updatePetUI();
+            if (!eventListenersInitialized) {
+                setupEventListeners();
+                eventListenersInitialized = true;
             }
-
-            // Generate daily tip
-            generateDailyTip(petData);
-
-            // Setup all event listeners
-            setupEventListeners(petData);
-
-            // Render vet list
-            renderVetList(mockVetData);
-
             lucide.createIcons();
         }
 
-        // --- Dashboard Update ---
-        function updateDashboard(logs) {
-            if (!logs || logs.length === 0) return;
+        // --- Update Pet UI ---
+        function updatePetUI() {
+            if (!currentPetData) return;
+            const p = currentPetData;
 
-            const latest = logs[0];
-            const previous = logs.length > 1 ? logs[1] : null;
+            // Sidebar
+            document.getElementById('pet-sidebar-name').textContent = p.name;
+            document.getElementById('pet-sidebar-img').src = `https://placehold.co/40x40/e0e7ff/4338ca?text=${encodeURIComponent(p.name)}`;
 
-            document.getElementById('metric-weight').innerHTML = `${latest.weight} <span class="text-lg text-slate-400">kg</span>`;
-            document.getElementById('metric-water').innerHTML = `${latest.water} <span class="text-lg text-slate-400">ml</span>`;
-            document.getElementById('metric-visits').innerHTML = `${latest.visits} <span class="text-lg text-slate-400">회</span>`;
-            document.getElementById('metric-duration').innerHTML = `${Math.round(Math.random() * 30 + 40)} <span class="text-lg text-slate-400">초</span>`;
-
-            if (previous) {
-                updateChangeIndicator('metric-weight-change', latest.weight - previous.weight, 'kg');
-                updateChangeIndicator('metric-water-change', latest.water - previous.water, 'ml');
-                updateChangeIndicator('metric-visits-change', latest.visits - previous.visits, '회');
-            }
-
-            // Update alert card
-            const alertCard = document.getElementById('alert-card');
-            if (latest.visits > 5) {
-                alertCard.className = 'lg:col-span-2 bg-red-50 border-l-4 border-red-500 text-red-700 p-6 rounded-xl shadow-sm';
-                alertCard.innerHTML = `<div class="flex items-start"><i data-lucide="alert-triangle" class="w-10 h-10 mr-4 text-red-500 flex-shrink-0 mt-1"></i><div><h4 class="font-bold text-xl">높은 위험도 알림!</h4><p class="mt-1">오늘 화장실 방문 횟수(${latest.visits}회)가 평소보다 많습니다. 비뇨기계 질환 가능성을 확인해보세요. <a href="#" onclick="showPage('alerts'); return false;" class="font-semibold underline">자세히 보기</a></p></div></div>`;
-            } else {
-                alertCard.className = 'lg:col-span-2 bg-green-50 border-l-4 border-green-500 text-green-700 p-6 rounded-xl shadow-sm';
-                alertCard.innerHTML = `<div class="flex items-start"><i data-lucide="check-circle" class="w-10 h-10 mr-4 text-green-500 flex-shrink-0 mt-1"></i><div><h4 class="font-bold text-xl">모든 것이 정상입니다</h4><p class="mt-1">오늘의 건강 데이터 분석 결과, 특이사항이 없습니다. 좋은 상태를 유지하고 있습니다!</p></div></div>`;
-            }
-
-            // Update weight chart
-            updateWeightChart(logs);
-            lucide.createIcons();
-        }
-
-        function updateChangeIndicator(elementId, change, unit) {
-            const el = document.getElementById(elementId);
-            if (!el) return;
-            const rounded = Math.abs(change).toFixed(unit === 'kg' ? 2 : 0);
-            if (change > 0) {
-                el.innerHTML = `<span class="text-red-500">&#9650; +${rounded}${unit}</span>`;
-            } else if (change < 0) {
-                el.innerHTML = `<span class="text-blue-500">&#9660; -${rounded}${unit}</span>`;
-            } else {
-                el.innerHTML = `<span class="text-slate-400">- 변화 없음</span>`;
-            }
-        }
-
-        function updateWeightChart(logs) {
-            const ctx = document.getElementById('weightChart').getContext('2d');
-            const chartLogs = [...logs].reverse().slice(-7);
-
-            if (weightChartInstance) weightChartInstance.destroy();
-
-            weightChartInstance = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: chartLogs.map(l => l.date),
-                    datasets: [{
-                        label: '체중 (kg)',
-                        data: chartLogs.map(l => l.weight),
-                        borderColor: '#4f46e5',
-                        backgroundColor: 'rgba(79, 70, 229, 0.1)',
-                        fill: true,
-                        tension: 0.4,
-                        pointBackgroundColor: '#4f46e5',
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: { beginAtZero: false, ticks: { callback: (v) => v + 'kg' } }
-                    },
-                    plugins: { legend: { display: false } }
-                }
-            });
-        }
-
-        // --- Health Log History ---
-        function updateHealthLogHistory(logs) {
-            const tbody = document.getElementById('health-log-history');
-            if (!tbody) return;
-            tbody.innerHTML = '';
-            logs.forEach(log => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-900">${log.date}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">${log.weight} kg</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">${log.water} ml</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">${log.visits} 회</td>
-                `;
-                tbody.appendChild(tr);
-            });
+            // Page subtitles
+            document.getElementById('health-check-subtitle').textContent = `${p.name}의 피부, 눈, 귀 등의 사진을 올려 AI에게 예비 분석을 요청하세요.`;
+            document.getElementById('video-analysis-subtitle').textContent = `${p.name}의 행동 영상(보행, 자세 등)을 올려 AI에게 분석을 요청하세요.`;
+            document.getElementById('ai-assistant-subtitle').textContent = `${p.name}의 일상 관리, 훈련, 응급 상황 대처까지 AI가 도와드립니다.`;
+            document.getElementById('play-recommend-title').textContent = `${p.name} 맞춤 AI 놀이 추천`;
+            document.getElementById('play-recommend-desc').textContent = `${p.name}의 나이와 품종을 고려하여 AI가 맞춤형 놀이와 환경 풍부화 아이디어를 제안합니다.`;
+            document.getElementById('handover-desc').textContent = `${p.name}를 맡길 때 필요한 인수인계 노트를 AI가 자동으로 생성해 드립니다.`;
+            document.getElementById('handover-title').innerHTML = `${p.name} 인수인계 노트 <button id="copyHandoverNoteBtn" class="text-sm bg-slate-200 text-slate-700 font-semibold py-1 px-3 rounded-lg hover:bg-slate-300">복사하기</button>`;
+            document.getElementById('behavior-label').textContent = `분석하고 싶은 ${p.name}의 행동을 자세히 설명해주세요:`;
+            document.getElementById('breed-info-desc').textContent = `${p.name}의 품종인 '${p.breed}'에 대한 상세 정보를 AI가 생성해 드립니다.`;
+            document.getElementById('breed-info-title').textContent = `AI 맞춤 품종 정보: ${p.breed}`;
+            document.getElementById('chat-subtitle').textContent = `${p.name}에 대해 궁금한 점을 AI에게 물어보세요.`;
+            document.getElementById('chat-welcome').textContent = `안녕하세요! 저는 ${p.name}의 전담 AI 집사입니다. 무엇이 궁금하신가요?`;
+            document.getElementById('persistent-chat-subtitle').textContent = `${p.name}에 대해 궁금한 점을 AI에게 물어보세요.`;
+            document.getElementById('persistent-chat-welcome').textContent = `안녕하세요! 저는 ${p.name}의 전담 AI 집사입니다. 무엇이 궁금하신가요?`;
         }
 
         // --- Video Analysis History ---
@@ -788,12 +462,11 @@
                     </div>
                     <div class="flex-grow">
                         <p class="font-semibold text-sm text-slate-800">${log.date || '날짜 없음'}</p>
-                        <p class="text-sm text-slate-600 mt-1">시뮬레이션: ${log.summary || ''}</p>
-                        <button class="text-sm text-indigo-600 hover:underline mt-1 video-detail-btn" data-log-id="${log.id}">전체 분석 보기</button>
+                        <p class="text-sm text-slate-600 mt-1">${log.summary || ''}</p>
+                        <button class="text-sm text-indigo-600 hover:underline mt-1 video-detail-btn">전체 분석 보기</button>
                     </div>
                 `;
                 container.appendChild(div);
-                // Add click handler for detail view
                 div.querySelector('.video-detail-btn').addEventListener('click', () => {
                     openModal('영상 분석 상세 결과');
                     document.getElementById('modalSpinner').classList.add('hidden');
@@ -803,130 +476,8 @@
             lucide.createIcons();
         }
 
-        // --- Health Log Form Submission ---
-        if(healthLogForm) healthLogForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const logData = {
-                date: document.getElementById('log-date').value,
-                weight: parseFloat(document.getElementById('log-weight').value),
-                water: parseInt(document.getElementById('log-water').value),
-                visits: parseInt(document.getElementById('log-visits').value),
-            };
-
-            if (!logData.date || isNaN(logData.weight) || isNaN(logData.water) || isNaN(logData.visits)) {
-                return;
-            }
-
-            if (isFirebaseConfigured && auth && auth.currentUser) {
-                try {
-                    const user = auth.currentUser;
-                    await db.collection('users').doc(user.uid).collection('pets').doc('main-pet').collection('healthLogs').doc(logData.date).set(logData);
-                    document.getElementById('log-success-msg').textContent = '기록이 저장되었습니다!';
-                    setTimeout(() => { document.getElementById('log-success-msg').textContent = ''; }, 3000);
-                } catch (error) {
-                    console.error("Error saving log:", error);
-                }
-            } else {
-                // Simulation mode
-                const existingIdx = localHealthLogs.findIndex(l => l.date === logData.date);
-                if (existingIdx >= 0) {
-                    localHealthLogs[existingIdx] = logData;
-                } else {
-                    localHealthLogs.unshift(logData);
-                }
-                localHealthLogs.sort((a, b) => b.date.localeCompare(a.date));
-                updateDashboard(localHealthLogs);
-                updateHealthLogHistory(localHealthLogs);
-                document.getElementById('log-success-msg').textContent = '기록이 저장되었습니다! (시뮬레이션 모드)';
-                setTimeout(() => { document.getElementById('log-success-msg').textContent = ''; }, 3000);
-            }
-            healthLogForm.reset();
-            document.getElementById('log-date').value = new Date().toISOString().split('T')[0];
-        });
-
-        // --- Daily Tip ---
-        async function generateDailyTip(petData) {
-            try {
-                const prompt = `당신은 반려동물 건강 전문가입니다. ${petData.name}(${petData.breed}, ${petData.age}세, 성격: ${petData.personality})를 위한 오늘의 맞춤 건강/생활 팁을 한 문장으로 간결하게 알려주세요. 한국어로 대답해주세요.`;
-                const result = await callGeminiAPI(prompt);
-                document.getElementById('dailyTipContent').textContent = result;
-            } catch (error) {
-                document.getElementById('dailyTipContent').textContent = `${petData.name}에게 충분한 물을 제공하고, 매일 놀이 시간을 가져주세요!`;
-            }
-        }
-
-        // --- Render Vet List ---
-        function renderVetList(vets) {
-            const container = document.getElementById('vetResults');
-            if (!container) return;
-            container.innerHTML = '';
-            vets.forEach(vet => {
-                const card = document.createElement('div');
-                card.className = 'bg-white p-6 rounded-xl shadow-sm';
-                card.innerHTML = `
-                    <div class="flex justify-between items-start mb-2">
-                        <h3 class="text-xl font-bold">${vet.name}</h3>
-                        ${vet.isRecommended ? '<span class="text-sm font-semibold text-indigo-600 bg-indigo-100 px-3 py-1 rounded-full">AI 추천</span>' : ''}
-                    </div>
-                    <p class="text-slate-500 text-sm mb-2">${vet.address}</p>
-                    <div class="flex items-center mb-2">
-                        <span class="text-yellow-500 font-bold mr-1">${'★'.repeat(Math.floor(vet.rating))}</span>
-                        <span class="text-slate-600 text-sm">${vet.rating} (${vet.reviews}건)</span>
-                    </div>
-                    <p class="text-slate-600 text-sm">${vet.features}</p>
-                `;
-                container.appendChild(card);
-            });
-        }
-
         // --- Setup Event Listeners ---
-        function setupEventListeners(petData) {
-            const petContext = `반려동물 정보 - 이름: ${petData.name}, 품종: ${petData.breed}, 나이: ${petData.age}세, 성격: ${petData.personality}.`;
-
-            // Meal Plan Button
-            const mealPlanBtn = document.getElementById('mealPlanBtn');
-            if (mealPlanBtn) mealPlanBtn.addEventListener('click', async () => {
-                openModal(`${petData.name} 맞춤 식단 추천`);
-                try {
-                    const prompt = `${petContext} 이 반려동물을 위한 맞춤 일일 식단 계획을 추천해주세요. 아침, 점심, 저녁, 간식으로 나누어 구체적인 양과 음식을 추천해주세요. 한국어로 대답해주세요.`;
-                    const result = await callGeminiAPI(prompt);
-                    showModalResult(simpleMarkdownToHtml(result));
-                } catch (e) { showModalError('식단 추천 생성에 실패했습니다: ' + e.message); }
-            });
-
-            // Long Term Report Button
-            const longTermReportBtn = document.getElementById('longTermReportBtn');
-            if (longTermReportBtn) longTermReportBtn.addEventListener('click', async () => {
-                openModal(`${petData.name} AI 장기 건강 리포트`);
-                try {
-                    const historicalInfo = `과거 건강 데이터: 3개월 전 체중 ${mockPetHistoricalData.weight_3_months_ago}, 2개월 전 ${mockPetHistoricalData.weight_2_months_ago}, 1개월 전 ${mockPetHistoricalData.weight_1_month_ago}. 월 평균 화장실 방문 ${mockPetHistoricalData.litter_visits_monthly_avg}, 평균 체류 시간 ${mockPetHistoricalData.litter_duration_monthly_avg}.`;
-                    const prompt = `${petContext} ${historicalInfo} 이 데이터를 기반으로 장기 건강 추세 분석 리포트를 작성해주세요. 체중 변화 추세, 화장실 습관 변화, 잠재적 건강 위험 요소, 향후 관리 권장사항을 포함해주세요. 한국어로 대답해주세요.`;
-                    const result = await callGeminiAPI(prompt);
-                    showModalResult(simpleMarkdownToHtml(result));
-                } catch (e) { showModalError('리포트 생성에 실패했습니다: ' + e.message); }
-            });
-
-            // Vet Summary Button
-            const vetSummaryBtn = document.getElementById('vetSummaryBtn');
-            if (vetSummaryBtn) vetSummaryBtn.addEventListener('click', async () => {
-                openModal('AI 수의사 상담 요약');
-                try {
-                    const prompt = `${petContext} 화장실 체류 시간이 45초에서 95초로 급증하고, 방문 횟수가 50% 이상 증가했습니다. 수의사에게 보여줄 수 있는 간결한 상담 요약 노트를 작성해주세요. 증상, 시작 시기, 관련 데이터, 의심되는 질환을 포함해주세요. 한국어로 대답해주세요.`;
-                    const result = await callGeminiAPI(prompt);
-                    showModalResult(simpleMarkdownToHtml(result));
-                } catch (e) { showModalError('상담 요약 생성에 실패했습니다: ' + e.message); }
-            });
-
-            // Alert Analysis Button
-            const alertAnalysisBtn = document.getElementById('alertAnalysisBtn');
-            if (alertAnalysisBtn) alertAnalysisBtn.addEventListener('click', async () => {
-                openModal('AI 심층 분석 및 대처 방안');
-                try {
-                    const prompt = `${petContext} 화장실 체류 시간이 45초에서 95초로 급증했고, 방문 횟수도 평소 대비 50% 이상 증가했습니다. 이 증상에 대한 심층 분석을 해주세요. 가능한 원인, 질환 가능성, 당장 할 수 있는 가정 내 대처 방법, 병원 방문 전 관찰 포인트를 포함해주세요. 한국어로 대답해주세요.`;
-                    const result = await callGeminiAPI(prompt);
-                    showModalResult(simpleMarkdownToHtml(result));
-                } catch (e) { showModalError('분석 생성에 실패했습니다: ' + e.message); }
-            });
+        function setupEventListeners() {
 
             // Image Upload & Analysis
             const fileUploadWrapper = document.getElementById('fileUploadWrapper');
@@ -961,7 +512,7 @@
                 resultContainer.classList.remove('hidden');
                 resultDiv.innerHTML = '<div class="flex justify-center"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div></div>';
                 try {
-                    const prompt = `당신은 수의사 AI 보조입니다. ${petContext} 이 반려동물의 사진을 분석해주세요. 피부 상태, 눈 상태, 귀 상태, 전반적인 외형 등을 확인하고, 발견되는 이상 소견이 있다면 설명해주세요. 주의해야 할 사항이 있다면 알려주세요. 이것은 참고용 예비 분석이며 전문 수의사 진료를 대체할 수 없음을 명시해주세요. 한국어로 대답해주세요.`;
+                    const prompt = `당신은 수의사 AI 보조입니다. ${getPetContext()} 이 반려동물의 사진을 분석해주세요. 피부 상태, 눈 상태, 귀 상태, 전반적인 외형 등을 확인하고, 발견되는 이상 소견이 있다면 설명해주세요. 주의해야 할 사항이 있다면 알려주세요. 이것은 참고용 예비 분석이며 전문 수의사 진료를 대체할 수 없음을 명시해주세요. 한국어로 대답해주세요.`;
                     const result = await callGeminiVisionAPI(prompt, currentImageBase64);
                     resultDiv.innerHTML = simpleMarkdownToHtml(result);
                 } catch (e) { resultDiv.innerHTML = `<p class="text-red-500">분석에 실패했습니다: ${e.message}</p>`; }
@@ -994,7 +545,6 @@
                 resultContainer.classList.remove('hidden');
                 resultDiv.innerHTML = '<div class="flex justify-center"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div></div>';
 
-                // Capture current frame from video
                 const video = document.getElementById('videoPreview');
                 const canvas = document.createElement('canvas');
                 canvas.width = video.videoWidth;
@@ -1003,18 +553,20 @@
                 const frameBase64 = canvas.toDataURL('image/jpeg').split(',')[1];
 
                 try {
-                    const prompt = `당신은 수의사 AI 보조입니다. ${petContext} 이 영상 프레임을 분석해주세요. 반려동물의 자세, 보행 패턴, 행동 등을 관찰하고, 발견되는 이상 소견이나 주의사항을 설명해주세요. 한국어로 대답해주세요.`;
+                    const prompt = `당신은 수의사 AI 보조입니다. ${getPetContext()} 이 영상 프레임을 분석해주세요. 반려동물의 자세, 보행 패턴, 행동 등을 관찰하고, 발견되는 이상 소견이나 주의사항을 설명해주세요. 한국어로 대답해주세요.`;
                     const result = await callGeminiVisionAPI(prompt, frameBase64);
                     resultDiv.innerHTML = simpleMarkdownToHtml(result);
 
-                    // Save to history (simulation mode)
-                    if (!isFirebaseConfigured) {
-                        const historyContainer = document.getElementById('video-analysis-history');
-                        const logEntry = document.createElement('div');
-                        logEntry.className = 'bg-slate-50 p-4 rounded-lg';
-                        logEntry.innerHTML = `<div class="flex justify-between items-center mb-2"><span class="font-semibold text-sm text-slate-700">${new Date().toLocaleString('ko-KR')}</span></div><div class="prose max-w-none text-sm">${simpleMarkdownToHtml(result)}</div>`;
-                        historyContainer.prepend(logEntry);
-                    }
+                    // Save to session history
+                    const now = new Date();
+                    const summary = result.substring(0, 50) + '...';
+                    videoAnalysisLogs.unshift({
+                        id: Date.now().toString(),
+                        date: now.toLocaleDateString('ko-KR'),
+                        summary: summary,
+                        result: result
+                    });
+                    updateVideoAnalysisHistory(videoAnalysisLogs);
                 } catch (e) { resultDiv.innerHTML = `<p class="text-red-500">영상 분석에 실패했습니다: ${e.message}</p>`; }
             });
 
@@ -1028,7 +580,7 @@
                 resultContainer.classList.remove('hidden');
                 resultDiv.innerHTML = '<div class="flex justify-center"><div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-600"></div></div>';
                 try {
-                    const prompt = `${petContext} "${food}"을(를) 이 반려동물이 먹어도 안전한지 분석해주세요. 안전/주의/위험 등급, 먹일 수 있는 양, 주의사항을 알려주세요. 한국어로 대답해주세요.`;
+                    const prompt = `${getPetContext()} "${food}"을(를) 이 반려동물이 먹어도 안전한지 분석해주세요. 안전/주의/위험 등급, 먹일 수 있는 양, 주의사항을 알려주세요. 한국어로 대답해주세요.`;
                     const result = await callGeminiAPI(prompt);
                     resultDiv.innerHTML = simpleMarkdownToHtml(result);
                 } catch (e) { resultDiv.innerHTML = `<p class="text-red-500">확인에 실패했습니다: ${e.message}</p>`; }
@@ -1042,7 +594,7 @@
                 resultContainer.classList.remove('hidden');
                 resultDiv.innerHTML = '<div class="flex justify-center"><div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-600"></div></div>';
                 try {
-                    const prompt = `${petContext} 이 반려동물의 나이와 성격을 고려하여 맞춤형 놀이 활동과 환경 풍부화 아이디어를 5가지 추천해주세요. 각 활동의 구체적인 방법과 기대 효과를 설명해주세요. 한국어로 대답해주세요.`;
+                    const prompt = `${getPetContext()} 이 반려동물의 나이와 품종을 고려하여 맞춤형 놀이 활동과 환경 풍부화 아이디어를 5가지 추천해주세요. 각 활동의 구체적인 방법과 기대 효과를 설명해주세요. 한국어로 대답해주세요.`;
                     const result = await callGeminiAPI(prompt);
                     resultDiv.innerHTML = simpleMarkdownToHtml(result);
                 } catch (e) { resultDiv.innerHTML = `<p class="text-red-500">추천 생성에 실패했습니다: ${e.message}</p>`; }
@@ -1056,11 +608,9 @@
                 resultContainer.classList.remove('hidden');
                 resultDiv.innerHTML = '<div class="flex justify-center"><div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-600"></div></div>';
                 try {
-                    const prompt = `${petContext} 이 반려동물을 펫시터나 병원에 맡길 때 필요한 인수인계 노트를 작성해주세요. 기본 정보, 식사 일정/양, 약물 복용 여부, 행동 특이사항, 긴급 연락처 양식, 주의사항을 포함해주세요. 한국어로 대답해주세요.`;
+                    const prompt = `${getPetContext()} 이 반려동물을 펫시터나 병원에 맡길 때 필요한 인수인계 노트를 작성해주세요. 기본 정보, 식사 일정/양, 약물 복용 여부, 행동 특이사항, 긴급 연락처 양식, 주의사항을 포함해주세요. 한국어로 대답해주세요.`;
                     const result = await callGeminiAPI(prompt);
                     resultDiv.innerHTML = simpleMarkdownToHtml(result);
-
-                    // Setup copy button
                     setTimeout(() => {
                         const copyBtn = document.getElementById('copyHandoverNoteBtn');
                         if (copyBtn) {
@@ -1085,7 +635,7 @@
                 resultContainer.classList.remove('hidden');
                 resultDiv.innerHTML = '<div class="flex justify-center"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div></div>';
                 try {
-                    const prompt = `${petContext} 보호자 보고 행동: "${behavior}". 이 행동에 대해 가능한 원인, 심리 상태 분석, 건강 문제 가능성, 권장 대처법을 자세히 분석해주세요. 한국어로 대답해주세요.`;
+                    const prompt = `${getPetContext()} 보호자 보고 행동: "${behavior}". 이 행동에 대해 가능한 원인, 심리 상태 분석, 건강 문제 가능성, 권장 대처법을 자세히 분석해주세요. 한국어로 대답해주세요.`;
                     const result = await callGeminiAPI(prompt);
                     resultDiv.innerHTML = simpleMarkdownToHtml(result);
                 } catch (e) { resultDiv.innerHTML = `<p class="text-red-500">분석에 실패했습니다: ${e.message}</p>`; }
@@ -1101,7 +651,7 @@
                 resultContainer.classList.remove('hidden');
                 resultDiv.innerHTML = '<div class="flex justify-center"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div></div>';
                 try {
-                    const prompt = `${petContext} 훈련 목표: "${goal}". 이 목표를 달성하기 위한 4주간의 단계별 훈련 계획을 작성해주세요. 주차별 목표, 구체적인 훈련 방법, 필요한 도구, 주의사항을 포함해주세요. 한국어로 대답해주세요.`;
+                    const prompt = `${getPetContext()} 훈련 목표: "${goal}". 이 목표를 달성하기 위한 4주간의 단계별 훈련 계획을 작성해주세요. 주차별 목표, 구체적인 훈련 방법, 필요한 도구, 주의사항을 포함해주세요. 한국어로 대답해주세요.`;
                     const result = await callGeminiAPI(prompt);
                     resultDiv.innerHTML = simpleMarkdownToHtml(result);
                 } catch (e) { resultDiv.innerHTML = `<p class="text-red-500">계획 생성에 실패했습니다: ${e.message}</p>`; }
@@ -1116,7 +666,7 @@
                 resultContainer.classList.remove('hidden');
                 resultDiv.innerHTML = '<div class="flex justify-center"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div></div>';
                 try {
-                    const prompt = `${petContext} 응급 상황: "${situation}". 이 응급 상황에 대한 단계별 대처 가이드를 작성해주세요. 즉시 해야 할 일, 절대 하면 안 되는 일, 응급 처치 방법, 병원으로 이동 시 주의사항을 포함해주세요. 이것은 참고용이며 즉시 수의사에게 연락해야 함을 명시해주세요. 한국어로 대답해주세요.`;
+                    const prompt = `${getPetContext()} 응급 상황: "${situation}". 이 응급 상황에 대한 단계별 대처 가이드를 작성해주세요. 즉시 해야 할 일, 절대 하면 안 되는 일, 응급 처치 방법, 병원으로 이동 시 주의사항을 포함해주세요. 이것은 참고용이며 즉시 수의사에게 연락해야 함을 명시해주세요. 한국어로 대답해주세요.`;
                     const result = await callGeminiAPI(prompt);
                     resultDiv.innerHTML = simpleMarkdownToHtml(result);
                 } catch (e) { resultDiv.innerHTML = `<p class="text-red-500">가이드 생성에 실패했습니다: ${e.message}</p>`; }
@@ -1132,7 +682,7 @@
                 resultContainer.classList.remove('hidden');
                 resultDiv.innerHTML = '<div class="flex justify-center"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div></div>';
                 try {
-                    const prompt = `${petContext} 증상/진료 항목: "${symptom}". 한국 기준으로 예상 진료비를 분석해주세요. 초진비, 검사비(혈액/소변/영상), 치료비, 약값 등 항목별 예상 비용 범위를 알려주세요. 지역/병원에 따라 차이가 있을 수 있음을 명시해주세요. 한국어로 대답해주세요.`;
+                    const prompt = `${getPetContext()} 증상/진료 항목: "${symptom}". 한국 기준으로 예상 진료비를 분석해주세요. 초진비, 검사비(혈액/소변/영상), 치료비, 약값 등 항목별 예상 비용 범위를 알려주세요. 지역/병원에 따라 차이가 있을 수 있음을 명시해주세요. 한국어로 대답해주세요.`;
                     const result = await callGeminiAPI(prompt);
                     resultDiv.innerHTML = simpleMarkdownToHtml(result);
                 } catch (e) { resultDiv.innerHTML = `<p class="text-red-500">예상 비용 생성에 실패했습니다: ${e.message}</p>`; }
@@ -1146,26 +696,92 @@
                 resultContainer.classList.remove('hidden');
                 resultDiv.innerHTML = '<div class="flex justify-center"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div></div>';
                 try {
-                    const prompt = `${petData.breed} 품종에 대한 상세 정보를 알려주세요. 기본 특성, 성격, 건강 주의사항, 취약한 질병, 적정 체중 범위, 수명, 사료 권장사항, 그루밍 필요성, 운동량 등을 포함해주세요. 한국어로 대답해주세요.`;
+                    const prompt = `${currentPetData.breed} 품종에 대한 상세 정보를 알려주세요. 기본 특성, 성격, 건강 주의사항, 취약한 질병, 적정 체중 범위, 수명, 사료 권장사항, 그루밍 필요성, 운동량 등을 포함해주세요. 한국어로 대답해주세요.`;
                     const result = await callGeminiAPI(prompt);
                     resultDiv.innerHTML = simpleMarkdownToHtml(result);
                 } catch (e) { resultDiv.innerHTML = `<p class="text-red-500">품종 정보 생성에 실패했습니다: ${e.message}</p>`; }
             });
 
-            // Vet Search
+            // GPS Location & Map Links
+            let userLocation = null;
+            const getLocationBtn = document.getElementById('getLocationBtn');
+            const locationStatus = document.getElementById('locationStatus');
+            const openGoogleMapBtn = document.getElementById('openGoogleMapBtn');
+            const openNaverMapBtn = document.getElementById('openNaverMapBtn');
+
+            function enableMapButtons() {
+                openGoogleMapBtn.disabled = false;
+                openGoogleMapBtn.classList.remove('text-slate-400', 'cursor-not-allowed');
+                openGoogleMapBtn.classList.add('text-slate-700');
+                openNaverMapBtn.disabled = false;
+                openNaverMapBtn.classList.remove('text-slate-400', 'cursor-not-allowed');
+                openNaverMapBtn.classList.add('text-slate-700');
+            }
+
+            if (getLocationBtn) getLocationBtn.addEventListener('click', () => {
+                if (!navigator.geolocation) {
+                    locationStatus.textContent = '이 브라우저에서는 위치 서비스를 지원하지 않습니다.';
+                    locationStatus.classList.add('text-red-500');
+                    return;
+                }
+                locationStatus.textContent = '위치를 확인하는 중...';
+                locationStatus.classList.remove('text-red-500');
+                getLocationBtn.disabled = true;
+                getLocationBtn.innerHTML = '<div class="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white mr-2"></div> 확인 중...';
+
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        userLocation = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        };
+                        locationStatus.textContent = `위치 확인 완료! (${userLocation.lat.toFixed(4)}, ${userLocation.lng.toFixed(4)})`;
+                        locationStatus.classList.add('text-green-600');
+                        getLocationBtn.disabled = false;
+                        getLocationBtn.innerHTML = '<i data-lucide="map-pin" class="w-5 h-5 mr-2"></i> 위치 다시 찾기';
+                        lucide.createIcons();
+                        enableMapButtons();
+                    },
+                    (error) => {
+                        let msg = '위치를 가져올 수 없습니다.';
+                        if (error.code === 1) msg = '위치 권한이 거부되었습니다. 브라우저 설정에서 위치 권한을 허용해주세요.';
+                        else if (error.code === 2) msg = '위치 정보를 사용할 수 없습니다.';
+                        else if (error.code === 3) msg = '위치 요청 시간이 초과되었습니다.';
+                        locationStatus.textContent = msg;
+                        locationStatus.classList.add('text-red-500');
+                        getLocationBtn.disabled = false;
+                        getLocationBtn.innerHTML = '<i data-lucide="map-pin" class="w-5 h-5 mr-2"></i> 내 위치 찾기';
+                        lucide.createIcons();
+                    },
+                    { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
+                );
+            });
+
+            if (openGoogleMapBtn) openGoogleMapBtn.addEventListener('click', () => {
+                if (!userLocation) return;
+                const url = `https://www.google.com/maps/search/동물병원/@${userLocation.lat},${userLocation.lng},14z`;
+                window.open(url, '_blank');
+            });
+
+            if (openNaverMapBtn) openNaverMapBtn.addEventListener('click', () => {
+                if (!userLocation) return;
+                const url = `https://map.naver.com/p/search/동물병원?c=${userLocation.lng},${userLocation.lat},14,0,0,0,dh`;
+                window.open(url, '_blank');
+            });
+
+            // Vet AI Search
             const vetSearchBtn = document.getElementById('vetSearchBtn');
             if (vetSearchBtn) vetSearchBtn.addEventListener('click', async () => {
                 const query = document.getElementById('vetSearchInput').value.trim();
-                if (!query) { renderVetList(mockVetData); return; }
+                if (!query) return;
                 const container = document.getElementById('vetResults');
                 container.innerHTML = '<div class="col-span-2 flex justify-center"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div></div>';
                 try {
-                    const prompt = `${petContext} 사용자 검색 요청: "${query}". 다음 병원 목록에서 요청에 가장 적합한 병원을 추천하고 이유를 설명해주세요. 병원 목록: ${JSON.stringify(mockVetData.map(v => ({ name: v.name, features: v.features })))}. 한국어로 대답해주세요.`;
+                    const locationInfo = userLocation ? `사용자 현재 위치 좌표: ${userLocation.lat}, ${userLocation.lng}.` : '';
+                    const prompt = `${getPetContext()} ${locationInfo} 사용자 검색 요청: "${query}". 이 조건에 맞는 동물병원을 추천해주세요. 병원 유형, 추천 이유, 찾을 때 확인해야 할 사항 등을 포함해주세요. 실제 병원이 아닌 참고용 AI 추천임을 명시해주세요. 한국어로 대답해주세요.`;
                     const result = await callGeminiAPI(prompt);
                     container.innerHTML = `<div class="col-span-2 bg-white p-6 rounded-xl shadow-sm"><div class="prose max-w-none">${simpleMarkdownToHtml(result)}</div></div>`;
-                    // Also show the vet cards below
-                    renderVetList(mockVetData);
-                } catch (e) { container.innerHTML = `<div class="col-span-2 text-red-500 text-center">검색에 실패했습니다: ${e.message}</div>`; renderVetList(mockVetData); }
+                } catch (e) { container.innerHTML = `<div class="col-span-2 text-red-500 text-center">검색에 실패했습니다: ${e.message}</div>`; }
             });
 
             // Chat
@@ -1178,13 +794,11 @@
 
                 const chatWindow = document.getElementById('chatWindow');
 
-                // Add user message
                 const userBubble = document.createElement('div');
                 userBubble.className = 'flex justify-end';
                 userBubble.innerHTML = `<div class="chat-bubble chat-bubble-user p-3 rounded-lg shadow-sm">${message}</div>`;
                 chatWindow.appendChild(userBubble);
 
-                // Add loading indicator
                 const loadingBubble = document.createElement('div');
                 loadingBubble.className = 'flex justify-start';
                 loadingBubble.id = 'chat-loading';
@@ -1195,10 +809,7 @@
                 input.value = '';
 
                 try {
-                    const healthDataSummary = localHealthLogs.length > 0
-                        ? `최근 건강 기록: ${JSON.stringify(localHealthLogs.slice(0, 3))}`
-                        : '건강 기록 없음';
-                    const prompt = `당신은 ${petData.name}의 전담 AI 집사입니다. ${petContext} ${healthDataSummary}. 과거 건강 데이터: ${JSON.stringify(mockPetHistoricalData)}. 보호자 질문: "${message}". 친절하고 전문적으로 답변해주세요. 한국어로 대답해주세요.`;
+                    const prompt = `당신은 ${currentPetData.name}의 전담 AI 집사입니다. ${getPetContext()} 보호자 질문: "${message}". 친절하고 전문적으로 답변해주세요. 한국어로 대답해주세요.`;
                     const result = await callGeminiAPI(prompt);
 
                     const loading = document.getElementById('chat-loading');
@@ -1220,7 +831,7 @@
                 chatWindow.scrollTop = chatWindow.scrollHeight;
             });
 
-            // Persistent Chat (same logic, different elements)
+            // Persistent Chat
             const persistentChatForm = document.getElementById('persistentChatForm');
             if (persistentChatForm) persistentChatForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
@@ -1245,10 +856,7 @@
                 input.value = '';
 
                 try {
-                    const healthDataSummary = localHealthLogs.length > 0
-                        ? `최근 건강 기록: ${JSON.stringify(localHealthLogs.slice(0, 3))}`
-                        : '건강 기록 없음';
-                    const prompt = `당신은 ${petData.name}의 전담 AI 집사입니다. ${petContext} ${healthDataSummary}. 과거 건강 데이터: ${JSON.stringify(mockPetHistoricalData)}. 보호자 질문: "${message}". 친절하고 전문적으로 답변해주세요. 한국어로 대답해주세요.`;
+                    const prompt = `당신은 ${currentPetData.name}의 전담 AI 집사입니다. ${getPetContext()} 보호자 질문: "${message}". 친절하고 전문적으로 답변해주세요. 한국어로 대답해주세요.`;
                     const result = await callGeminiAPI(prompt);
 
                     const loading = document.getElementById('persistent-chat-loading');
