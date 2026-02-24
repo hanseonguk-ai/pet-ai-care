@@ -288,6 +288,17 @@
                     <h3 class="text-xl md:text-2xl font-bold text-slate-800 mb-3 md:mb-4">AI 분석 결과</h3>
                     <div id="analysisResult" class="bg-white rounded-xl shadow-sm p-4 md:p-6 prose max-w-none text-sm md:text-base"></div>
                 </div>
+                <!-- 이미지 분석 기반 AI 채팅 -->
+                <div id="healthChatContainer" class="mt-4 md:mt-6 hidden">
+                    <h3 class="text-lg md:text-xl font-bold text-slate-800 mb-3 md:mb-4">분석 결과에 대해 AI에게 물어보기</h3>
+                    <div id="healthChatWindow" class="bg-white rounded-xl shadow-sm p-3 md:p-4 overflow-y-auto space-y-3 md:space-y-4 min-h-[100px] max-h-[300px] md:max-h-[400px]">
+                        <div class="flex justify-start"><div id="health-chat-welcome" class="chat-bubble chat-bubble-ai p-3 rounded-lg shadow-sm text-sm md:text-base">분석 결과를 바탕으로 궁금한 점을 물어보세요!</div></div>
+                    </div>
+                    <form id="healthChatForm" class="mt-3 md:mt-4 flex items-center space-x-2">
+                        <input id="healthChatInput" type="text" placeholder="분석 결과에 대해 궁금한 점을 물어보세요..." class="flex-grow border-slate-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 p-2.5 md:p-3 text-base" required>
+                        <button type="submit" class="bg-indigo-600 text-white font-semibold p-2.5 md:p-3 rounded-lg hover:bg-indigo-700 transition-colors flex items-center"><i data-lucide="send" class="w-5 h-5 md:w-6 md:h-6"></i></button>
+                    </form>
+                </div>
             </section>
 
             <!-- AI Video Analysis Page -->
@@ -324,6 +335,17 @@
                 <div class="mt-4 md:mt-6 bg-white rounded-xl shadow-sm p-4 md:p-6">
                     <h3 class="text-lg md:text-xl font-bold text-slate-800 mb-3 md:mb-4">영상 분석 기록</h3>
                     <div id="video-analysis-history" class="space-y-3 md:space-y-4 max-h-72 md:max-h-96 overflow-y-auto"><p class="text-slate-500 text-center text-sm">아직 분석 기록이 없습니다.</p></div>
+                </div>
+                <!-- 영상 분석 기반 AI 채팅 -->
+                <div id="videoChatContainer" class="mt-4 md:mt-6 hidden">
+                    <h3 class="text-lg md:text-xl font-bold text-slate-800 mb-3 md:mb-4">영상 분석 결과에 대해 AI에게 물어보기</h3>
+                    <div id="videoChatWindow" class="bg-white rounded-xl shadow-sm p-3 md:p-4 overflow-y-auto space-y-3 md:space-y-4 min-h-[100px] max-h-[300px] md:max-h-[400px]">
+                        <div class="flex justify-start"><div id="video-chat-welcome" class="chat-bubble chat-bubble-ai p-3 rounded-lg shadow-sm text-sm md:text-base">영상 분석 결과를 바탕으로 궁금한 점을 물어보세요!</div></div>
+                    </div>
+                    <form id="videoChatForm" class="mt-3 md:mt-4 flex items-center space-x-2">
+                        <input id="videoChatInput" type="text" placeholder="영상 분석 결과에 대해 궁금한 점을 물어보세요..." class="flex-grow border-slate-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 p-2.5 md:p-3 text-base" required>
+                        <button type="submit" class="bg-indigo-600 text-white font-semibold p-2.5 md:p-3 rounded-lg hover:bg-indigo-700 transition-colors flex items-center"><i data-lucide="send" class="w-5 h-5 md:w-6 md:h-6"></i></button>
+                    </form>
                 </div>
             </section>
 
@@ -466,20 +488,6 @@
                 <div id="vetResults" class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6"></div>
             </section>
 
-            <!-- Persistent Chat Widget (shown on all pages except dedicated chat page) -->
-            <div id="persistent-chat" class="mt-6 md:mt-8">
-                <header class="mb-3 md:mb-4">
-                    <h2 class="text-xl md:text-3xl font-bold text-slate-800">✨ AI 집사에게 물어보기</h2>
-                    <p id="persistent-chat-subtitle" class="text-slate-500 text-sm md:text-base">반려동물에 대해 궁금한 점을 AI에게 물어보세요.</p>
-                </header>
-                <div id="persistentChatWindow" class="bg-white rounded-xl shadow-sm p-3 md:p-4 overflow-y-auto space-y-3 md:space-y-4 min-h-[100px] max-h-[300px] md:max-h-[400px]">
-                    <div class="flex justify-start"><div id="persistent-chat-welcome" class="chat-bubble chat-bubble-ai p-3 rounded-lg shadow-sm text-sm md:text-base">안녕하세요! AI 집사입니다. 무엇이 궁금하신가요?</div></div>
-                </div>
-                <form id="persistentChatForm" class="mt-3 md:mt-4 flex items-center space-x-2">
-                    <input id="persistentChatInput" type="text" placeholder="메시지를 입력하세요..." class="flex-grow border-slate-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 p-2.5 md:p-3 text-base" required>
-                    <button type="submit" class="bg-indigo-600 text-white font-semibold p-2.5 md:p-3 rounded-lg hover:bg-indigo-700 transition-colors flex items-center"><i data-lucide="send" class="w-5 h-5 md:w-6 md:h-6"></i></button>
-                </form>
-            </div>
         </main>
 
         <!-- Mobile Bottom Navigation -->
@@ -700,11 +708,6 @@
                 btn.classList.remove('active');
                 if (btn.dataset.page === pageName) btn.classList.add('active');
             });
-            // Persistent chat visibility
-            const persistentChat = document.getElementById('persistent-chat');
-            if (persistentChat) {
-                persistentChat.style.display = (pageName === 'chat') ? 'none' : 'block';
-            }
         }
 
         // Desktop sidebar nav clicks
@@ -771,8 +774,8 @@
             document.getElementById('breed-info-title').textContent = `AI 맞춤 품종 정보: ${p.breed}`;
             document.getElementById('chat-subtitle').textContent = `${p.name}에 대해 궁금한 점을 AI에게 물어보세요.`;
             document.getElementById('chat-welcome').textContent = `안녕하세요! 저는 ${p.name}의 전담 AI 집사입니다. 무엇이 궁금하신가요?`;
-            document.getElementById('persistent-chat-subtitle').textContent = `${p.name}에 대해 궁금한 점을 AI에게 물어보세요.`;
-            document.getElementById('persistent-chat-welcome').textContent = `안녕하세요! 저는 ${p.name}의 전담 AI 집사입니다. 무엇이 궁금하신가요?`;
+            document.getElementById('health-chat-welcome').textContent = `${p.name}의 분석 결과를 바탕으로 궁금한 점을 물어보세요!`;
+            document.getElementById('video-chat-welcome').textContent = `${p.name}의 영상 분석 결과를 바탕으로 궁금한 점을 물어보세요!`;
         }
 
         // --- Video Analysis History ---
@@ -849,6 +852,8 @@
                     const prompt = `당신은 수의사 AI 보조입니다. ${getPetContext()} 이 반려동물의 사진을 분석해주세요. 피부 상태, 눈 상태, 귀 상태, 전반적인 외형 등을 확인하고, 발견되는 이상 소견이 있다면 설명해주세요. 주의해야 할 사항이 있다면 알려주세요. 이것은 참고용 예비 분석이며 전문 수의사 진료를 대체할 수 없음을 명시해주세요. 한국어로 대답해주세요.`;
                     const result = await callGeminiVisionAPI(prompt, currentImageBase64);
                     resultDiv.innerHTML = simpleMarkdownToHtml(result);
+                    lastImageAnalysisResult = result;
+                    document.getElementById('healthChatContainer').classList.remove('hidden');
                 } catch (e) { resultDiv.innerHTML = `<p class="text-red-500">분석에 실패했습니다: ${e.message}</p>`; }
             });
 
@@ -994,6 +999,8 @@
 
                     const result = await callGeminiVisionMultiFrame(prompt, frames);
                     resultDiv.innerHTML = simpleMarkdownToHtml(result);
+                    lastVideoAnalysisResult = result;
+                    document.getElementById('videoChatContainer').classList.remove('hidden');
 
                     // Save to session history
                     const now = new Date();
@@ -1276,15 +1283,16 @@
                 chatWindow.scrollTop = chatWindow.scrollHeight;
             });
 
-            // Persistent Chat
-            const persistentChatForm = document.getElementById('persistentChatForm');
-            if (persistentChatForm) persistentChatForm.addEventListener('submit', async (e) => {
+            // Health Check Context Chat (이미지 분석 결과 기반)
+            let lastImageAnalysisResult = '';
+            const healthChatForm = document.getElementById('healthChatForm');
+            if (healthChatForm) healthChatForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                const input = document.getElementById('persistentChatInput');
+                const input = document.getElementById('healthChatInput');
                 const message = input.value.trim();
                 if (!message) return;
 
-                const chatWindow = document.getElementById('persistentChatWindow');
+                const chatWindow = document.getElementById('healthChatWindow');
 
                 const userBubble = document.createElement('div');
                 userBubble.className = 'flex justify-end';
@@ -1293,28 +1301,86 @@
 
                 const loadingBubble = document.createElement('div');
                 loadingBubble.className = 'flex justify-start';
-                loadingBubble.id = 'persistent-chat-loading';
+                loadingBubble.id = 'health-chat-loading';
                 loadingBubble.innerHTML = `<div class="chat-bubble chat-bubble-ai p-3 rounded-lg shadow-sm text-sm"><div class="animate-pulse">AI가 생각 중...</div></div>`;
                 chatWindow.appendChild(loadingBubble);
                 chatWindow.scrollTop = chatWindow.scrollHeight;
-
                 input.value = '';
 
                 try {
-                    const prompt = `당신은 ${currentPetData.name}의 전담 AI 집사입니다. ${getPetContext()} 보호자 질문: "${message}". 친절하고 전문적으로 답변해주세요. 한국어로 대답해주세요.`;
+                    const prompt = `당신은 ${currentPetData.name}의 전담 수의사 AI입니다. ${getPetContext()}
+
+아래는 방금 이 반려동물의 사진을 AI가 분석한 결과입니다:
+---
+${lastImageAnalysisResult}
+---
+
+위 분석 결과를 기반으로 보호자의 질문에 답변해주세요.
+보호자 질문: "${message}"
+한국어로 친절하고 전문적으로 답변해주세요.`;
                     const result = await callGeminiAPI(prompt);
-
-                    const loading = document.getElementById('persistent-chat-loading');
+                    const loading = document.getElementById('health-chat-loading');
                     if (loading) loading.remove();
-
                     const aiBubble = document.createElement('div');
                     aiBubble.className = 'flex justify-start';
                     aiBubble.innerHTML = `<div class="chat-bubble chat-bubble-ai p-3 rounded-lg shadow-sm text-sm md:text-base">${simpleMarkdownToHtml(result)}</div>`;
                     chatWindow.appendChild(aiBubble);
                 } catch (error) {
-                    const loading = document.getElementById('persistent-chat-loading');
+                    const loading = document.getElementById('health-chat-loading');
                     if (loading) loading.remove();
+                    const errorBubble = document.createElement('div');
+                    errorBubble.className = 'flex justify-start';
+                    errorBubble.innerHTML = `<div class="chat-bubble chat-bubble-ai p-3 rounded-lg shadow-sm text-red-500 text-sm">죄송합니다. 응답 생성에 실패했습니다: ${error.message}</div>`;
+                    chatWindow.appendChild(errorBubble);
+                }
+                chatWindow.scrollTop = chatWindow.scrollHeight;
+            });
 
+            // Video Analysis Context Chat (영상 분석 결과 기반)
+            let lastVideoAnalysisResult = '';
+            const videoChatForm = document.getElementById('videoChatForm');
+            if (videoChatForm) videoChatForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const input = document.getElementById('videoChatInput');
+                const message = input.value.trim();
+                if (!message) return;
+
+                const chatWindow = document.getElementById('videoChatWindow');
+
+                const userBubble = document.createElement('div');
+                userBubble.className = 'flex justify-end';
+                userBubble.innerHTML = `<div class="chat-bubble chat-bubble-user p-3 rounded-lg shadow-sm text-sm md:text-base">${message}</div>`;
+                chatWindow.appendChild(userBubble);
+
+                const loadingBubble = document.createElement('div');
+                loadingBubble.className = 'flex justify-start';
+                loadingBubble.id = 'video-chat-loading';
+                loadingBubble.innerHTML = `<div class="chat-bubble chat-bubble-ai p-3 rounded-lg shadow-sm text-sm"><div class="animate-pulse">AI가 생각 중...</div></div>`;
+                chatWindow.appendChild(loadingBubble);
+                chatWindow.scrollTop = chatWindow.scrollHeight;
+                input.value = '';
+
+                try {
+                    const prompt = `당신은 ${currentPetData.name}의 전담 수의사 AI입니다. ${getPetContext()}
+
+아래는 방금 이 반려동물의 행동 영상을 AI가 분석한 결과입니다:
+---
+${lastVideoAnalysisResult}
+---
+
+위 영상 분석 결과를 기반으로 보호자의 질문에 답변해주세요.
+보호자 질문: "${message}"
+한국어로 친절하고 전문적으로 답변해주세요.`;
+                    const result = await callGeminiAPI(prompt);
+                    const loading = document.getElementById('video-chat-loading');
+                    if (loading) loading.remove();
+                    const aiBubble = document.createElement('div');
+                    aiBubble.className = 'flex justify-start';
+                    aiBubble.innerHTML = `<div class="chat-bubble chat-bubble-ai p-3 rounded-lg shadow-sm text-sm md:text-base">${simpleMarkdownToHtml(result)}</div>`;
+                    chatWindow.appendChild(aiBubble);
+                } catch (error) {
+                    const loading = document.getElementById('video-chat-loading');
+                    if (loading) loading.remove();
                     const errorBubble = document.createElement('div');
                     errorBubble.className = 'flex justify-start';
                     errorBubble.innerHTML = `<div class="chat-bubble chat-bubble-ai p-3 rounded-lg shadow-sm text-red-500 text-sm">죄송합니다. 응답 생성에 실패했습니다: ${error.message}</div>`;
