@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Pet AI Care</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
@@ -17,7 +17,7 @@
         .nav-item.active { background-color: #4f46e5; color: white; }
         .page { display: none; }
         .page.active { display: block; }
-        .chat-bubble { max-width: 80%; }
+        .chat-bubble { max-width: 85%; word-break: break-word; }
         .chat-bubble-user { background-color: #4f46e5; color: white; }
         .chat-bubble-ai { background-color: #ffffff; color: #334155; }
         .file-upload-wrapper { border: 2px dashed #cbd5e1; }
@@ -25,43 +25,58 @@
         .tab-btn.active { border-color: #4f46e5; color: #4f46e5; background-color: #eef2ff; }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
+        .mobile-nav-btn.active { color: #4f46e5; }
+        .mobile-nav-btn { color: #94a3b8; }
+        @media (max-width: 767px) {
+            .chat-bubble { max-width: 90%; }
+        }
     </style>
 </head>
 <body>
 
     <!-- Pet Info Container -->
-    <div id="pet-info-container" class="w-full h-screen flex items-center justify-center bg-slate-100">
+    <div id="pet-info-container" class="w-full min-h-screen flex items-center justify-center bg-slate-100 p-4">
         <div class="w-full max-w-md">
-            <div class="bg-white p-8 rounded-xl shadow-md">
-                <h2 class="text-3xl font-bold text-center text-indigo-600 mb-2">Pet AI Care</h2>
-                <p class="text-center text-slate-500 mb-8">반려동물 정보를 입력해주세요.</p>
+            <div class="bg-white p-6 sm:p-8 rounded-xl shadow-md">
+                <h2 class="text-2xl sm:text-3xl font-bold text-center text-indigo-600 mb-2">Pet AI Care</h2>
+                <p class="text-center text-slate-500 mb-6 sm:mb-8 text-sm sm:text-base">반려동물 정보를 입력해주세요.</p>
                 <form id="pet-info-form">
                     <div class="mb-4">
-                        <label for="pet-name" class="block text-slate-700 font-semibold mb-2">이름</label>
-                        <input type="text" id="pet-name" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                        <label for="pet-name" class="block text-slate-700 font-semibold mb-2 text-sm">이름</label>
+                        <input type="text" id="pet-name" class="w-full px-3 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-base" required>
                     </div>
                     <div class="mb-4">
-                        <label for="pet-breed" class="block text-slate-700 font-semibold mb-2">품종</label>
-                        <input type="text" id="pet-breed" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                        <label for="pet-breed" class="block text-slate-700 font-semibold mb-2 text-sm">품종</label>
+                        <input type="text" id="pet-breed" class="w-full px-3 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-base" required>
                     </div>
                     <div class="mb-4">
-                        <label for="pet-age" class="block text-slate-700 font-semibold mb-2">나이</label>
-                        <input type="number" id="pet-age" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                        <label for="pet-age" class="block text-slate-700 font-semibold mb-2 text-sm">나이</label>
+                        <input type="number" id="pet-age" class="w-full px-3 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-base" required>
                     </div>
                     <div class="mb-6">
-                        <label for="pet-weight" class="block text-slate-700 font-semibold mb-2">몸무게 (kg)</label>
-                        <input type="number" step="0.01" id="pet-weight" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                        <label for="pet-weight" class="block text-slate-700 font-semibold mb-2 text-sm">몸무게 (kg)</label>
+                        <input type="number" step="0.01" id="pet-weight" class="w-full px-3 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-base" required>
                     </div>
-                    <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-3 rounded-lg hover:bg-indigo-700 transition-colors">시작하기</button>
+                    <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-3 rounded-lg hover:bg-indigo-700 transition-colors text-base">시작하기</button>
                 </form>
             </div>
         </div>
     </div>
 
     <!-- Main App Container (Initially Hidden) -->
-    <div id="app-container" class="h-screen flex-grow flex hidden">
-        <!-- Sidebar Navigation -->
-        <aside class="w-64 bg-white shadow-md flex-shrink-0 flex flex-col">
+    <div id="app-container" class="h-screen flex hidden">
+
+        <!-- Mobile Top Header -->
+        <header id="mobileHeader" class="md:hidden fixed top-0 left-0 right-0 z-40 bg-white shadow-sm h-14 flex items-center justify-between px-4">
+            <h1 class="text-lg font-bold text-indigo-600 flex items-center"><i data-lucide="cat" class="mr-1.5 w-5 h-5"></i> Pet AI Care</h1>
+            <button id="mobileEditPetBtn" class="flex items-center gap-2 text-slate-600">
+                <span id="mobile-pet-name" class="text-sm font-medium truncate max-w-[80px]">반려동물</span>
+                <img id="mobile-pet-img" src="https://placehold.co/32x32/e0e7ff/4338ca?text=Pet" class="w-8 h-8 rounded-full" alt="Pet">
+            </button>
+        </header>
+
+        <!-- Desktop Sidebar Navigation -->
+        <aside class="hidden md:flex w-64 bg-white shadow-md flex-shrink-0 flex-col">
             <div class="h-20 flex items-center justify-center border-b"><h1 class="text-2xl font-bold text-indigo-600 flex items-center"><i data-lucide="cat" class="mr-2"></i> Pet AI Care</h1></div>
             <nav class="flex-grow p-4">
                 <ul class="space-y-2">
@@ -84,166 +99,260 @@
         </aside>
 
         <!-- Main Content -->
-        <main class="flex-1 bg-slate-100 p-8 overflow-y-auto">
+        <main class="flex-1 bg-slate-100 p-4 pt-[72px] pb-[88px] md:p-8 md:pt-8 md:pb-8 overflow-y-auto">
             <!-- AI Health Check Page -->
             <div id="health-check" class="page active">
-                <header class="mb-6"><h2 class="text-3xl font-bold text-slate-800">AI 건강 체크</h2><p id="health-check-subtitle" class="text-slate-500">반려동물의 피부, 눈, 귀 등의 사진을 올려 AI에게 예비 분석을 요청하세요.</p></header>
-                <div class="bg-white rounded-xl shadow-sm p-6"><div id="fileUploadWrapper" class="file-upload-wrapper rounded-lg p-8 text-center cursor-pointer hover:bg-slate-50 transition-colors"><i data-lucide="upload-cloud" class="w-16 h-16 mx-auto text-slate-400"></i><p class="mt-4 font-semibold text-slate-700">분석할 사진을 여기에 드래그하거나 클릭하세요</p><p class="text-sm text-slate-500">피부, 눈, 귀 등 상태를 확인할 부위를 선명하게 찍어주세요.</p><input type="file" id="imageUpload" class="hidden" accept="image/*"></div><div id="imagePreviewContainer" class="mt-6 text-center hidden"><img id="imagePreview" src="" alt="Image Preview" class="max-w-xs max-h-64 mx-auto rounded-lg shadow-md"><button id="analyzeImageBtn" class="mt-4 bg-indigo-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-indigo-700 transition-colors flex items-center mx-auto"><span class="mr-2">✨</span> AI 분석 시작하기</button></div></div>
-                <div id="analysisResultContainer" class="mt-6 hidden"><h3 class="text-2xl font-bold text-slate-800 mb-4">AI 분석 결과</h3><div id="analysisResult" class="bg-white rounded-xl shadow-sm p-6 prose max-w-none"></div></div>
+                <header class="mb-4 md:mb-6">
+                    <h2 class="text-2xl md:text-3xl font-bold text-slate-800">AI 건강 체크</h2>
+                    <p id="health-check-subtitle" class="text-slate-500 text-sm md:text-base">반려동물의 피부, 눈, 귀 등의 사진을 올려 AI에게 예비 분석을 요청하세요.</p>
+                </header>
+                <div class="bg-white rounded-xl shadow-sm p-4 md:p-6">
+                    <div id="fileUploadWrapper" class="file-upload-wrapper rounded-lg p-6 md:p-8 text-center cursor-pointer hover:bg-slate-50 transition-colors">
+                        <i data-lucide="upload-cloud" class="w-12 h-12 md:w-16 md:h-16 mx-auto text-slate-400"></i>
+                        <p class="mt-3 md:mt-4 font-semibold text-slate-700 text-sm md:text-base">분석할 사진을 여기에 드래그하거나 클릭하세요</p>
+                        <p class="text-xs md:text-sm text-slate-500">피부, 눈, 귀 등 상태를 확인할 부위를 선명하게 찍어주세요.</p>
+                        <input type="file" id="imageUpload" class="hidden" accept="image/*">
+                    </div>
+                    <div id="imagePreviewContainer" class="mt-4 md:mt-6 text-center hidden">
+                        <img id="imagePreview" src="" alt="Image Preview" class="max-w-full sm:max-w-xs max-h-64 mx-auto rounded-lg shadow-md">
+                        <button id="analyzeImageBtn" class="mt-4 bg-indigo-600 text-white font-semibold py-2.5 px-5 rounded-lg hover:bg-indigo-700 transition-colors flex items-center mx-auto text-sm md:text-base">
+                            <span class="mr-2">✨</span> AI 분석 시작하기
+                        </button>
+                    </div>
+                </div>
+                <div id="analysisResultContainer" class="mt-4 md:mt-6 hidden">
+                    <h3 class="text-xl md:text-2xl font-bold text-slate-800 mb-3 md:mb-4">AI 분석 결과</h3>
+                    <div id="analysisResult" class="bg-white rounded-xl shadow-sm p-4 md:p-6 prose max-w-none text-sm md:text-base"></div>
+                </div>
             </div>
 
             <!-- AI Video Analysis Page -->
             <div id="video-analysis" class="page">
-                <header class="mb-6"><h2 class="text-3xl font-bold text-slate-800">AI 영상 분석</h2><p id="video-analysis-subtitle" class="text-slate-500">반려동물의 행동 영상을 올려 AI가 전체 영상을 분석합니다.</p></header>
-                <div class="bg-white rounded-xl shadow-sm p-6">
-                    <div id="videoUploadWrapper" class="file-upload-wrapper rounded-lg p-8 text-center cursor-pointer hover:bg-slate-50 transition-colors">
-                        <i data-lucide="video" class="w-16 h-16 mx-auto text-slate-400"></i>
-                        <p class="mt-4 font-semibold text-slate-700">분석할 영상을 여기에 드래그하거나 클릭하세요</p>
-                        <p class="text-sm text-slate-500">영상의 모든 프레임을 AI가 자동으로 읽고 분석합니다.</p>
+                <header class="mb-4 md:mb-6">
+                    <h2 class="text-2xl md:text-3xl font-bold text-slate-800">AI 영상 분석</h2>
+                    <p id="video-analysis-subtitle" class="text-slate-500 text-sm md:text-base">반려동물의 행동 영상을 올려 AI가 전체 영상을 분석합니다.</p>
+                </header>
+                <div class="bg-white rounded-xl shadow-sm p-4 md:p-6">
+                    <div id="videoUploadWrapper" class="file-upload-wrapper rounded-lg p-6 md:p-8 text-center cursor-pointer hover:bg-slate-50 transition-colors">
+                        <i data-lucide="video" class="w-12 h-12 md:w-16 md:h-16 mx-auto text-slate-400"></i>
+                        <p class="mt-3 md:mt-4 font-semibold text-slate-700 text-sm md:text-base">분석할 영상을 여기에 드래그하거나 클릭하세요</p>
+                        <p class="text-xs md:text-sm text-slate-500">영상의 모든 프레임을 AI가 자동으로 읽고 분석합니다.</p>
                         <input type="file" id="videoUpload" class="hidden" accept="video/*">
                     </div>
-                    <div id="videoPreviewContainer" class="mt-6 text-center hidden">
-                        <video id="videoPreview" controls class="max-w-full max-h-96 mx-auto rounded-lg shadow-md"></video>
-                        <div id="videoInfoBar" class="mt-3 text-sm text-slate-500"></div>
-                        <div id="frameExtractionProgress" class="mt-3 hidden">
-                            <div class="w-full bg-slate-200 rounded-full h-3">
-                                <div id="frameProgressBar" class="bg-indigo-600 h-3 rounded-full transition-all" style="width: 0%"></div>
+                    <div id="videoPreviewContainer" class="mt-4 md:mt-6 text-center hidden">
+                        <video id="videoPreview" controls class="max-w-full max-h-64 md:max-h-96 mx-auto rounded-lg shadow-md"></video>
+                        <div id="videoInfoBar" class="mt-2 md:mt-3 text-xs md:text-sm text-slate-500"></div>
+                        <div id="frameExtractionProgress" class="mt-2 md:mt-3 hidden">
+                            <div class="w-full bg-slate-200 rounded-full h-2.5 md:h-3">
+                                <div id="frameProgressBar" class="bg-indigo-600 h-2.5 md:h-3 rounded-full transition-all" style="width: 0%"></div>
                             </div>
-                            <p id="frameProgressText" class="text-sm text-slate-500 mt-1">프레임 추출 중...</p>
+                            <p id="frameProgressText" class="text-xs md:text-sm text-slate-500 mt-1">프레임 추출 중...</p>
                         </div>
-                        <button id="analyzeVideoBtn" class="mt-4 bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-indigo-700 transition-colors flex items-center mx-auto">
+                        <button id="analyzeVideoBtn" class="mt-4 bg-indigo-600 text-white font-semibold py-2.5 md:py-3 px-5 md:px-6 rounded-lg hover:bg-indigo-700 transition-colors flex items-center mx-auto text-sm md:text-base">
                             <span class="mr-2">✨</span> 전체 영상 AI 분석하기
                         </button>
                     </div>
                 </div>
-                <div id="videoAnalysisResultContainer" class="mt-6 hidden">
-                    <h3 class="text-2xl font-bold text-slate-800 mb-4">AI 영상 분석 결과</h3>
-                    <div id="videoAnalysisResult" class="bg-white rounded-xl shadow-sm p-6 prose max-w-none"></div>
+                <div id="videoAnalysisResultContainer" class="mt-4 md:mt-6 hidden">
+                    <h3 class="text-xl md:text-2xl font-bold text-slate-800 mb-3 md:mb-4">AI 영상 분석 결과</h3>
+                    <div id="videoAnalysisResult" class="bg-white rounded-xl shadow-sm p-4 md:p-6 prose max-w-none text-sm md:text-base"></div>
                 </div>
-                <div class="mt-6 bg-white rounded-xl shadow-sm p-6">
-                    <h3 class="text-xl font-bold text-slate-800 mb-4">영상 분석 기록</h3>
-                    <div id="video-analysis-history" class="space-y-4 max-h-96 overflow-y-auto"><p class="text-slate-500 text-center">아직 분석 기록이 없습니다.</p></div>
+                <div class="mt-4 md:mt-6 bg-white rounded-xl shadow-sm p-4 md:p-6">
+                    <h3 class="text-lg md:text-xl font-bold text-slate-800 mb-3 md:mb-4">영상 분석 기록</h3>
+                    <div id="video-analysis-history" class="space-y-3 md:space-y-4 max-h-72 md:max-h-96 overflow-y-auto"><p class="text-slate-500 text-center text-sm">아직 분석 기록이 없습니다.</p></div>
                 </div>
             </div>
 
             <!-- AI Assistant Page -->
             <div id="ai-assistant" class="page">
-                <header class="mb-6"><h2 class="text-3xl font-bold text-slate-800">AI 도우미</h2><p id="ai-assistant-subtitle" class="text-slate-500">반려동물의 일상 관리, 훈련, 응급 상황 대처까지 AI가 도와드립니다.</p></header>
+                <header class="mb-4 md:mb-6">
+                    <h2 class="text-2xl md:text-3xl font-bold text-slate-800">AI 도우미</h2>
+                    <p id="ai-assistant-subtitle" class="text-slate-500 text-sm md:text-base">반려동물의 일상 관리, 훈련, 응급 상황 대처까지 AI가 도와드립니다.</p>
+                </header>
                 <div class="border-b border-gray-200 mb-4">
-                    <nav class="-mb-px flex space-x-4 overflow-x-auto" aria-label="Tabs">
-                        <button class="tab-btn whitespace-nowrap py-3 px-4 border-b-2 font-medium text-sm text-slate-500 hover:text-indigo-600 active" data-tab="lifestyle">일상 관리</button>
-                        <button class="tab-btn whitespace-nowrap py-3 px-4 border-b-2 font-medium text-sm text-slate-500 hover:text-indigo-600" data-tab="behavior">행동 분석</button>
-                        <button class="tab-btn whitespace-nowrap py-3 px-4 border-b-2 font-medium text-sm text-slate-500 hover:text-indigo-600" data-tab="training">훈련 계획</button>
-                        <button class="tab-btn whitespace-nowrap py-3 px-4 border-b-2 font-medium text-sm text-slate-500 hover:text-indigo-600" data-tab="emergency">응급 대처</button>
-                        <button class="tab-btn whitespace-nowrap py-3 px-4 border-b-2 font-medium text-sm text-slate-500 hover:text-indigo-600" data-tab="cost-estimator">진료비 예상</button>
-                        <button class="tab-btn whitespace-nowrap py-3 px-4 border-b-2 font-medium text-sm text-slate-500 hover:text-indigo-600" data-tab="breed-info">품종 정보</button>
+                    <nav class="-mb-px flex space-x-1 sm:space-x-4 overflow-x-auto scrollbar-none" aria-label="Tabs">
+                        <button class="tab-btn whitespace-nowrap py-2.5 md:py-3 px-2.5 sm:px-4 border-b-2 font-medium text-xs sm:text-sm text-slate-500 hover:text-indigo-600 active" data-tab="lifestyle">일상 관리</button>
+                        <button class="tab-btn whitespace-nowrap py-2.5 md:py-3 px-2.5 sm:px-4 border-b-2 font-medium text-xs sm:text-sm text-slate-500 hover:text-indigo-600" data-tab="behavior">행동 분석</button>
+                        <button class="tab-btn whitespace-nowrap py-2.5 md:py-3 px-2.5 sm:px-4 border-b-2 font-medium text-xs sm:text-sm text-slate-500 hover:text-indigo-600" data-tab="training">훈련 계획</button>
+                        <button class="tab-btn whitespace-nowrap py-2.5 md:py-3 px-2.5 sm:px-4 border-b-2 font-medium text-xs sm:text-sm text-slate-500 hover:text-indigo-600" data-tab="emergency">응급 대처</button>
+                        <button class="tab-btn whitespace-nowrap py-2.5 md:py-3 px-2.5 sm:px-4 border-b-2 font-medium text-xs sm:text-sm text-slate-500 hover:text-indigo-600" data-tab="cost-estimator">진료비</button>
+                        <button class="tab-btn whitespace-nowrap py-2.5 md:py-3 px-2.5 sm:px-4 border-b-2 font-medium text-xs sm:text-sm text-slate-500 hover:text-indigo-600" data-tab="breed-info">품종 정보</button>
                     </nav>
                 </div>
 
                 <div class="tab-content active" data-tab-content="lifestyle">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-white rounded-xl shadow-sm p-6">
-                            <h3 class="text-xl font-bold text-slate-800 mb-4">"이거 먹어도 되나요?" AI 음식 체크</h3>
-                            <label for="foodInput" class="block font-semibold text-slate-700 mb-2">궁금한 음식 이름을 입력하세요:</label>
-                            <input id="foodInput" type="text" class="w-full border-slate-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500" placeholder="예: 딸기, 요거트">
-                            <button id="checkFoodSafetyBtn" class="mt-4 w-full bg-indigo-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-indigo-700 transition-colors flex items-center justify-center"><span class="mr-2">✨</span> 안전성 확인하기</button>
-                            <div id="foodSafetyResultContainer" class="mt-4 hidden"><div id="foodSafetyResult" class="prose max-w-none text-sm p-3 bg-slate-50 rounded-lg"></div></div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                        <div class="bg-white rounded-xl shadow-sm p-4 md:p-6">
+                            <h3 class="text-lg md:text-xl font-bold text-slate-800 mb-3 md:mb-4">"이거 먹어도 되나요?" AI 음식 체크</h3>
+                            <label for="foodInput" class="block font-semibold text-slate-700 mb-2 text-sm">궁금한 음식 이름을 입력하세요:</label>
+                            <input id="foodInput" type="text" class="w-full border-slate-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-base" placeholder="예: 딸기, 요거트">
+                            <button id="checkFoodSafetyBtn" class="mt-3 md:mt-4 w-full bg-indigo-600 text-white font-semibold py-2.5 px-5 rounded-lg hover:bg-indigo-700 transition-colors flex items-center justify-center text-sm md:text-base"><span class="mr-2">✨</span> 안전성 확인하기</button>
+                            <div id="foodSafetyResultContainer" class="mt-3 md:mt-4 hidden"><div id="foodSafetyResult" class="prose max-w-none text-sm p-3 bg-slate-50 rounded-lg"></div></div>
                         </div>
-                        <div class="bg-white rounded-xl shadow-sm p-6">
-                            <h3 class="text-xl font-bold text-slate-800 mb-4" id="play-recommend-title">맞춤 AI 놀이 추천</h3>
-                            <p class="text-slate-600 mb-4" id="play-recommend-desc">반려동물의 나이와 품종을 고려하여 AI가 맞춤형 놀이와 환경 풍부화 아이디어를 제안합니다.</p>
-                            <button id="recommendPlayBtn" class="w-full bg-indigo-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-indigo-700 transition-colors flex items-center justify-center"><span class="mr-2">✨</span> 놀이 추천받기</button>
-                            <div id="playRecommendationResultContainer" class="mt-4 hidden"><div id="playRecommendationResult" class="prose max-w-none text-sm p-3 bg-slate-50 rounded-lg"></div></div>
+                        <div class="bg-white rounded-xl shadow-sm p-4 md:p-6">
+                            <h3 class="text-lg md:text-xl font-bold text-slate-800 mb-3 md:mb-4" id="play-recommend-title">맞춤 AI 놀이 추천</h3>
+                            <p class="text-slate-600 mb-3 md:mb-4 text-sm" id="play-recommend-desc">반려동물의 나이와 품종을 고려하여 AI가 맞춤형 놀이와 환경 풍부화 아이디어를 제안합니다.</p>
+                            <button id="recommendPlayBtn" class="w-full bg-indigo-600 text-white font-semibold py-2.5 px-5 rounded-lg hover:bg-indigo-700 transition-colors flex items-center justify-center text-sm md:text-base"><span class="mr-2">✨</span> 놀이 추천받기</button>
+                            <div id="playRecommendationResultContainer" class="mt-3 md:mt-4 hidden"><div id="playRecommendationResult" class="prose max-w-none text-sm p-3 bg-slate-50 rounded-lg"></div></div>
                         </div>
                     </div>
-                    <div class="bg-white rounded-xl shadow-sm p-6 mt-6">
-                        <h3 class="text-xl font-bold text-slate-800 mb-4">펫시터/병원용 인수인계 노트</h3>
-                        <p class="text-slate-600 mb-4" id="handover-desc">반려동물을 맡길 때 필요한 인수인계 노트를 AI가 자동으로 생성해 드립니다.</p>
-                        <button id="generateHandoverNoteBtn" class="bg-indigo-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-indigo-700 transition-colors flex items-center"><span class="mr-2">✨</span> 인수인계 노트 생성하기</button>
-                        <div id="handoverNoteResultContainer" class="mt-4 hidden"><h4 id="handover-title" class="text-lg font-bold text-slate-800 mb-2 flex justify-between items-center">인수인계 노트 <button id="copyHandoverNoteBtn" class="text-sm bg-slate-200 text-slate-700 font-semibold py-1 px-3 rounded-lg hover:bg-slate-300">복사하기</button></h4><div id="handoverNoteResult" class="prose max-w-none text-sm p-3 bg-slate-50 rounded-lg"></div></div>
+                    <div class="bg-white rounded-xl shadow-sm p-4 md:p-6 mt-4 md:mt-6">
+                        <h3 class="text-lg md:text-xl font-bold text-slate-800 mb-3 md:mb-4">펫시터/병원용 인수인계 노트</h3>
+                        <p class="text-slate-600 mb-3 md:mb-4 text-sm" id="handover-desc">반려동물을 맡길 때 필요한 인수인계 노트를 AI가 자동으로 생성해 드립니다.</p>
+                        <button id="generateHandoverNoteBtn" class="bg-indigo-600 text-white font-semibold py-2.5 px-5 rounded-lg hover:bg-indigo-700 transition-colors flex items-center text-sm md:text-base"><span class="mr-2">✨</span> 인수인계 노트 생성하기</button>
+                        <div id="handoverNoteResultContainer" class="mt-3 md:mt-4 hidden">
+                            <h4 id="handover-title" class="text-base md:text-lg font-bold text-slate-800 mb-2 flex justify-between items-center">인수인계 노트 <button id="copyHandoverNoteBtn" class="text-xs md:text-sm bg-slate-200 text-slate-700 font-semibold py-1 px-3 rounded-lg hover:bg-slate-300">복사하기</button></h4>
+                            <div id="handoverNoteResult" class="prose max-w-none text-sm p-3 bg-slate-50 rounded-lg"></div>
+                        </div>
                     </div>
                 </div>
 
                 <div class="tab-content" data-tab-content="behavior">
-                    <div class="bg-white rounded-xl shadow-sm p-6"><label for="behaviorInput" class="block font-semibold text-slate-700 mb-2" id="behavior-label">분석하고 싶은 반려동물의 행동을 자세히 설명해주세요:</label><textarea id="behaviorInput" rows="4" class="w-full border-slate-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500" placeholder="예: 최근 밤에 잠을 안 자고 계속 울어요. 이유가 뭘까요?"></textarea><button id="analyzeBehaviorBtn" class="mt-4 bg-indigo-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-indigo-700 transition-colors flex items-center"><span class="mr-2">✨</span> AI 분석 요청하기</button></div>
-                    <div id="behaviorResultContainer" class="mt-6 hidden"><h3 class="text-2xl font-bold text-slate-800 mb-4">AI 행동 분석 결과</h3><div id="behaviorResult" class="bg-white rounded-xl shadow-sm p-6 prose max-w-none"></div></div>
+                    <div class="bg-white rounded-xl shadow-sm p-4 md:p-6">
+                        <label for="behaviorInput" class="block font-semibold text-slate-700 mb-2 text-sm" id="behavior-label">분석하고 싶은 반려동물의 행동을 자세히 설명해주세요:</label>
+                        <textarea id="behaviorInput" rows="4" class="w-full border-slate-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-base" placeholder="예: 최근 밤에 잠을 안 자고 계속 울어요. 이유가 뭘까요?"></textarea>
+                        <button id="analyzeBehaviorBtn" class="mt-3 md:mt-4 bg-indigo-600 text-white font-semibold py-2.5 px-5 rounded-lg hover:bg-indigo-700 transition-colors flex items-center text-sm md:text-base"><span class="mr-2">✨</span> AI 분석 요청하기</button>
+                    </div>
+                    <div id="behaviorResultContainer" class="mt-4 md:mt-6 hidden"><h3 class="text-xl md:text-2xl font-bold text-slate-800 mb-3 md:mb-4">AI 행동 분석 결과</h3><div id="behaviorResult" class="bg-white rounded-xl shadow-sm p-4 md:p-6 prose max-w-none text-sm md:text-base"></div></div>
                 </div>
                 <div class="tab-content" data-tab-content="training">
-                    <div class="bg-white rounded-xl shadow-sm p-6"><label for="trainingInput" class="block font-semibold text-slate-700 mb-2">어떤 훈련을 도와드릴까요? 목표를 알려주세요:</label><textarea id="trainingInput" rows="4" class="w-full border-slate-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500" placeholder="예: 가구를 긁지 않도록 훈련시키고 싶어요."></textarea><button id="generateTrainingPlanBtn" class="mt-4 bg-indigo-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-indigo-700 transition-colors flex items-center"><span class="mr-2">✨</span> AI 훈련 계획 생성하기</button></div>
-                    <div id="trainingPlanResultContainer" class="mt-6 hidden"><h3 class="text-2xl font-bold text-slate-800 mb-4">AI 맞춤 훈련 계획</h3><div id="trainingPlanResult" class="bg-white rounded-xl shadow-sm p-6 prose max-w-none"></div></div>
+                    <div class="bg-white rounded-xl shadow-sm p-4 md:p-6">
+                        <label for="trainingInput" class="block font-semibold text-slate-700 mb-2 text-sm">어떤 훈련을 도와드릴까요? 목표를 알려주세요:</label>
+                        <textarea id="trainingInput" rows="4" class="w-full border-slate-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-base" placeholder="예: 가구를 긁지 않도록 훈련시키고 싶어요."></textarea>
+                        <button id="generateTrainingPlanBtn" class="mt-3 md:mt-4 bg-indigo-600 text-white font-semibold py-2.5 px-5 rounded-lg hover:bg-indigo-700 transition-colors flex items-center text-sm md:text-base"><span class="mr-2">✨</span> AI 훈련 계획 생성하기</button>
+                    </div>
+                    <div id="trainingPlanResultContainer" class="mt-4 md:mt-6 hidden"><h3 class="text-xl md:text-2xl font-bold text-slate-800 mb-3 md:mb-4">AI 맞춤 훈련 계획</h3><div id="trainingPlanResult" class="bg-white rounded-xl shadow-sm p-4 md:p-6 prose max-w-none text-sm md:text-base"></div></div>
                 </div>
                 <div class="tab-content" data-tab-content="emergency">
-                    <div class="bg-white rounded-xl shadow-sm p-6"><label for="emergencySituation" class="block font-semibold text-slate-700 mb-2">어떤 응급 상황에 대한 대처법이 궁금하신가요?</label><select id="emergencySituation" class="w-full border-slate-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"><option>독성 물질 섭취 (예: 초콜릿, 백합)</option><option>기도 막힘 / 호흡 곤란</option><option>심한 외상 / 골절 의심</option><option>경련 또는 발작</option><option>화상</option></select><button id="generateEmergencyProtocolBtn" class="mt-4 bg-indigo-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-indigo-700 transition-colors flex items-center"><span class="mr-2">✨</span> AI 응급 대처 가이드 생성</button></div>
-                    <div id="emergencyProtocolResultContainer" class="mt-6 hidden"><h3 class="text-2xl font-bold text-slate-800 mb-4">AI 응급 대처 가이드</h3><div id="emergencyProtocolResult" class="bg-white rounded-xl shadow-sm p-6 prose max-w-none"></div></div>
+                    <div class="bg-white rounded-xl shadow-sm p-4 md:p-6">
+                        <label for="emergencySituation" class="block font-semibold text-slate-700 mb-2 text-sm">어떤 응급 상황에 대한 대처법이 궁금하신가요?</label>
+                        <select id="emergencySituation" class="w-full border-slate-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-base">
+                            <option>독성 물질 섭취 (예: 초콜릿, 백합)</option><option>기도 막힘 / 호흡 곤란</option><option>심한 외상 / 골절 의심</option><option>경련 또는 발작</option><option>화상</option>
+                        </select>
+                        <button id="generateEmergencyProtocolBtn" class="mt-3 md:mt-4 bg-indigo-600 text-white font-semibold py-2.5 px-5 rounded-lg hover:bg-indigo-700 transition-colors flex items-center text-sm md:text-base"><span class="mr-2">✨</span> AI 응급 대처 가이드 생성</button>
+                    </div>
+                    <div id="emergencyProtocolResultContainer" class="mt-4 md:mt-6 hidden"><h3 class="text-xl md:text-2xl font-bold text-slate-800 mb-3 md:mb-4">AI 응급 대처 가이드</h3><div id="emergencyProtocolResult" class="bg-white rounded-xl shadow-sm p-4 md:p-6 prose max-w-none text-sm md:text-base"></div></div>
                 </div>
                 <div class="tab-content" data-tab-content="cost-estimator">
-                    <div class="bg-white rounded-xl shadow-sm p-6"><label for="symptomInput" class="block font-semibold text-slate-700 mb-2">증상이나 궁금한 진료 항목을 입력하세요:</label><textarea id="symptomInput" rows="4" class="w-full border-slate-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500" placeholder="예: 고양이 방광염 진료, 스케일링 비용"></textarea><button id="estimateCostBtn" class="mt-4 bg-indigo-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-indigo-700 transition-colors flex items-center"><span class="mr-2">✨</span> AI 진료비 예상하기</button></div>
-                    <div id="costEstimateResultContainer" class="mt-6 hidden"><h3 class="text-2xl font-bold text-slate-800 mb-4">AI 진료비 예상 결과</h3><div id="costEstimateResult" class="bg-white rounded-xl shadow-sm p-6 prose max-w-none"></div></div>
+                    <div class="bg-white rounded-xl shadow-sm p-4 md:p-6">
+                        <label for="symptomInput" class="block font-semibold text-slate-700 mb-2 text-sm">증상이나 궁금한 진료 항목을 입력하세요:</label>
+                        <textarea id="symptomInput" rows="4" class="w-full border-slate-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-base" placeholder="예: 고양이 방광염 진료, 스케일링 비용"></textarea>
+                        <button id="estimateCostBtn" class="mt-3 md:mt-4 bg-indigo-600 text-white font-semibold py-2.5 px-5 rounded-lg hover:bg-indigo-700 transition-colors flex items-center text-sm md:text-base"><span class="mr-2">✨</span> AI 진료비 예상하기</button>
+                    </div>
+                    <div id="costEstimateResultContainer" class="mt-4 md:mt-6 hidden"><h3 class="text-xl md:text-2xl font-bold text-slate-800 mb-3 md:mb-4">AI 진료비 예상 결과</h3><div id="costEstimateResult" class="bg-white rounded-xl shadow-sm p-4 md:p-6 prose max-w-none text-sm md:text-base"></div></div>
                 </div>
                 <div class="tab-content" data-tab-content="breed-info">
-                    <div class="bg-white rounded-xl shadow-sm p-6"><p class="text-slate-700 mb-4" id="breed-info-desc">반려동물의 품종에 대한 상세 정보를 AI가 생성해 드립니다.</p><button id="generateBreedInfoBtn" class="bg-indigo-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-indigo-700 transition-colors flex items-center"><span class="mr-2">✨</span> 맞춤 품종 정보 보기</button></div>
-                    <div id="breedInfoResultContainer" class="mt-6 hidden"><h3 id="breed-info-title" class="text-2xl font-bold text-slate-800 mb-4">AI 맞춤 품종 정보</h3><div id="breedInfoResult" class="bg-white rounded-xl shadow-sm p-6 prose max-w-none"></div></div>
+                    <div class="bg-white rounded-xl shadow-sm p-4 md:p-6">
+                        <p class="text-slate-700 mb-3 md:mb-4 text-sm" id="breed-info-desc">반려동물의 품종에 대한 상세 정보를 AI가 생성해 드립니다.</p>
+                        <button id="generateBreedInfoBtn" class="bg-indigo-600 text-white font-semibold py-2.5 px-5 rounded-lg hover:bg-indigo-700 transition-colors flex items-center text-sm md:text-base"><span class="mr-2">✨</span> 맞춤 품종 정보 보기</button>
+                    </div>
+                    <div id="breedInfoResultContainer" class="mt-4 md:mt-6 hidden"><h3 id="breed-info-title" class="text-xl md:text-2xl font-bold text-slate-800 mb-3 md:mb-4">AI 맞춤 품종 정보</h3><div id="breedInfoResult" class="bg-white rounded-xl shadow-sm p-4 md:p-6 prose max-w-none text-sm md:text-base"></div></div>
                 </div>
             </div>
 
             <!-- AI Chatbot Page -->
-            <div id="chat" class="page flex flex-col h-full">
-                <header class="mb-6"><h2 class="text-3xl font-bold text-slate-800">AI 집사에게 물어보기</h2><p id="chat-subtitle" class="text-slate-500">반려동물에 대해 궁금한 점을 AI에게 물어보세요.</p></header>
-                <div id="chatWindow" class="flex-grow bg-white rounded-xl shadow-sm p-4 overflow-y-auto space-y-4"><div class="flex justify-start"><div id="chat-welcome" class="chat-bubble chat-bubble-ai p-3 rounded-lg shadow-sm">안녕하세요! AI 집사입니다. 무엇이 궁금하신가요?</div></div></div>
-                <form id="chatForm" class="mt-4 flex items-center space-x-2"><input id="chatInput" type="text" placeholder="메시지를 입력하세요..." class="flex-grow border-slate-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 p-3" required><button type="submit" class="bg-indigo-600 text-white font-semibold p-3 rounded-lg hover:bg-indigo-700 transition-colors flex items-center"><i data-lucide="send" class="w-6 h-6"></i></button></form>
+            <div id="chat" class="page flex flex-col" style="min-height: calc(100vh - 160px);">
+                <header class="mb-4 md:mb-6">
+                    <h2 class="text-2xl md:text-3xl font-bold text-slate-800">AI 집사에게 물어보기</h2>
+                    <p id="chat-subtitle" class="text-slate-500 text-sm md:text-base">반려동물에 대해 궁금한 점을 AI에게 물어보세요.</p>
+                </header>
+                <div id="chatWindow" class="flex-grow bg-white rounded-xl shadow-sm p-3 md:p-4 overflow-y-auto space-y-3 md:space-y-4">
+                    <div class="flex justify-start"><div id="chat-welcome" class="chat-bubble chat-bubble-ai p-3 rounded-lg shadow-sm text-sm md:text-base">안녕하세요! AI 집사입니다. 무엇이 궁금하신가요?</div></div>
+                </div>
+                <form id="chatForm" class="mt-3 md:mt-4 flex items-center space-x-2">
+                    <input id="chatInput" type="text" placeholder="메시지를 입력하세요..." class="flex-grow border-slate-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 p-2.5 md:p-3 text-base" required>
+                    <button type="submit" class="bg-indigo-600 text-white font-semibold p-2.5 md:p-3 rounded-lg hover:bg-indigo-700 transition-colors flex items-center"><i data-lucide="send" class="w-5 h-5 md:w-6 md:h-6"></i></button>
+                </form>
             </div>
 
             <!-- Vets Page -->
             <div id="vets" class="page">
-                <h2 class="text-3xl font-bold text-slate-800 mb-8">내 주변 동물병원</h2>
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mb-4 md:mb-8">내 주변 동물병원</h2>
 
                 <!-- GPS Location Section -->
-                <div class="bg-white p-6 rounded-xl shadow-sm mb-6">
-                    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                        <button id="getLocationBtn" class="bg-indigo-600 text-white font-semibold py-3 px-5 rounded-lg hover:bg-indigo-700 transition-colors flex items-center flex-shrink-0">
+                <div class="bg-white p-4 md:p-6 rounded-xl shadow-sm mb-4 md:mb-6">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 md:gap-4">
+                        <button id="getLocationBtn" class="w-full sm:w-auto bg-indigo-600 text-white font-semibold py-2.5 md:py-3 px-5 rounded-lg hover:bg-indigo-700 transition-colors flex items-center justify-center sm:justify-start flex-shrink-0 text-sm md:text-base">
                             <i data-lucide="map-pin" class="w-5 h-5 mr-2"></i> 내 위치 찾기
                         </button>
-                        <p id="locationStatus" class="text-slate-500 text-sm">위치 버튼을 눌러 현재 위치를 확인하세요.</p>
+                        <p id="locationStatus" class="text-slate-500 text-xs md:text-sm">위치 버튼을 눌러 현재 위치를 확인하세요.</p>
                     </div>
                 </div>
 
                 <!-- Map Link Buttons -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                    <button id="openGoogleMapBtn" class="bg-white p-5 rounded-xl shadow-sm hover:shadow-md transition-shadow flex items-center justify-center gap-3 text-slate-400 cursor-not-allowed" disabled>
-                        <svg class="w-6 h-6 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                        <span class="font-semibold">Google 지도에서 동물병원 검색</span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 mb-4 md:mb-6">
+                    <button id="openGoogleMapBtn" class="bg-white p-4 md:p-5 rounded-xl shadow-sm hover:shadow-md transition-shadow flex items-center justify-center gap-2 md:gap-3 text-slate-400 cursor-not-allowed text-sm md:text-base" disabled>
+                        <svg class="w-5 h-5 md:w-6 md:h-6 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                        <span class="font-semibold">Google 지도에서 검색</span>
                     </button>
-                    <button id="openNaverMapBtn" class="bg-white p-5 rounded-xl shadow-sm hover:shadow-md transition-shadow flex items-center justify-center gap-3 text-slate-400 cursor-not-allowed" disabled>
-                        <svg class="w-6 h-6 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                        <span class="font-semibold">네이버 지도에서 동물병원 검색</span>
+                    <button id="openNaverMapBtn" class="bg-white p-4 md:p-5 rounded-xl shadow-sm hover:shadow-md transition-shadow flex items-center justify-center gap-2 md:gap-3 text-slate-400 cursor-not-allowed text-sm md:text-base" disabled>
+                        <svg class="w-5 h-5 md:w-6 md:h-6 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                        <span class="font-semibold">네이버 지도에서 검색</span>
                     </button>
                 </div>
 
                 <!-- AI Search Section -->
-                <div class="bg-white p-4 rounded-xl shadow-sm mb-6">
-                    <h3 class="text-lg font-bold text-slate-800 mb-3">AI 병원 추천</h3>
-                    <div class="flex items-center space-x-2"><input id="vetSearchInput" type="text" placeholder="예: 방광염 잘 보고 야간 진료 가능한 곳" class="flex-grow border-slate-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"><button id="vetSearchBtn" class="bg-indigo-600 text-white font-semibold p-3 rounded-lg hover:bg-indigo-700 transition-colors flex items-center"><span class="mr-2">✨</span> AI 검색</button></div>
+                <div class="bg-white p-3 md:p-4 rounded-xl shadow-sm mb-4 md:mb-6">
+                    <h3 class="text-base md:text-lg font-bold text-slate-800 mb-2 md:mb-3">AI 병원 추천</h3>
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:space-x-2">
+                        <input id="vetSearchInput" type="text" placeholder="예: 방광염 잘 보고 야간 진료 가능한 곳" class="flex-grow border-slate-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-base">
+                        <button id="vetSearchBtn" class="bg-indigo-600 text-white font-semibold p-2.5 md:p-3 rounded-lg hover:bg-indigo-700 transition-colors flex items-center justify-center text-sm md:text-base flex-shrink-0"><span class="mr-2">✨</span> AI 검색</button>
+                    </div>
                 </div>
-                <div id="vetResults" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+                <div id="vetResults" class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6"></div>
             </div>
 
             <!-- Persistent Chat Widget (shown on all pages except dedicated chat page) -->
-            <div id="persistent-chat" class="mt-8">
-                <header class="mb-4"><h2 class="text-3xl font-bold text-slate-800">✨ AI 집사에게 물어보기</h2><p id="persistent-chat-subtitle" class="text-slate-500">반려동물에 대해 궁금한 점을 AI에게 물어보세요.</p></header>
-                <div id="persistentChatWindow" class="bg-white rounded-xl shadow-sm p-4 overflow-y-auto space-y-4 min-h-[120px] max-h-[400px]"><div class="flex justify-start"><div id="persistent-chat-welcome" class="chat-bubble chat-bubble-ai p-3 rounded-lg shadow-sm">안녕하세요! AI 집사입니다. 무엇이 궁금하신가요?</div></div></div>
-                <form id="persistentChatForm" class="mt-4 flex items-center space-x-2"><input id="persistentChatInput" type="text" placeholder="메시지를 입력하세요..." class="flex-grow border-slate-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 p-3" required><button type="submit" class="bg-indigo-600 text-white font-semibold p-3 rounded-lg hover:bg-indigo-700 transition-colors flex items-center"><i data-lucide="send" class="w-6 h-6"></i></button></form>
+            <div id="persistent-chat" class="mt-6 md:mt-8">
+                <header class="mb-3 md:mb-4">
+                    <h2 class="text-xl md:text-3xl font-bold text-slate-800">✨ AI 집사에게 물어보기</h2>
+                    <p id="persistent-chat-subtitle" class="text-slate-500 text-sm md:text-base">반려동물에 대해 궁금한 점을 AI에게 물어보세요.</p>
+                </header>
+                <div id="persistentChatWindow" class="bg-white rounded-xl shadow-sm p-3 md:p-4 overflow-y-auto space-y-3 md:space-y-4 min-h-[100px] max-h-[300px] md:max-h-[400px]">
+                    <div class="flex justify-start"><div id="persistent-chat-welcome" class="chat-bubble chat-bubble-ai p-3 rounded-lg shadow-sm text-sm md:text-base">안녕하세요! AI 집사입니다. 무엇이 궁금하신가요?</div></div>
+                </div>
+                <form id="persistentChatForm" class="mt-3 md:mt-4 flex items-center space-x-2">
+                    <input id="persistentChatInput" type="text" placeholder="메시지를 입력하세요..." class="flex-grow border-slate-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 p-2.5 md:p-3 text-base" required>
+                    <button type="submit" class="bg-indigo-600 text-white font-semibold p-2.5 md:p-3 rounded-lg hover:bg-indigo-700 transition-colors flex items-center"><i data-lucide="send" class="w-5 h-5 md:w-6 md:h-6"></i></button>
+                </form>
             </div>
         </main>
+
+        <!-- Mobile Bottom Navigation -->
+        <nav id="mobileBottomNav" class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-slate-200">
+            <div class="flex justify-around items-center h-16 px-1 pb-[env(safe-area-inset-bottom)]">
+                <button class="mobile-nav-btn flex flex-col items-center justify-center gap-0.5 flex-1 py-1 active" data-page="health-check">
+                    <i data-lucide="scan-eye" class="w-5 h-5"></i>
+                    <span class="text-[10px] font-medium leading-tight">건강체크</span>
+                </button>
+                <button class="mobile-nav-btn flex flex-col items-center justify-center gap-0.5 flex-1 py-1" data-page="video-analysis">
+                    <i data-lucide="video" class="w-5 h-5"></i>
+                    <span class="text-[10px] font-medium leading-tight">영상분석</span>
+                </button>
+                <button class="mobile-nav-btn flex flex-col items-center justify-center gap-0.5 flex-1 py-1" data-page="ai-assistant">
+                    <i data-lucide="cpu" class="w-5 h-5"></i>
+                    <span class="text-[10px] font-medium leading-tight">AI도우미</span>
+                </button>
+                <button class="mobile-nav-btn flex flex-col items-center justify-center gap-0.5 flex-1 py-1" data-page="chat">
+                    <i data-lucide="message-circle" class="w-5 h-5"></i>
+                    <span class="text-[10px] font-medium leading-tight">챗봇</span>
+                </button>
+                <button class="mobile-nav-btn flex flex-col items-center justify-center gap-0.5 flex-1 py-1" data-page="vets">
+                    <i data-lucide="stethoscope" class="w-5 h-5"></i>
+                    <span class="text-[10px] font-medium leading-tight">병원찾기</span>
+                </button>
+            </div>
+        </nav>
     </div>
 
     <!-- Gemini Modal -->
-    <div id="geminiModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4">
-        <div class="bg-white rounded-xl shadow-2xl p-6 max-w-2xl w-full relative">
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-500 hover:text-slate-800"><i data-lucide="x" class="w-6 h-6"></i></button>
-            <h3 id="modalTitle" class="text-2xl font-bold mb-4 text-slate-800"></h3>
-            <div id="modalContent" class="text-slate-700 max-h-[60vh] overflow-y-auto pr-2">
-                <div id="modalSpinner" class="flex justify-center items-center h-48"><div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-indigo-600"></div></div>
-                <div id="modalResult" class="prose max-w-none"></div>
+    <div id="geminiModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-3 md:p-4">
+        <div class="bg-white rounded-xl shadow-2xl p-4 md:p-6 max-w-2xl w-full relative max-h-[90vh] flex flex-col">
+            <button onclick="closeModal()" class="absolute top-3 right-3 md:top-4 md:right-4 text-slate-500 hover:text-slate-800"><i data-lucide="x" class="w-5 h-5 md:w-6 md:h-6"></i></button>
+            <h3 id="modalTitle" class="text-xl md:text-2xl font-bold mb-3 md:mb-4 text-slate-800 pr-8"></h3>
+            <div id="modalContent" class="text-slate-700 overflow-y-auto flex-1 pr-1 md:pr-2">
+                <div id="modalSpinner" class="flex justify-center items-center h-36 md:h-48"><div class="animate-spin rounded-full h-12 w-12 md:h-16 md:w-16 border-t-2 border-b-2 border-indigo-600"></div></div>
+                <div id="modalResult" class="prose max-w-none text-sm md:text-base"></div>
             </div>
         </div>
     </div>
@@ -282,9 +391,19 @@
             appContainer.classList.remove('hidden');
         });
 
-        // --- Edit Pet Info ---
+        // --- Edit Pet Info (Desktop) ---
         editPetInfoBtn.addEventListener('click', (e) => {
             e.preventDefault();
+            goToEditPet();
+        });
+
+        // --- Edit Pet Info (Mobile Header) ---
+        const mobileEditPetBtn = document.getElementById('mobileEditPetBtn');
+        if (mobileEditPetBtn) mobileEditPetBtn.addEventListener('click', () => {
+            goToEditPet();
+        });
+
+        function goToEditPet() {
             if (currentPetData) {
                 document.getElementById('pet-name').value = currentPetData.name;
                 document.getElementById('pet-breed').value = currentPetData.breed;
@@ -293,7 +412,7 @@
             }
             appContainer.classList.add('hidden');
             petInfoContainer.classList.remove('hidden');
-        });
+        }
 
         // --- Gemini API Calls (via Cloudflare Functions Proxy) ---
         async function callGeminiAPI(prompt) {
@@ -385,21 +504,36 @@
         // --- Navigation Logic ---
         function showPage(pageName) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            // Desktop nav
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             const targetPage = document.getElementById(pageName);
             if (targetPage) targetPage.classList.add('active');
             const targetNav = document.querySelector(`.nav-item[data-page="${pageName}"]`);
             if (targetNav) targetNav.classList.add('active');
+            // Mobile nav
+            document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.page === pageName) btn.classList.add('active');
+            });
+            // Persistent chat visibility
             const persistentChat = document.getElementById('persistent-chat');
             if (persistentChat) {
                 persistentChat.style.display = (pageName === 'chat') ? 'none' : 'block';
             }
         }
 
+        // Desktop sidebar nav clicks
         document.querySelectorAll('.nav-item').forEach(item => {
             item.addEventListener('click', (e) => {
                 e.preventDefault();
                 showPage(item.dataset.page);
+            });
+        });
+
+        // Mobile bottom nav clicks
+        document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                showPage(btn.dataset.page);
             });
         });
 
@@ -429,9 +563,15 @@
             if (!currentPetData) return;
             const p = currentPetData;
 
-            // Sidebar
+            // Desktop Sidebar
             document.getElementById('pet-sidebar-name').textContent = p.name;
             document.getElementById('pet-sidebar-img').src = `https://placehold.co/40x40/e0e7ff/4338ca?text=${encodeURIComponent(p.name)}`;
+
+            // Mobile Header
+            const mobilePetName = document.getElementById('mobile-pet-name');
+            const mobilePetImg = document.getElementById('mobile-pet-img');
+            if (mobilePetName) mobilePetName.textContent = p.name;
+            if (mobilePetImg) mobilePetImg.src = `https://placehold.co/32x32/e0e7ff/4338ca?text=${encodeURIComponent(p.name)}`;
 
             // Page subtitles
             document.getElementById('health-check-subtitle').textContent = `${p.name}의 피부, 눈, 귀 등의 사진을 올려 AI에게 예비 분석을 요청하세요.`;
@@ -440,7 +580,7 @@
             document.getElementById('play-recommend-title').textContent = `${p.name} 맞춤 AI 놀이 추천`;
             document.getElementById('play-recommend-desc').textContent = `${p.name}의 나이와 품종을 고려하여 AI가 맞춤형 놀이와 환경 풍부화 아이디어를 제안합니다.`;
             document.getElementById('handover-desc').textContent = `${p.name}를 맡길 때 필요한 인수인계 노트를 AI가 자동으로 생성해 드립니다.`;
-            document.getElementById('handover-title').innerHTML = `${p.name} 인수인계 노트 <button id="copyHandoverNoteBtn" class="text-sm bg-slate-200 text-slate-700 font-semibold py-1 px-3 rounded-lg hover:bg-slate-300">복사하기</button>`;
+            document.getElementById('handover-title').innerHTML = `${p.name} 인수인계 노트 <button id="copyHandoverNoteBtn" class="text-xs md:text-sm bg-slate-200 text-slate-700 font-semibold py-1 px-3 rounded-lg hover:bg-slate-300">복사하기</button>`;
             document.getElementById('behavior-label').textContent = `분석하고 싶은 ${p.name}의 행동을 자세히 설명해주세요:`;
             document.getElementById('breed-info-desc').textContent = `${p.name}의 품종인 '${p.breed}'에 대한 상세 정보를 AI가 생성해 드립니다.`;
             document.getElementById('breed-info-title').textContent = `AI 맞춤 품종 정보: ${p.breed}`;
@@ -455,24 +595,24 @@
             const container = document.getElementById('video-analysis-history');
             if (!container) return;
             if (!logs || logs.length === 0) {
-                container.innerHTML = '<p class="text-slate-500 text-center">아직 분석 기록이 없습니다.</p>';
+                container.innerHTML = '<p class="text-slate-500 text-center text-sm">아직 분석 기록이 없습니다.</p>';
                 return;
             }
             container.innerHTML = '';
             logs.forEach(log => {
                 const div = document.createElement('div');
-                div.className = 'bg-slate-50 p-4 rounded-lg flex items-start space-x-4';
+                div.className = 'bg-slate-50 p-3 md:p-4 rounded-lg flex items-start space-x-3 md:space-x-4';
                 const frameInfo = log.frameCount ? `${log.frameCount}프레임 분석` : '';
                 const durationInfo = log.duration ? ` | ${log.duration}초 영상` : '';
                 div.innerHTML = `
-                    <div class="w-16 h-16 bg-indigo-100 rounded-lg flex-shrink-0 flex items-center justify-center">
-                        <i data-lucide="scan-eye" class="w-8 h-8 text-indigo-500"></i>
+                    <div class="w-12 h-12 md:w-16 md:h-16 bg-indigo-100 rounded-lg flex-shrink-0 flex items-center justify-center">
+                        <i data-lucide="scan-eye" class="w-6 h-6 md:w-8 md:h-8 text-indigo-500"></i>
                     </div>
-                    <div class="flex-grow">
-                        <p class="font-semibold text-sm text-slate-800">${log.date || '날짜 없음'}</p>
-                        <p class="text-xs text-indigo-600 mt-0.5">${frameInfo}${durationInfo}</p>
-                        <p class="text-sm text-slate-600 mt-1">${log.summary || ''}</p>
-                        <button class="text-sm text-indigo-600 hover:underline mt-1 video-detail-btn">전체 분석 보기</button>
+                    <div class="flex-grow min-w-0">
+                        <p class="font-semibold text-xs md:text-sm text-slate-800">${log.date || '날짜 없음'}</p>
+                        <p class="text-[10px] md:text-xs text-indigo-600 mt-0.5">${frameInfo}${durationInfo}</p>
+                        <p class="text-xs md:text-sm text-slate-600 mt-1 truncate">${log.summary || ''}</p>
+                        <button class="text-xs md:text-sm text-indigo-600 hover:underline mt-1 video-detail-btn">전체 분석 보기</button>
                     </div>
                 `;
                 container.appendChild(div);
@@ -641,14 +781,14 @@
                 const resultContainer = document.getElementById('videoAnalysisResultContainer');
                 const resultDiv = document.getElementById('videoAnalysisResult');
                 resultContainer.classList.remove('hidden');
-                resultDiv.innerHTML = '<div class="flex justify-center items-center gap-3"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div><p class="text-slate-500">프레임을 추출하고 있습니다...</p></div>';
+                resultDiv.innerHTML = '<div class="flex justify-center items-center gap-3"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div><p class="text-slate-500 text-sm">프레임을 추출하고 있습니다...</p></div>';
 
                 analyzeVideoBtn.disabled = true;
                 analyzeVideoBtn.innerHTML = '<div class="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white mr-2"></div> 분석 중...';
 
                 try {
                     const frames = await extractFrames(video, 20);
-                    resultDiv.innerHTML = '<div class="flex justify-center items-center gap-3"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div><p class="text-slate-500">AI가 ' + frames.length + '개 프레임을 분석하고 있습니다...</p></div>';
+                    resultDiv.innerHTML = '<div class="flex justify-center items-center gap-3"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div><p class="text-slate-500 text-sm">AI가 ' + frames.length + '개 프레임을 분석하고 있습니다...</p></div>';
 
                     const prompt = `당신은 전문 수의사 AI 보조입니다. ${getPetContext()}
 
@@ -900,8 +1040,8 @@
                     const locationInfo = userLocation ? `사용자 현재 위치 좌표: ${userLocation.lat}, ${userLocation.lng}.` : '';
                     const prompt = `${getPetContext()} ${locationInfo} 사용자 검색 요청: "${query}". 이 조건에 맞는 동물병원을 추천해주세요. 병원 유형, 추천 이유, 찾을 때 확인해야 할 사항 등을 포함해주세요. 실제 병원이 아닌 참고용 AI 추천임을 명시해주세요. 한국어로 대답해주세요.`;
                     const result = await callGeminiAPI(prompt);
-                    container.innerHTML = `<div class="col-span-2 bg-white p-6 rounded-xl shadow-sm"><div class="prose max-w-none">${simpleMarkdownToHtml(result)}</div></div>`;
-                } catch (e) { container.innerHTML = `<div class="col-span-2 text-red-500 text-center">검색에 실패했습니다: ${e.message}</div>`; }
+                    container.innerHTML = `<div class="col-span-2 bg-white p-4 md:p-6 rounded-xl shadow-sm"><div class="prose max-w-none text-sm md:text-base">${simpleMarkdownToHtml(result)}</div></div>`;
+                } catch (e) { container.innerHTML = `<div class="col-span-2 text-red-500 text-center text-sm">검색에 실패했습니다: ${e.message}</div>`; }
             });
 
             // Chat
@@ -916,13 +1056,13 @@
 
                 const userBubble = document.createElement('div');
                 userBubble.className = 'flex justify-end';
-                userBubble.innerHTML = `<div class="chat-bubble chat-bubble-user p-3 rounded-lg shadow-sm">${message}</div>`;
+                userBubble.innerHTML = `<div class="chat-bubble chat-bubble-user p-3 rounded-lg shadow-sm text-sm md:text-base">${message}</div>`;
                 chatWindow.appendChild(userBubble);
 
                 const loadingBubble = document.createElement('div');
                 loadingBubble.className = 'flex justify-start';
                 loadingBubble.id = 'chat-loading';
-                loadingBubble.innerHTML = `<div class="chat-bubble chat-bubble-ai p-3 rounded-lg shadow-sm"><div class="animate-pulse">AI가 생각 중...</div></div>`;
+                loadingBubble.innerHTML = `<div class="chat-bubble chat-bubble-ai p-3 rounded-lg shadow-sm text-sm"><div class="animate-pulse">AI가 생각 중...</div></div>`;
                 chatWindow.appendChild(loadingBubble);
                 chatWindow.scrollTop = chatWindow.scrollHeight;
 
@@ -937,7 +1077,7 @@
 
                     const aiBubble = document.createElement('div');
                     aiBubble.className = 'flex justify-start';
-                    aiBubble.innerHTML = `<div class="chat-bubble chat-bubble-ai p-3 rounded-lg shadow-sm">${simpleMarkdownToHtml(result)}</div>`;
+                    aiBubble.innerHTML = `<div class="chat-bubble chat-bubble-ai p-3 rounded-lg shadow-sm text-sm md:text-base">${simpleMarkdownToHtml(result)}</div>`;
                     chatWindow.appendChild(aiBubble);
                 } catch (error) {
                     const loading = document.getElementById('chat-loading');
@@ -945,7 +1085,7 @@
 
                     const errorBubble = document.createElement('div');
                     errorBubble.className = 'flex justify-start';
-                    errorBubble.innerHTML = `<div class="chat-bubble chat-bubble-ai p-3 rounded-lg shadow-sm text-red-500">죄송합니다. 응답 생성에 실패했습니다: ${error.message}</div>`;
+                    errorBubble.innerHTML = `<div class="chat-bubble chat-bubble-ai p-3 rounded-lg shadow-sm text-red-500 text-sm">죄송합니다. 응답 생성에 실패했습니다: ${error.message}</div>`;
                     chatWindow.appendChild(errorBubble);
                 }
                 chatWindow.scrollTop = chatWindow.scrollHeight;
@@ -963,13 +1103,13 @@
 
                 const userBubble = document.createElement('div');
                 userBubble.className = 'flex justify-end';
-                userBubble.innerHTML = `<div class="chat-bubble chat-bubble-user p-3 rounded-lg shadow-sm">${message}</div>`;
+                userBubble.innerHTML = `<div class="chat-bubble chat-bubble-user p-3 rounded-lg shadow-sm text-sm md:text-base">${message}</div>`;
                 chatWindow.appendChild(userBubble);
 
                 const loadingBubble = document.createElement('div');
                 loadingBubble.className = 'flex justify-start';
                 loadingBubble.id = 'persistent-chat-loading';
-                loadingBubble.innerHTML = `<div class="chat-bubble chat-bubble-ai p-3 rounded-lg shadow-sm"><div class="animate-pulse">AI가 생각 중...</div></div>`;
+                loadingBubble.innerHTML = `<div class="chat-bubble chat-bubble-ai p-3 rounded-lg shadow-sm text-sm"><div class="animate-pulse">AI가 생각 중...</div></div>`;
                 chatWindow.appendChild(loadingBubble);
                 chatWindow.scrollTop = chatWindow.scrollHeight;
 
@@ -984,7 +1124,7 @@
 
                     const aiBubble = document.createElement('div');
                     aiBubble.className = 'flex justify-start';
-                    aiBubble.innerHTML = `<div class="chat-bubble chat-bubble-ai p-3 rounded-lg shadow-sm">${simpleMarkdownToHtml(result)}</div>`;
+                    aiBubble.innerHTML = `<div class="chat-bubble chat-bubble-ai p-3 rounded-lg shadow-sm text-sm md:text-base">${simpleMarkdownToHtml(result)}</div>`;
                     chatWindow.appendChild(aiBubble);
                 } catch (error) {
                     const loading = document.getElementById('persistent-chat-loading');
@@ -992,7 +1132,7 @@
 
                     const errorBubble = document.createElement('div');
                     errorBubble.className = 'flex justify-start';
-                    errorBubble.innerHTML = `<div class="chat-bubble chat-bubble-ai p-3 rounded-lg shadow-sm text-red-500">죄송합니다. 응답 생성에 실패했습니다: ${error.message}</div>`;
+                    errorBubble.innerHTML = `<div class="chat-bubble chat-bubble-ai p-3 rounded-lg shadow-sm text-red-500 text-sm">죄송합니다. 응답 생성에 실패했습니다: ${error.message}</div>`;
                     chatWindow.appendChild(errorBubble);
                 }
                 chatWindow.scrollTop = chatWindow.scrollHeight;
