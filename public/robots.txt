@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://pet-ai-care.pages.dev/sitemap.xml
+Sitemap: https://aicat.reviewking74.com/sitemap.xml
 
 # Allow all major search engine bots
 User-agent: Googlebot
