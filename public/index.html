@@ -2,8 +2,156 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Pet AI Care</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet AI Care - AI 반려동물 건강관리 서비스 | 고양이 건강체크, 영상분석, AI 수의사 상담</title>
+    <meta name="description" content="AI 기반 반려동물 건강관리 플랫폼. Gemini AI로 고양이 피부·눈·귀 사진 분석, 행동 영상 분석, 맞춤 훈련 계획, 응급 대처 가이드, 진료비 예상, 근처 동물병원 검색까지. 무료로 시작하세요.">
+    <meta name="keywords" content="반려동물 AI, 고양이 건강체크, AI 수의사, 펫 케어, 동물병원 찾기, 고양이 행동분석, 반려동물 영상분석, AI 펫 도우미, 고양이 건강관리, 반려묘 케어">
+    <meta name="author" content="Pet AI Care">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <link rel="canonical" href="https://pet-ai-care.pages.dev/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pet-ai-care.pages.dev/">
+    <meta property="og:title" content="Pet AI Care - AI 반려동물 건강관리 서비스">
+    <meta property="og:description" content="AI가 반려동물의 건강을 체크하고, 영상을 분석하고, 맞춤 케어 솔루션을 제공합니다. 고양이 사진 한 장으로 건강 상태를 확인해보세요.">
+    <meta property="og:image" content="https://pet-ai-care.pages.dev/og-image.png">
+    <meta property="og:locale" content="ko_KR">
+    <meta property="og:site_name" content="Pet AI Care">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Pet AI Care - AI 반려동물 건강관리 서비스">
+    <meta name="twitter:description" content="AI가 반려동물의 건강을 체크하고, 영상을 분석하고, 맞춤 케어 솔루션을 제공합니다.">
+    <meta name="twitter:image" content="https://pet-ai-care.pages.dev/og-image.png">
+
+    <!-- Mobile App Meta -->
+    <meta name="application-name" content="Pet AI Care">
+    <meta name="theme-color" content="#4f46e5">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Pet AI Care">
+
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://generativelanguage.googleapis.com">
+
+    <!-- JSON-LD Structured Data: WebApplication -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Pet AI Care",
+        "alternateName": "펫 AI 케어",
+        "url": "https://pet-ai-care.pages.dev/",
+        "description": "AI 기반 반려동물 건강관리 플랫폼. Gemini AI로 고양이 피부·눈·귀 사진 분석, 행동 영상 분석, 맞춤 훈련 계획, 응급 대처 가이드, 진료비 예상, 근처 동물병원 검색까지 제공합니다.",
+        "applicationCategory": "HealthApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "KRW"
+        },
+        "featureList": [
+            "AI 반려동물 건강 체크 (사진 분석)",
+            "AI 영상 행동 분석 (전체 프레임 분석)",
+            "맞춤형 놀이 추천",
+            "AI 행동 분석",
+            "4주 훈련 계획 생성",
+            "응급 대처 가이드",
+            "진료비 예상",
+            "품종 정보 제공",
+            "GPS 기반 동물병원 찾기",
+            "AI 챗봇 상담"
+        ],
+        "inLanguage": "ko",
+        "creator": {
+            "@type": "Organization",
+            "name": "Pet AI Care"
+        }
+    }
+    </script>
+
+    <!-- JSON-LD Structured Data: FAQPage (for AI GEO) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Pet AI Care는 어떤 서비스인가요?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Pet AI Care는 Gemini AI를 활용한 반려동물 건강관리 플랫폼입니다. 반려동물의 사진을 올리면 피부, 눈, 귀 상태를 AI가 분석하고, 영상을 올리면 행동 패턴과 건강 이상 여부를 파악합니다. 맞춤 훈련 계획, 응급 대처 가이드, 진료비 예상, 근처 동물병원 검색 등 종합적인 펫 케어 서비스를 무료로 제공합니다."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "AI로 고양이 건강 상태를 어떻게 확인하나요?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "반려동물의 피부, 눈, 귀 등 확인하고 싶은 부위를 선명하게 촬영하여 업로드하면, Gemini AI가 이미지를 분석하여 피부 상태, 눈 상태, 귀 상태, 전반적인 외형 이상 소견을 확인하고 주의사항을 알려줍니다. 이는 참고용 예비 분석이며 전문 수의사 진료를 대체하지 않습니다."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "반려동물 영상 분석은 어떻게 작동하나요?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "반려동물의 행동 영상을 업로드하면, AI가 영상에서 최대 20개 프레임을 자동으로 추출하여 분석합니다. 현재 상황 파악, 행동 패턴, 감정·심리 상태, 보행·자세 분석, 건강 이상 소견, 환경 안전성을 종합적으로 평가하여 결과를 제공합니다."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "근처 동물병원은 어떻게 찾나요?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "GPS 위치 찾기 기능을 통해 현재 위치를 확인한 후, Google 지도 또는 네이버 지도에서 주변 동물병원을 바로 검색할 수 있습니다. 또한 AI 검색 기능으로 특정 조건(야간 진료, 특정 질환 전문 등)에 맞는 동물병원 추천도 받을 수 있습니다."
+                }
+            }
+        ]
+    }
+    </script>
+
+    <!-- JSON-LD Structured Data: HowTo (for AI GEO) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "AI로 반려동물 건강 체크하는 방법",
+        "description": "Pet AI Care에서 AI를 활용하여 반려동물의 건강 상태를 확인하는 방법을 안내합니다.",
+        "step": [
+            {
+                "@type": "HowToStep",
+                "position": 1,
+                "name": "반려동물 정보 입력",
+                "text": "이름, 품종, 나이, 몸무게 등 반려동물의 기본 정보를 입력합니다."
+            },
+            {
+                "@type": "HowToStep",
+                "position": 2,
+                "name": "사진 또는 영상 업로드",
+                "text": "건강을 확인하고 싶은 부위의 사진을 올리거나, 행동 영상을 업로드합니다."
+            },
+            {
+                "@type": "HowToStep",
+                "position": 3,
+                "name": "AI 분석 결과 확인",
+                "text": "Gemini AI가 이미지 또는 영상을 분석하여 건강 상태, 행동 패턴, 주의사항 등을 종합적으로 알려줍니다."
+            },
+            {
+                "@type": "HowToStep",
+                "position": 4,
+                "name": "추가 기능 활용",
+                "text": "AI 도우미를 통해 맞춤 훈련 계획, 응급 대처법, 진료비 예상, 근처 동물병원 찾기 등을 이용할 수 있습니다."
+            }
+        ]
+    }
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -33,13 +181,29 @@
     </style>
 </head>
 <body>
+    <!-- SEO: Noscript fallback for search engines and no-JS users -->
+    <noscript>
+        <div style="max-width:800px;margin:40px auto;padding:20px;font-family:sans-serif;line-height:1.8;">
+            <h1>Pet AI Care - AI 반려동물 건강관리 서비스</h1>
+            <p>Pet AI Care는 Gemini AI를 활용한 무료 반려동물 건강관리 플랫폼입니다.</p>
+            <h2>주요 기능</h2>
+            <ul>
+                <li><strong>AI 건강 체크</strong> - 반려동물의 피부, 눈, 귀 사진을 업로드하면 AI가 건강 상태를 분석합니다.</li>
+                <li><strong>AI 영상 분석</strong> - 행동 영상을 올리면 최대 20개 프레임을 추출하여 행동 패턴, 감정 상태, 건강 이상 여부를 분석합니다.</li>
+                <li><strong>AI 도우미</strong> - 음식 안전성 확인, 맞춤 놀이 추천, 행동 분석, 훈련 계획, 응급 대처, 진료비 예상, 품종 정보를 제공합니다.</li>
+                <li><strong>AI 챗봇</strong> - 반려동물에 대해 궁금한 점을 AI 전담 집사에게 물어볼 수 있습니다.</li>
+                <li><strong>동물병원 찾기</strong> - GPS 위치 기반으로 Google 지도, 네이버 지도에서 주변 동물병원을 검색합니다.</li>
+            </ul>
+            <p>이 서비스를 이용하려면 JavaScript를 활성화해주세요.</p>
+        </div>
+    </noscript>
 
     <!-- Pet Info Container -->
-    <div id="pet-info-container" class="w-full min-h-screen flex items-center justify-center bg-slate-100 p-4">
+    <div id="pet-info-container" class="w-full min-h-screen flex items-center justify-center bg-slate-100 p-4" role="region" aria-label="반려동물 정보 입력">
         <div class="w-full max-w-md">
             <div class="bg-white p-6 sm:p-8 rounded-xl shadow-md">
-                <h2 class="text-2xl sm:text-3xl font-bold text-center text-indigo-600 mb-2">Pet AI Care</h2>
-                <p class="text-center text-slate-500 mb-6 sm:mb-8 text-sm sm:text-base">반려동물 정보를 입력해주세요.</p>
+                <h1 class="text-2xl sm:text-3xl font-bold text-center text-indigo-600 mb-2">Pet AI Care</h1>
+                <p class="text-center text-slate-500 mb-6 sm:mb-8 text-sm sm:text-base">AI 기반 반려동물 건강관리 - 정보를 입력해주세요.</p>
                 <form id="pet-info-form">
                     <div class="mb-4">
                         <label for="pet-name" class="block text-slate-700 font-semibold mb-2 text-sm">이름</label>
@@ -64,11 +228,11 @@
     </div>
 
     <!-- Main App Container (Initially Hidden) -->
-    <div id="app-container" class="h-screen flex hidden">
+    <div id="app-container" class="h-screen flex hidden" role="application" aria-label="Pet AI Care 앱">
 
         <!-- Mobile Top Header -->
-        <header id="mobileHeader" class="md:hidden fixed top-0 left-0 right-0 z-40 bg-white shadow-sm h-14 flex items-center justify-between px-4">
-            <h1 class="text-lg font-bold text-indigo-600 flex items-center"><i data-lucide="cat" class="mr-1.5 w-5 h-5"></i> Pet AI Care</h1>
+        <header id="mobileHeader" class="md:hidden fixed top-0 left-0 right-0 z-40 bg-white shadow-sm h-14 flex items-center justify-between px-4" role="banner">
+            <h1 class="text-lg font-bold text-indigo-600 flex items-center"><i data-lucide="cat" class="mr-1.5 w-5 h-5" aria-hidden="true"></i> Pet AI Care</h1>
             <button id="mobileEditPetBtn" class="flex items-center gap-2 text-slate-600">
                 <span id="mobile-pet-name" class="text-sm font-medium truncate max-w-[80px]">반려동물</span>
                 <img id="mobile-pet-img" src="https://placehold.co/32x32/e0e7ff/4338ca?text=Pet" class="w-8 h-8 rounded-full" alt="Pet">
@@ -76,15 +240,15 @@
         </header>
 
         <!-- Desktop Sidebar Navigation -->
-        <aside class="hidden md:flex w-64 bg-white shadow-md flex-shrink-0 flex-col">
-            <div class="h-20 flex items-center justify-center border-b"><h1 class="text-2xl font-bold text-indigo-600 flex items-center"><i data-lucide="cat" class="mr-2"></i> Pet AI Care</h1></div>
-            <nav class="flex-grow p-4">
-                <ul class="space-y-2">
-                    <li><a href="#" class="nav-item flex items-center py-3 px-4 rounded-lg text-slate-700 hover:bg-slate-200 transition-colors active" data-page="health-check"><i data-lucide="scan-eye" class="mr-3"></i>AI 건강 체크</a></li>
-                    <li><a href="#" class="nav-item flex items-center py-3 px-4 rounded-lg text-slate-700 hover:bg-slate-200 transition-colors" data-page="video-analysis"><i data-lucide="video" class="mr-3"></i>영상 분석</a></li>
-                    <li><a href="#" class="nav-item flex items-center py-3 px-4 rounded-lg text-slate-700 hover:bg-slate-200 transition-colors" data-page="ai-assistant"><i data-lucide="cpu" class="mr-3"></i>AI 도우미</a></li>
-                    <li><a href="#" class="nav-item flex items-center py-3 px-4 rounded-lg text-slate-700 hover:bg-slate-200 transition-colors" data-page="chat"><i data-lucide="message-circle" class="mr-3"></i>AI 챗봇</a></li>
-                    <li><a href="#" class="nav-item flex items-center py-3 px-4 rounded-lg text-slate-700 hover:bg-slate-200 transition-colors" data-page="vets"><i data-lucide="stethoscope" class="mr-3"></i>병원 찾기</a></li>
+        <aside class="hidden md:flex w-64 bg-white shadow-md flex-shrink-0 flex-col" role="complementary" aria-label="사이드바">
+            <div class="h-20 flex items-center justify-center border-b"><span class="text-2xl font-bold text-indigo-600 flex items-center" aria-hidden="true"><i data-lucide="cat" class="mr-2"></i> Pet AI Care</span></div>
+            <nav class="flex-grow p-4" aria-label="메인 내비게이션">
+                <ul class="space-y-2" role="menubar">
+                    <li role="none"><a href="#health-check" role="menuitem" class="nav-item flex items-center py-3 px-4 rounded-lg text-slate-700 hover:bg-slate-200 transition-colors active" data-page="health-check"><i data-lucide="scan-eye" class="mr-3" aria-hidden="true"></i>AI 건강 체크</a></li>
+                    <li role="none"><a href="#video-analysis" role="menuitem" class="nav-item flex items-center py-3 px-4 rounded-lg text-slate-700 hover:bg-slate-200 transition-colors" data-page="video-analysis"><i data-lucide="video" class="mr-3" aria-hidden="true"></i>영상 분석</a></li>
+                    <li role="none"><a href="#ai-assistant" role="menuitem" class="nav-item flex items-center py-3 px-4 rounded-lg text-slate-700 hover:bg-slate-200 transition-colors" data-page="ai-assistant"><i data-lucide="cpu" class="mr-3" aria-hidden="true"></i>AI 도우미</a></li>
+                    <li role="none"><a href="#chat" role="menuitem" class="nav-item flex items-center py-3 px-4 rounded-lg text-slate-700 hover:bg-slate-200 transition-colors" data-page="chat"><i data-lucide="message-circle" class="mr-3" aria-hidden="true"></i>AI 챗봇</a></li>
+                    <li role="none"><a href="#vets" role="menuitem" class="nav-item flex items-center py-3 px-4 rounded-lg text-slate-700 hover:bg-slate-200 transition-colors" data-page="vets"><i data-lucide="stethoscope" class="mr-3" aria-hidden="true"></i>병원 찾기</a></li>
                 </ul>
             </nav>
             <div class="p-4 border-t">
@@ -101,9 +265,9 @@
         <!-- Main Content -->
         <main class="flex-1 bg-slate-100 p-4 pt-[72px] pb-[88px] md:p-8 md:pt-8 md:pb-8 overflow-y-auto">
             <!-- AI Health Check Page -->
-            <div id="health-check" class="page active">
+            <section id="health-check" class="page active" aria-labelledby="health-check-heading">
                 <header class="mb-4 md:mb-6">
-                    <h2 class="text-2xl md:text-3xl font-bold text-slate-800">AI 건강 체크</h2>
+                    <h2 id="health-check-heading" class="text-2xl md:text-3xl font-bold text-slate-800">AI 건강 체크</h2>
                     <p id="health-check-subtitle" class="text-slate-500 text-sm md:text-base">반려동물의 피부, 눈, 귀 등의 사진을 올려 AI에게 예비 분석을 요청하세요.</p>
                 </header>
                 <div class="bg-white rounded-xl shadow-sm p-4 md:p-6">
@@ -114,7 +278,7 @@
                         <input type="file" id="imageUpload" class="hidden" accept="image/*">
                     </div>
                     <div id="imagePreviewContainer" class="mt-4 md:mt-6 text-center hidden">
-                        <img id="imagePreview" src="" alt="Image Preview" class="max-w-full sm:max-w-xs max-h-64 mx-auto rounded-lg shadow-md">
+                        <img id="imagePreview" src="" alt="반려동물 건강 체크 업로드 이미지 미리보기" class="max-w-full sm:max-w-xs max-h-64 mx-auto rounded-lg shadow-md">
                         <button id="analyzeImageBtn" class="mt-4 bg-indigo-600 text-white font-semibold py-2.5 px-5 rounded-lg hover:bg-indigo-700 transition-colors flex items-center mx-auto text-sm md:text-base">
                             <span class="mr-2">✨</span> AI 분석 시작하기
                         </button>
@@ -124,12 +288,12 @@
                     <h3 class="text-xl md:text-2xl font-bold text-slate-800 mb-3 md:mb-4">AI 분석 결과</h3>
                     <div id="analysisResult" class="bg-white rounded-xl shadow-sm p-4 md:p-6 prose max-w-none text-sm md:text-base"></div>
                 </div>
-            </div>
+            </section>
 
             <!-- AI Video Analysis Page -->
-            <div id="video-analysis" class="page">
+            <section id="video-analysis" class="page" aria-labelledby="video-analysis-heading">
                 <header class="mb-4 md:mb-6">
-                    <h2 class="text-2xl md:text-3xl font-bold text-slate-800">AI 영상 분석</h2>
+                    <h2 id="video-analysis-heading" class="text-2xl md:text-3xl font-bold text-slate-800">AI 영상 분석</h2>
                     <p id="video-analysis-subtitle" class="text-slate-500 text-sm md:text-base">반려동물의 행동 영상을 올려 AI가 전체 영상을 분석합니다.</p>
                 </header>
                 <div class="bg-white rounded-xl shadow-sm p-4 md:p-6">
@@ -161,12 +325,12 @@
                     <h3 class="text-lg md:text-xl font-bold text-slate-800 mb-3 md:mb-4">영상 분석 기록</h3>
                     <div id="video-analysis-history" class="space-y-3 md:space-y-4 max-h-72 md:max-h-96 overflow-y-auto"><p class="text-slate-500 text-center text-sm">아직 분석 기록이 없습니다.</p></div>
                 </div>
-            </div>
+            </section>
 
             <!-- AI Assistant Page -->
-            <div id="ai-assistant" class="page">
+            <section id="ai-assistant" class="page" aria-labelledby="ai-assistant-heading">
                 <header class="mb-4 md:mb-6">
-                    <h2 class="text-2xl md:text-3xl font-bold text-slate-800">AI 도우미</h2>
+                    <h2 id="ai-assistant-heading" class="text-2xl md:text-3xl font-bold text-slate-800">AI 도우미</h2>
                     <p id="ai-assistant-subtitle" class="text-slate-500 text-sm md:text-base">반려동물의 일상 관리, 훈련, 응급 상황 대처까지 AI가 도와드립니다.</p>
                 </header>
                 <div class="border-b border-gray-200 mb-4">
@@ -248,12 +412,12 @@
                     </div>
                     <div id="breedInfoResultContainer" class="mt-4 md:mt-6 hidden"><h3 id="breed-info-title" class="text-xl md:text-2xl font-bold text-slate-800 mb-3 md:mb-4">AI 맞춤 품종 정보</h3><div id="breedInfoResult" class="bg-white rounded-xl shadow-sm p-4 md:p-6 prose max-w-none text-sm md:text-base"></div></div>
                 </div>
-            </div>
+            </section>
 
             <!-- AI Chatbot Page -->
-            <div id="chat" class="page flex flex-col" style="min-height: calc(100vh - 160px);">
+            <section id="chat" class="page flex flex-col" style="min-height: calc(100vh - 160px);" aria-labelledby="chat-heading">
                 <header class="mb-4 md:mb-6">
-                    <h2 class="text-2xl md:text-3xl font-bold text-slate-800">AI 집사에게 물어보기</h2>
+                    <h2 id="chat-heading" class="text-2xl md:text-3xl font-bold text-slate-800">AI 집사에게 물어보기</h2>
                     <p id="chat-subtitle" class="text-slate-500 text-sm md:text-base">반려동물에 대해 궁금한 점을 AI에게 물어보세요.</p>
                 </header>
                 <div id="chatWindow" class="flex-grow bg-white rounded-xl shadow-sm p-3 md:p-4 overflow-y-auto space-y-3 md:space-y-4">
@@ -263,11 +427,11 @@
                     <input id="chatInput" type="text" placeholder="메시지를 입력하세요..." class="flex-grow border-slate-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 p-2.5 md:p-3 text-base" required>
                     <button type="submit" class="bg-indigo-600 text-white font-semibold p-2.5 md:p-3 rounded-lg hover:bg-indigo-700 transition-colors flex items-center"><i data-lucide="send" class="w-5 h-5 md:w-6 md:h-6"></i></button>
                 </form>
-            </div>
+            </section>
 
             <!-- Vets Page -->
-            <div id="vets" class="page">
-                <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mb-4 md:mb-8">내 주변 동물병원</h2>
+            <section id="vets" class="page" aria-labelledby="vets-heading">
+                <h2 id="vets-heading" class="text-2xl md:text-3xl font-bold text-slate-800 mb-4 md:mb-8">내 주변 동물병원</h2>
 
                 <!-- GPS Location Section -->
                 <div class="bg-white p-4 md:p-6 rounded-xl shadow-sm mb-4 md:mb-6">
@@ -300,7 +464,7 @@
                     </div>
                 </div>
                 <div id="vetResults" class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6"></div>
-            </div>
+            </section>
 
             <!-- Persistent Chat Widget (shown on all pages except dedicated chat page) -->
             <div id="persistent-chat" class="mt-6 md:mt-8">
@@ -319,26 +483,26 @@
         </main>
 
         <!-- Mobile Bottom Navigation -->
-        <nav id="mobileBottomNav" class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-slate-200">
+        <nav id="mobileBottomNav" class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-slate-200" aria-label="모바일 내비게이션">
             <div class="flex justify-around items-center h-16 px-1 pb-[env(safe-area-inset-bottom)]">
-                <button class="mobile-nav-btn flex flex-col items-center justify-center gap-0.5 flex-1 py-1 active" data-page="health-check">
-                    <i data-lucide="scan-eye" class="w-5 h-5"></i>
+                <button class="mobile-nav-btn flex flex-col items-center justify-center gap-0.5 flex-1 py-1 active" data-page="health-check" aria-label="AI 건강 체크">
+                    <i data-lucide="scan-eye" class="w-5 h-5" aria-hidden="true"></i>
                     <span class="text-[10px] font-medium leading-tight">건강체크</span>
                 </button>
-                <button class="mobile-nav-btn flex flex-col items-center justify-center gap-0.5 flex-1 py-1" data-page="video-analysis">
-                    <i data-lucide="video" class="w-5 h-5"></i>
+                <button class="mobile-nav-btn flex flex-col items-center justify-center gap-0.5 flex-1 py-1" data-page="video-analysis" aria-label="AI 영상 분석">
+                    <i data-lucide="video" class="w-5 h-5" aria-hidden="true"></i>
                     <span class="text-[10px] font-medium leading-tight">영상분석</span>
                 </button>
-                <button class="mobile-nav-btn flex flex-col items-center justify-center gap-0.5 flex-1 py-1" data-page="ai-assistant">
-                    <i data-lucide="cpu" class="w-5 h-5"></i>
+                <button class="mobile-nav-btn flex flex-col items-center justify-center gap-0.5 flex-1 py-1" data-page="ai-assistant" aria-label="AI 도우미">
+                    <i data-lucide="cpu" class="w-5 h-5" aria-hidden="true"></i>
                     <span class="text-[10px] font-medium leading-tight">AI도우미</span>
                 </button>
-                <button class="mobile-nav-btn flex flex-col items-center justify-center gap-0.5 flex-1 py-1" data-page="chat">
-                    <i data-lucide="message-circle" class="w-5 h-5"></i>
+                <button class="mobile-nav-btn flex flex-col items-center justify-center gap-0.5 flex-1 py-1" data-page="chat" aria-label="AI 챗봇">
+                    <i data-lucide="message-circle" class="w-5 h-5" aria-hidden="true"></i>
                     <span class="text-[10px] font-medium leading-tight">챗봇</span>
                 </button>
-                <button class="mobile-nav-btn flex flex-col items-center justify-center gap-0.5 flex-1 py-1" data-page="vets">
-                    <i data-lucide="stethoscope" class="w-5 h-5"></i>
+                <button class="mobile-nav-btn flex flex-col items-center justify-center gap-0.5 flex-1 py-1" data-page="vets" aria-label="동물병원 찾기">
+                    <i data-lucide="stethoscope" class="w-5 h-5" aria-hidden="true"></i>
                     <span class="text-[10px] font-medium leading-tight">병원찾기</span>
                 </button>
             </div>
@@ -356,6 +520,27 @@
             </div>
         </div>
     </div>
+
+    <!-- SEO: Hidden semantic footer for crawlers -->
+    <footer class="sr-only" aria-hidden="true">
+        <p>Pet AI Care - AI 기반 반려동물 건강관리 플랫폼</p>
+        <p>Gemini AI를 활용한 반려동물 사진 분석, 영상 행동 분석, 맞춤 훈련 계획, 응급 대처 가이드, 진료비 예상, GPS 기반 동물병원 검색 서비스를 무료로 제공합니다.</p>
+        <nav aria-label="서비스 목록">
+            <ul>
+                <li>AI 반려동물 건강 체크 - 피부, 눈, 귀 사진 AI 분석</li>
+                <li>AI 영상 행동 분석 - 최대 20프레임 추출 분석</li>
+                <li>AI 음식 안전성 확인</li>
+                <li>맞춤형 놀이 추천</li>
+                <li>AI 행동 분석 및 심리 상태 파악</li>
+                <li>4주간 맞춤 훈련 계획</li>
+                <li>응급 상황 대처 가이드</li>
+                <li>진료비 예상 서비스</li>
+                <li>품종별 상세 정보</li>
+                <li>GPS 기반 근처 동물병원 찾기</li>
+                <li>AI 챗봇 실시간 상담</li>
+            </ul>
+        </nav>
+    </footer>
 
     <script>
         lucide.createIcons();
