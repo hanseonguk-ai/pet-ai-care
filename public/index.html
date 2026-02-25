@@ -607,6 +607,15 @@
             petInfoContainer.classList.remove('hidden');
         }
 
+        // --- Helper: Extract error message ---
+        function extractErrorMsg(errData) {
+            if (!errData) return 'API 요청에 실패했습니다.';
+            if (typeof errData.error === 'string') return errData.error;
+            if (errData.error && errData.error.message) return errData.error.message;
+            if (typeof errData.message === 'string') return errData.message;
+            return 'API 요청에 실패했습니다.';
+        }
+
         // --- Gemini API Calls (via Cloudflare Functions Proxy) ---
         async function callGeminiAPI(prompt) {
             const response = await fetch("/api/gemini", {
@@ -618,7 +627,7 @@
             });
             if (!response.ok) {
                 const errData = await response.json().catch(() => ({}));
-                throw new Error(errData.error || "API 요청에 실패했습니다.");
+                throw new Error(extractErrorMsg(errData));
             }
             const data = await response.json();
             if (data.candidates && data.candidates[0] && data.candidates[0].content) {
@@ -642,7 +651,7 @@
             });
             if (!response.ok) {
                 const errData = await response.json().catch(() => ({}));
-                throw new Error(errData.error || "Vision API 요청에 실패했습니다.");
+                throw new Error(extractErrorMsg(errData));
             }
             const data = await response.json();
             if (data.candidates && data.candidates[0] && data.candidates[0].content) {

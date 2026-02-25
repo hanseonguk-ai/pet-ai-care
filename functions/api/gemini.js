@@ -19,7 +19,7 @@ export async function onRequestPost(context) {
     }
 
     const geminiUrl =
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=" +
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" +
       apiKey;
 
     const geminiResponse = await fetch(geminiUrl, {
@@ -29,6 +29,16 @@ export async function onRequestPost(context) {
     });
 
     const geminiData = await geminiResponse.json();
+
+    if (geminiData.error) {
+      const errMsg = typeof geminiData.error === 'string'
+        ? geminiData.error
+        : geminiData.error.message || JSON.stringify(geminiData.error);
+      return new Response(
+        JSON.stringify({ error: errMsg }),
+        { status: geminiResponse.status || 500, headers: { "Content-Type": "application/json" } }
+      );
+    }
 
     return new Response(JSON.stringify(geminiData), {
       status: geminiResponse.status,
